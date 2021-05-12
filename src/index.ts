@@ -20,7 +20,6 @@ class hybridless {
     public readonly logger: Logger;
     public readonly docker: Docker;
     public readonly depManager: DepsManager;
-    public containerFunctions: boolean;
     //Resources
     public functions: BaseFunction[];
     //Aux
@@ -38,7 +37,6 @@ class hybridless {
         this.docker = new Docker(this);
         this.depManager = new DepsManager(this);
         this.functions = [];
-        this.containerFunctions = false;
         //Commands
         this.commands = {
             hybridless: { 

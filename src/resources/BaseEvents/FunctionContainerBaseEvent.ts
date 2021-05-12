@@ -14,7 +14,6 @@ const executor = util.promisify(child.exec);
 export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent> {
     public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionEvent, index: number) {
         super(plugin, func, event, index);
-        plugin.containerFunctions = true;
     }
 
     //Plugin lifecycle
