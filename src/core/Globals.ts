@@ -1,4 +1,4 @@
-import { OFunctionContainerRuntime, OFunctionHttpdRuntime, OFunctionLambdaContainerRuntime } from "../options";
+import { OFunctionProcessTaskRuntime, OFunctionHttpdTaskRuntime, OFunctionLambdaContainerRuntime } from "../options";
 import BPromise = require('bluebird');
 import { v4 as uuidv4 } from 'uuid';
 //
@@ -17,31 +17,32 @@ export default class Globals {
     public static DefaultHealthCheckTimeout = 10;
     public static DefaultHealthCheckHealthyCount = 2;
     public static DefaultHealthCheckUnhealthCount = 5;
+    public static DefaultLoadBalancerAdditionalTimeout = 1;
 
     //HTTPD stuff
         public static HTTPD_DefaultMemory = 1024;
         public static HTTPD_DefaultCPU = 512;
         public static HTTPD_DefaultTimeout = 30;
         public static HTTPD_DefaultConcurrency = 2;
-        private static _HTTPD_ImageByRuntime(environment: OFunctionHttpdRuntime): string {
-            if (environment == OFunctionHttpdRuntime.nodejs10) {
+        private static _HTTPD_ImageByRuntime(environment: OFunctionHttpdTaskRuntime): string {
+            if (environment == OFunctionHttpdTaskRuntime.nodejs10) {
                 return 'Dockerfile-Httpd-Nodejs10'
-            } else if (environment == OFunctionHttpdRuntime.nodejs13) {
+            } else if (environment == OFunctionHttpdTaskRuntime.nodejs13) {
                 return 'Dockerfile-Httpd-Nodejs13'
-            } else if (environment == OFunctionHttpdRuntime.php5) {
+            } else if (environment == OFunctionHttpdTaskRuntime.php5) {
                 return 'Dockerfile-Httpd-PHP5'
-            } else if (environment == OFunctionHttpdRuntime.php7) {
+            } else if (environment == OFunctionHttpdTaskRuntime.php7) {
                 return 'Dockerfile-Httpd-PHP7'
             } throw new Error(`Unknown Httpd environment ${environment}, can't continue!`);
         }
-        public static HTTPD_DockerFilesByRuntime(environment: OFunctionHttpdRuntime, serverlessDir: string, handler: string, healthCheckRoute: string, customDockerFile?: string): DockerFiles {
+        public static HTTPD_DockerFilesByRuntime(environment: OFunctionHttpdTaskRuntime, serverlessDir: string, handler: string, healthCheckRoute: string, customDockerFile?: string): DockerFiles {
             const dockerFileName = Globals._HTTPD_ImageByRuntime(environment);
             //
             let safeDir: any = __dirname.split('/');
             safeDir.splice(safeDir.length - 1, 1);
             safeDir = safeDir.join('/');
             //Nodejs Specific
-            if (environment == OFunctionHttpdRuntime.nodejs10 || environment == OFunctionHttpdRuntime.nodejs13) {
+            if (environment == OFunctionHttpdTaskRuntime.nodejs10 || environment == OFunctionHttpdTaskRuntime.nodejs13) {
                 return [
                 (customDockerFile ? 
                     { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
@@ -61,8 +62,8 @@ export default class Globals {
                 ];
             }
         }
-        public static HTTPD_HealthCheckByRuntime(environment: OFunctionHttpdRuntime): string {
-            if (environment == OFunctionHttpdRuntime.nodejs10 || environment == OFunctionHttpdRuntime.nodejs13) {
+        public static HTTPD_HealthCheckByRuntime(environment: OFunctionHttpdTaskRuntime): string {
+            if (environment == OFunctionHttpdTaskRuntime.nodejs10 || environment == OFunctionHttpdTaskRuntime.nodejs13) {
                 return `/healthCheck/${uuidv4()}`;
             } throw new Error(`Unknown Httpd environment ${environment}, can't continue!`);
         }
@@ -70,14 +71,14 @@ export default class Globals {
         public static Process_DefaultMemory = 1024;
         public static Process_DefaultCPU = 512;
         public static Process_DefaultConcurrency = 1;
-        public static _Process_ImageByRuntime(environment: OFunctionContainerRuntime): string {
-            if (environment == OFunctionContainerRuntime.nodejs10) {
+        public static _Process_ImageByRuntime(environment: OFunctionProcessTaskRuntime): string {
+            if (environment == OFunctionProcessTaskRuntime.nodejs10) {
                 return 'Dockerfile-Process-Nodejs10'
-            } else if (environment == OFunctionContainerRuntime.nodejs13) {
+            } else if (environment == OFunctionProcessTaskRuntime.nodejs13) {
                 return 'Dockerfile-Process-Nodejs13'
             } throw new Error(`Unknown process environment ${environment}, can't continue!`);
         }
-        public static Process_DockerFilesByRuntime(environment: OFunctionContainerRuntime, serverlessDir: string, customDockerFile?: string): DockerFiles {
+        public static Process_DockerFilesByRuntime(environment: OFunctionProcessTaskRuntime, serverlessDir: string, customDockerFile?: string): DockerFiles {
             const dockerFileName = Globals._Process_ImageByRuntime(environment);
             //
             let safeDir: any = __dirname.split('/');

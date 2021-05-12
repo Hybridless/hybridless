@@ -1,8 +1,8 @@
-import { OFunction, OFunctionEvent, OFunctionProcessTaskEvent, OFunctionHTTPDTaskEvent, OFunctionEventType, OFunctionContainerRuntime, OFunctionHttpdRuntime } from "../options";
+import { OFunction, OFunctionEvent, OFunctionProcessTaskEvent, OFunctionHTTPDTaskEvent, OFunctionEventType, OFunctionLambdaEvent, OFunctionLambdaContainerEvent } from "../options";
 import Hybridless = require("..");
 //Event types
-import { FunctionProcessEvent } from "./FunctionProcessTaskEvent";
-import { FunctionHTTPDEvent } from "./FunctionHttpdTaskEvent";
+import { FunctionProcessTaskEvent } from "./FunctionProcessTaskEvent";
+import { FunctionHTTPDTaskEvent } from "./FunctionHttpdTaskEvent";
 import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEvent";
 import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent";
 import { FunctionLambdaEvent } from "./FunctionLambdaEvent";
@@ -97,29 +97,33 @@ export class BaseFunction {
     }
 
     //Public getters
-    public getEntrypoint(optionalEvent: OFunctionEvent): string {
+    public getEntrypoint(event: OFunctionEvent): string {
         //PHP function event?
-        if (optionalEvent && optionalEvent['runtime'] && (optionalEvent['runtime'] == OFunctionHttpdRuntime.php5 || optionalEvent['runtime'] == OFunctionHttpdRuntime.php7)) {
+        if (event && event['runtime'].toLowerCase().indexOf('php') != -1) {
             //get handler without last component (function)
-            let noFuncHandler: any = (optionalEvent.handler || this.funcOptions.handler).split('/');
+            let noFuncHandler: any = (event.handler || this.funcOptions.handler).split('/');
             noFuncHandler.splice(noFuncHandler.length - 1, 1);
             noFuncHandler = noFuncHandler.join('/');    
             return noFuncHandler;
-        } else {
+        } else if (event && event['runtime'].toLowerCase().indexOf('node') != -1) { //NodeJS event
             //get handler without last component (function)
-            let noFuncHandler: any = (optionalEvent.handler || this.funcOptions.handler).split('.');
+            let noFuncHandler: any = (event.handler || this.funcOptions.handler).split('.');
             noFuncHandler.splice(noFuncHandler.length - 1, 1);
             noFuncHandler = noFuncHandler.join('.');
             return noFuncHandler;
+        } else {
+            this.plugin.logger.error('Could not generate entrypoint for event! No runtime is specified..', event);
         }
     }
-    public getEntrypointFunction(optionalEvent: OFunctionEvent): string {
-        let noFuncHandler: string = this.getEntrypoint(optionalEvent);
+    public getEntrypointFunction(event: OFunctionEvent): string {
+        let noFuncHandler: string = this.getEntrypoint(event);
         //PHP function event?
-        if (optionalEvent && optionalEvent['runtime'] && (optionalEvent['runtime'] == OFunctionHttpdRuntime.php5 || optionalEvent['runtime'] == OFunctionHttpdRuntime.php7)) {
-            return (optionalEvent.handler || this.funcOptions.handler).replace(noFuncHandler, '');
+        if (event && event['runtime'].toLowerCase().indexOf('php') != -1) {
+            return (event.handler || this.funcOptions.handler).replace(noFuncHandler, '');
+        } else if (event && event['runtime'].toLowerCase().indexOf('node') != -1) { //NodeJS event
+            return (event.handler || this.funcOptions.handler).replace(noFuncHandler + '.', '');
         } else {
-            return (optionalEvent.handler || this.funcOptions.handler).replace(noFuncHandler + '.', '');
+            this.plugin.logger.error('Could not generate entrypoint for event! No runtime is specified..', event);
         }
     }
     public getName(): string {
@@ -131,23 +135,25 @@ export class BaseFunction {
         return new BPromise( (resolve) => {
             //Check if needs ELB, we check against HTTPD because we can have proc. and httpd mixed in same cluster but still
             //requiring loadbalancer
-            const needsELB = !!(this.events.find(e => (e instanceof FunctionHTTPDEvent)));
+            const needsELB = !!(this.events.find(e => (e instanceof FunctionHTTPDTaskEvent)));
             //Write fargate task
             const FargateName = this.getName();
             const FargateResource = {
                 clusterName: FargateName,
-                disableELB: !needsELB,
+                tags: this.plugin.getDefaultTags(true),
+                services: tasks,
+                //Should specify custom cluster?
                 ...(this.funcOptions.ecsClusterArn && this.funcOptions.ecsClusterArn != 'null' && this.funcOptions.ecsIngressSecGroupId && this.funcOptions.ecsIngressSecGroupId != 'null' ?
                     { clusterArns: { ecsClusterArn: this.funcOptions.ecsClusterArn, ecsIngressSecGroupId: this.funcOptions.ecsIngressSecGroupId } } : { }),
-                //We need to have an additional gap on the ELB timeout
-                ...(this.funcOptions.timeout ? { timeout: this.funcOptions.timeout + 1 } : { timeout: Globals.HTTPD_DefaultTimeout + 1 }),
-                tags: this.plugin.getDefaultTags(true),
+                //VPC
                 ...this.getVPC(true),
                 //needs pulic IP to be able to retrieve ECS info -- in most of the cases
                 //however when alb is disabled this param is disreguarded
                 public: true, /*  */
-                services: tasks,
+                disableELB: !needsELB,
                 ...(this.funcOptions.albListenerArn && this.funcOptions.albListenerArn != 'null' ? { albListenerArn: this.funcOptions.albListenerArn } : {}),
+                //We need to have an additional gap on the ALB timeout
+                timeout: (this.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) + (this.funcOptions.additionalALBTimeout || Globals.DefaultLoadBalancerAdditionalTimeout),
             };
             this.plugin.appendFargateCluster(FargateName, FargateResource);
             //
@@ -159,13 +165,13 @@ export class BaseFunction {
     //Helpers
     private parseFunction(plugin: Hybridless, func: BaseFunction, event: OFunctionEvent, index: number): FunctionBaseEvent<OFunctionEvent> {
         if (event.eventType == OFunctionEventType.process) {
-            return new FunctionProcessEvent(plugin, func, <OFunctionProcessTaskEvent>event, index);
+            return new FunctionProcessTaskEvent(plugin, func, <OFunctionProcessTaskEvent>event, index);
         } else if (event.eventType == OFunctionEventType.httpd) {
-            return new FunctionHTTPDEvent(plugin, func, <OFunctionHTTPDTaskEvent>event, index);
+            return new FunctionHTTPDTaskEvent(plugin, func, <OFunctionHTTPDTaskEvent>event, index);
         } else if (event.eventType == OFunctionEventType.lambda) {
-            return new FunctionLambdaEvent(plugin, func, <FunctionLambdaEvent>event, index);
+            return new FunctionLambdaEvent(plugin, func, <OFunctionLambdaEvent>event, index);
         } else if (event.eventType == OFunctionEventType.lambdaContainer) {
-            return new FunctionLambdaContainerEvent(plugin, func, <FunctionLambdaContainerEvent>event, index);
+            return new FunctionLambdaContainerEvent(plugin, func, <OFunctionLambdaContainerEvent>event, index);
         } return null;
     }
     public getVPC(wrapped: boolean): any {

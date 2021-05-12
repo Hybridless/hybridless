@@ -16,13 +16,13 @@ export enum OFunctionEventType {
     process = 'process',
     lambdaContainer = 'lambdaContainer'
 };
-export enum OFunctionHttpdRuntime {
+export enum OFunctionHttpdTaskRuntime {
     nodejs10 = 'nodejs10',
     nodejs13 = 'nodejs13',
     php5 = 'php5',
     php7 = 'php7',
 };
-export enum OFunctionContainerRuntime {
+export enum OFunctionProcessTaskRuntime {
     nodejs10 = 'nodejs10',
     nodejs13 = 'nodejs13',
 };
@@ -45,7 +45,6 @@ export interface OFunctionEvent {
     eventType: OFunctionEventType;
     handler?: string; //this, takes precende over function handler - Usefulll for multi-purpose clusters
     enabled?: boolean; //defaults to true
-
     memory?: number; //defaults to 1024 - takes precedence over OFunction.memory
     role?: string;
 }
@@ -72,7 +71,7 @@ export interface OFunctionTaskBaseEvent extends OFunctionEvent {
     }
 }
 export interface OFunctionHTTPDTaskEvent extends OFunctionTaskBaseEvent {
-    runtime?: OFunctionHttpdRuntime;
+    runtime: OFunctionHttpdTaskRuntime;
     //ALB listener layer
     routes?: {
         path: string;
@@ -101,7 +100,7 @@ export interface OFunctionHTTPDTaskEvent extends OFunctionTaskBaseEvent {
 }
 export interface OFunctionProcessTaskEvent extends OFunctionTaskBaseEvent {
     ec2LaunchType?: boolean; //defaults to false, if true will laucnh task into EC2
-    runtime?: OFunctionContainerRuntime;
+    runtime: OFunctionProcessTaskRuntime;
     dockerFile?: string;
 }
 
@@ -127,11 +126,11 @@ export interface OFunctionLambdaBaseEvent extends OFunctionEvent {
     filterPolicy?: object;
 }
 export interface OFunctionLambdaEvent extends OFunctionLambdaBaseEvent {
-    runtime?: string;
+    runtime: string;
     layers?: string[];
 }
 export interface OFunctionLambdaContainerEvent extends OFunctionLambdaBaseEvent {
-    runtime?: OFunctionLambdaContainerRuntime;
+    runtime: OFunctionLambdaContainerRuntime;
     dockerFile?: string;
 }
 
@@ -147,6 +146,7 @@ export interface OFunction {
     ecsIngressSecGroupId?: string;
     //ALB
     albListenerArn?: string;
+    additionalALBTimeout?: number; //default to 1 second
 }
 //Plugin
 export interface OPlugin {

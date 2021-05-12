@@ -2,13 +2,13 @@ import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEv
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionHTTPDTaskEvent, OFunctionHttpdRuntime } from "../options";
+import { OFunctionHTTPDTaskEvent, OFunctionHttpdTaskRuntime } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
 import BPromise = require('bluebird');
 //
-export class FunctionHttpdTaskEvent extends FunctionContainerBaseEvent {
+export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
     private healthRoute: string;
     public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionHTTPDTaskEvent, index: number) {
         super(plugin, func, event, index);
@@ -21,7 +21,7 @@ export class FunctionHttpdTaskEvent extends FunctionContainerBaseEvent {
     }
     protected getContainerEnvironments(): any {
         const event: OFunctionHTTPDTaskEvent = (<OFunctionHTTPDTaskEvent>this.event);
-        const isPHP = (event.runtime == OFunctionHttpdRuntime.php5 || event.runtime == OFunctionHttpdRuntime.php7);
+        const isPHP = (event.runtime == OFunctionHttpdTaskRuntime.php5 || event.runtime == OFunctionHttpdTaskRuntime.php7);
         return {
             //Plataform specific
             ...(!isPHP ? {
@@ -72,8 +72,8 @@ export class FunctionHttpdTaskEvent extends FunctionContainerBaseEvent {
                 desiredCount: (event.concurrency || Globals.HTTPD_DefaultConcurrency),
                 ec2LaunchType: !!event.ec2LaunchType,
                 environment: {
+                    ...this.plugin.getEnvironmentIvars(),
                     ...this.getContainerEnvironments(),
-                    ...this.plugin.getEnvironmentIvars()
                 },
                 ...(event.autoScale && <unknown>event.autoScale != 'null' ? { autoScale: event.autoScale } : {}),
                 logsMultilinePattern: (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),
@@ -107,8 +107,8 @@ export class FunctionHttpdTaskEvent extends FunctionContainerBaseEvent {
     }
 
     private getPort(): number {
-        const event: OFunctionHTTPDTaskEvent = this.event;
-        const isPHP = (event.runtime == OFunctionHttpdRuntime.php5 || event.runtime == OFunctionHttpdRuntime.php7);
+        const event: OFunctionHTTPDTaskEvent = <OFunctionHTTPDTaskEvent>this.event;
+        const isPHP = (event.runtime == OFunctionHttpdTaskRuntime.php5 || event.runtime == OFunctionHttpdTaskRuntime.php7);
         return (event.port || ((event.certificateArns && isPHP == false) ? 443 : 80));
     }
 }

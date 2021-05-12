@@ -50,8 +50,8 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
                 image: `${ECRRepoFullURL}`,
                 desiredCount: (event.concurrency || Globals.Process_DefaultConcurrency),
                 environment: {
+                    ...this.plugin.getEnvironmentIvars(),
                     ...this.getContainerEnvironments(),
-                    ...this.plugin.getEnvironmentIvars()
                 },
                 logsMultilinePattern: (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),
             });
