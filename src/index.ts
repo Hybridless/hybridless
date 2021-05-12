@@ -149,7 +149,7 @@ class Hybridless {
             //For each function
             for (let func of this.functions) await func.checkDependecies();
             //Check with manager
-            await this.depManager.checkDependencies();
+            await this.depManager.loadDependecies();
             //
             resolve();
         }); 
