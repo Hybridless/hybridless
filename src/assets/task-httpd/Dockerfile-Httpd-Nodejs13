@@ -8,7 +8,7 @@ COPY proxy.js /usr/src/httpd/proxy.js
 # Set the working directory
 WORKDIR /usr/src/app
 
-RUN cd /usr/src/httpd/ && npm i -S @hybridless/hybridless-runtime-nodejs-httpd@latest
+RUN cd /usr/src/httpd/ && npm i -S @hybridless/runtime-nodejs-httpd@latest
 
 EXPOSE $PORT
 

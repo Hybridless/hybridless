@@ -30,7 +30,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         const dockerFileName = Globals.LambdaContainer_ImageByRuntime(environment);
         const customDockerFile = (<OFunctionLambdaContainerEvent>this.event).dockerFile;
         const serverlessDir = this.plugin.serverless.config.servicePath;
-        const additionalDockerFiles = (<OFunctionLambdaContainerEvent>this.event).additionalDockerFiles?.map((file) => {
+        const additionalDockerFiles = ((<OFunctionLambdaContainerEvent>this.event).additionalDockerFiles || []).map((file) => {
             return { name: file.from, dir: serverlessDir, dest: file.to }
         });
         //Get build directory

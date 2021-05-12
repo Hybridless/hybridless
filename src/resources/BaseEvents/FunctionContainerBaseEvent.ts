@@ -19,7 +19,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
 
     //Plugin lifecycle
     public async spread(): BPromise { return BPromise.resolve(); }
-    public async checkDependecies(): BPromise {
+    public async checkDependencies(): BPromise {
         return new BPromise(async (resolve, reject) => {
             if (this.event['runtime'].indexOf('node') != -1 && !this.plugin.options.disableWebPack) this.plugin.depManager.enableWebpack();
             this.plugin.depManager.enableECSPlugin();
@@ -30,9 +30,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
         const ECRRepoName = this._getECRRepoName();
         //Check if existing repo exists
         const ecrs = await this.plugin.serverless.getProvider('aws').request(
-            'ECR', 'describeRepositories', {},
-            this.plugin.serverless.getProvider('aws').getStage(),
-            this.plugin.serverless.getProvider('aws').getRegion()
+            'ECR', 'describeRepositories', {}
         );
         if (ecrs) {
             const existingECR = ecrs.repositories.find((repo) => repo.repositoryName == ECRRepoName);
@@ -113,9 +111,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
         const createECR = await this.plugin.serverless.getProvider('aws').request(
             'ECR',
             'createRepository',
-            { repositoryName: ECRRepoName, imageTagMutability: 'MUTABLE', tags: this.plugin.getDefaultTags() },
-            this.plugin.serverless.getProvider('aws').getStage(),
-            this.plugin.serverless.getProvider('aws').getRegion()
+            { repositoryName: ECRRepoName, imageTagMutability: 'MUTABLE', tags: this.plugin.getDefaultTags() }
         );
         if (createECR) {
             //Setup ECR lifecycle policy
@@ -141,9 +137,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
                             }
                         ]
                     })
-                },
-                this.plugin.serverless.getProvider('aws').getStage(),
-                this.plugin.serverless.getProvider('aws').getRegion()
+                }
             );
         } else return BPromise.reject('Could not create ECR repo!');
     }

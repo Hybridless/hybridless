@@ -21,7 +21,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
         const dockerFileName = Globals.HTTPD_ImageByRuntime(environment);
         const customDockerFile = (<OFunctionHTTPDTaskEvent>this.event).dockerFile;
         const serverlessDir = this.plugin.serverless.config.servicePath;
-        const additionalDockerFiles = (<OFunctionHTTPDTaskEvent>this.event).additionalDockerFiles?.map((file) => {
+        const additionalDockerFiles = ((<OFunctionHTTPDTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
             return { name: file.from, dir: serverlessDir, dest: file.to }
         });
         //Get build directory

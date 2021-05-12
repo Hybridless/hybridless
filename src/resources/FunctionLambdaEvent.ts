@@ -23,7 +23,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
             resolve();
         });
     }
-    public async checkDependecies(): BPromise {
+    public async checkDependencies(): BPromise {
         return new BPromise(async (resolve, reject) => {
             if (this.event['runtime'].indexOf('node') != -1 && !this.plugin.options.disableWebPack) this.plugin.depManager.enableWebpack();
             resolve();

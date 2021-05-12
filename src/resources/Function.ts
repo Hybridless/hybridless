@@ -53,11 +53,11 @@ export class BaseFunction {
             resolve();
         });
     }
-    public async checkDependecies(): BPromise {
+    public async checkDependencies(): BPromise {
         //For type of event, check function dependencies
         return new BPromise(async (resolve) => {
             for (let event of this.events) {
-                if (event && event.isEnabled()) await event.checkDependecies();
+                if (event && event.isEnabled()) await event.checkDependencies();
             };
             resolve();
         });

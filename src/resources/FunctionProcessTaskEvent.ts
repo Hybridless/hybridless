@@ -19,7 +19,7 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
         const dockerFileName = Globals.Process_ImageByRuntime(environment);
         const customDockerFile = (<OFunctionProcessTaskEvent>this.event).dockerFile;
         const serverlessDir = this.plugin.serverless.config.servicePath;
-        const additionalDockerFiles = (<OFunctionProcessTaskEvent>this.event).additionalDockerFiles?.map((file) => {
+        const additionalDockerFiles = ((<OFunctionProcessTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
             return { name: file.from, dir: serverlessDir, dest: file.to }
         });
         //Get build directory

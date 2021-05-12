@@ -9,9 +9,9 @@ import BPromise = require('bluebird');
 import DepsManager from "./core/DepsManager";
 import Globals from "./core/Globals";
 //
-let _slsOptionsRef = null;
+let _globalHybridless: hybridless = null;
 //
-class Hybridless {
+class hybridless {
     //Plugin stub
     private readonly hooks: {[key: string]: Function};
     private readonly commands: object;
@@ -32,6 +32,7 @@ class Hybridless {
     public options: OPlugin; //options
     // 
     constructor(serverless: any, options: any) {
+        _globalHybridless = this;
         this.serverless = serverless;
         this.logger = new Logger(this, 'DEBUG');
         this.docker = new Docker(this);
@@ -40,16 +41,16 @@ class Hybridless {
         this.containerFunctions = false;
         //Commands
         this.commands = {
-            Hybridless: {
+            hybridless: { 
                 usage: 'Hybridless TODO',
                 commands: {
                     create: {
                         type: 'entrypoint',
-                        lifecycleEvents: ['resources'],
+                        lifecycleEvents: ['setup', 'spread', 'checkDependencies', 'createResources'],
                     },
-                    spread: {
+                    prebuild: {
                         type: 'entrypoint',
-                        lifecycleEvents: ['spread'],
+                        lifecycleEvents: ['compile'],
                     },
                     build: {
                         type: 'entrypoint',
@@ -58,6 +59,10 @@ class Hybridless {
                     push: {
                         type: 'entrypoint',
                         lifecycleEvents: ['push']
+                    },
+                    predeploy: {
+                        type: 'entrypoint',
+                        lifecycleEvents: ['pack']
                     }
                 }
             }
@@ -65,32 +70,37 @@ class Hybridless {
         //Hooks
         this.hooks = {
             // Cmds
-            'hybridless:create:resources': () => BPromise.bind(this).then(this.createResouces),
-            'hybridless:checkDependecies:checkDependecies': () => BPromise.bind(this).then(this.checkDependecies),
-            'hybridless:spread:spread': () => BPromise.bind(this).then(this.spread),
-            'hybridless:build:build': () => BPromise.bind(this).then(this.build),
-            'hybridless:push:push': () => BPromise.bind(this).then(this.push),
+            'hybridless:create:setup': () => BPromise.bind(this).then(this.setup), //0
+            'hybridless:create:spread': () => BPromise.bind(this).then(this.spread), //1
+            'hybridless:create:checkDependencies': () => BPromise.bind(this).then(this.checkDependencies), //2
+            'hybridless:create:createResources': () => BPromise.bind(this).then(this.createResouces), //3
+            'hybridless:prebuild:compile': () => BPromise.bind(this).then(this.compile), //4
+            'hybridless:build:build': () => BPromise.bind(this).then(this.build), //5
+            'hybridless:push:push': () => BPromise.bind(this).then(this.push), //6
+            'hybridless:predeploy:pack': () => BPromise.bind(this).then(this.finish), //7
+            'hybridless:predeploy:compileCloudFormation': () => BPromise.bind(this).then(this.compileCloudFormation), //7, 8
             // Real hooks
             'before:package:initialize': () => {
                 return BPromise.bind(this)
-                    .then(this.setup) //0
-                    .then(this.spread) //1
-                    .then(this.checkDependecies) //2
-                    .then(() => this.serverless.pluginManager.spawn('hybridless:create')) //3
+                    .then(() => this.serverless.pluginManager.spawn('hybridless:create')) //0, 1, 2, 3
+            },
+            'before:package:createDeploymentArtifacts': () => {
+                return BPromise.bind(this)
+                    .then(() => this.serverless.pluginManager.spawn('hybridless:prebuild')) //4
             },
             'package:createDeploymentArtifacts': () => {
                 return BPromise.bind(this)
-                    .then(() => this.serverless.pluginManager.spawn('hybridless:build')) //4
-                    .then(() => this.serverless.pluginManager.spawn('hybridless:push')) //5
+                    .then(() => this.serverless.pluginManager.spawn('hybridless:build')) //5
+                    .then(() => this.serverless.pluginManager.spawn('hybridless:push')) //6
             },
-            'deploy:compileFunctions': () => {
+            'package:compileFunctions': () => {
                 return BPromise.bind(this)
-                    .then(this.compile) //6
+                    .then(() => this.serverless.pluginManager.spawn('hybridless:predeploy')) //7, 8
             }
-        }
+        };
     }
 
-    /* routines */
+    /* Live-cycle */
     private async setup(): BPromise {
         return new BPromise( async (resolve) => {
             this.logger.log('Setting up plugin...');
@@ -105,7 +115,6 @@ class Hybridless {
             }
             this.options = tmpOptions;
             //Initialize stuff
-            _slsOptionsRef = this.options;
             this.provider = this.serverless.getProvider(Globals.PluginDefaultProvider);
             this.service = this.serverless.service;
             this.stage = (this.service.custom ? this.service.custom.stage : null);
@@ -144,10 +153,10 @@ class Hybridless {
             resolve();
         });
     }
-    private async checkDependecies(): BPromise {
+    private async checkDependencies(): BPromise {
         return new BPromise(async (resolve) => {
             //For each function
-            for (let func of this.functions) await func.checkDependecies();
+            for (let func of this.functions) await func.checkDependencies();
             //Check with manager
             await this.depManager.loadDependecies();
             //
@@ -169,6 +178,12 @@ class Hybridless {
             resolve();
         });
     }
+    private async compile(): BPromise {
+        return new BPromise.resolve()
+            .then(() => (!this.depManager.isWebpackRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('webpack:validate')))
+            .then(() => (!this.depManager.isWebpackRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('webpack:compile')))
+            .then(() => (!this.depManager.isWebpackRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('webpack:package')));
+    }
     private async build(): BPromise { 
         return new BPromise( async (resolve) => {
             //No components specified, don't process
@@ -179,7 +194,9 @@ class Hybridless {
             }
             //For each function
             this.logger.log('Building components from functions...');
-            for (let func of this.functions) await func.build();
+            let builds = [];
+            for (let func of this.functions) builds.push(func.build());
+            await BPromise.all(builds);
             //
             resolve();
         }); 
@@ -199,14 +216,19 @@ class Hybridless {
             resolve();
         });
     }
-    private async compile(): BPromise {
+    private async finish(): BPromise {
         return new BPromise(async (resolve) => {
             await this._modifyExecutionRole();
             resolve();
         });
     }
+    private async compileCloudFormation(): BPromise {
+        return new BPromise.resolve()
+            .then(() => (!this.depManager.isECSRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('serverless-ecs-plugin:compile')));
+    }
     
-    //Getters
+
+    /* Public Getters */
     public getDefaultTags(raw?: boolean): Array<object> | string[] {
         if (raw) return this.options.tags;
         if (this.options.tags && Object.keys(this.options.tags).length > 0) {
@@ -219,6 +241,21 @@ class Hybridless {
     public getName(): string {
         return this.provider.naming.getNormalizedFunctionName(`${this.service.service}`.replace(/-/g,''));
     }
+    public async getAccountID(): BPromise {
+        const acc = await this.provider.getAccountInfo();
+        if (acc && acc.accountId) return acc.accountId;
+        return null;
+    }
+    public getEnvironmentIvars(): object {
+        // return this.serverless.
+        if (this.service.provider && this.service.provider.environment) {
+            let copy = JSON.parse(JSON.stringify(this.service.provider.environment));
+            for (let key of Object.keys(copy)) {
+                if (!copy[key]) delete copy[key];
+            } return copy;
+        } return {};
+    }
+
 
     //Resources managements
     public appendResource(serviceKey: string, service: any): void {
@@ -245,13 +282,12 @@ class Hybridless {
     private async _modifyExecutionRole(): BPromise {
         //Modify lambda execution role
         const policy = this.serverless.service.provider.compiledCloudFormationTemplate.Resources['IamRoleLambdaExecution'];
-        if (policy && this.containerFunctions) {
+        if (policy && this.depManager.isECSRequired()) {
             if (policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.indexOf('ecs-tasks.amazonaws.com') == -1) {
                 policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.push('ecs-tasks.amazonaws.com');
 
             } 
-        } else if (this.containerFunctions) console.error('Could not find IamRoleLambdaExecution policy for appending trust relation with ECS.');
-        //v2 - Modify execution role principal (if needed)
+        } else if (this.depManager.isECSRequired()) console.error('Could not find IamRoleLambdaExecution policy for appending trust relation with ECS.');
         if (policy && this.serverless.service.provider?.iam?.servicesPrincipal) {
             for (let principal of this.serverless.service.provider?.iam?.servicesPrincipal) {
                 if (policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.indexOf(principal) == -1) {
@@ -262,29 +298,14 @@ class Hybridless {
         return BPromise.resolve();
     }
 
-    //Helpers
-    public async getAccountID(): BPromise {
-        const acc = await this.provider.getAccountInfo();
-        if (acc && acc.accountId) return acc.accountId;
-        return null;
-    }
-    public getEnvironmentIvars(): object {
-        // return this.serverless.
-        if (this.service.provider && this.service.provider.environment) {
-            let copy = JSON.parse(JSON.stringify(this.service.provider.environment));
-            for (let key of Object.keys(copy)) {
-                if (!copy[key]) delete copy[key];
-            } return copy;
-        } return {};
-    }
 
-    //webpack
-    public static getWebpackEntries(): BPromise {
+    /* Static Interface - Webpack */
+    public static getWebpackEntries(): object {
         const entries = {};
         //for each function, add entry!
-        for (let funcName of Object.keys(_slsOptionsRef.functions)) {
-            const func = _slsOptionsRef.functions[funcName];
-            const isNodeJS = (func.events.find((e) => (e['runtime'].indexOf('node') != -1)));
+        for (let funcName of Object.keys(_globalHybridless.options.functions)) {
+            const func = _globalHybridless.options.functions[funcName];
+            const isNodeJS = (func.events.find((e) => (e['runtime'].toLowerCase().indexOf('node') != -1)));
             //Handler is defined at root level
             if (func.handler && isNodeJS) {
                 //get handler without last component (function)
@@ -304,9 +325,18 @@ class Hybridless {
                 }
             }
         }
-        //
-        return entries;
+        return {
+            ...entries, 
+            //include default webpack 
+            ...(_globalHybridless.depManager.isWebpackRequired() ? require("serverless-webpack").lib.entries : {})
+        };
+    }
+    public static getWebpackExternals(): object {
+        return (_globalHybridless.depManager.isWebpackRequired() ? require("webpack-node-externals")() : {});
+    }
+    public static isWebpackLocal(): boolean {
+        return (_globalHybridless.depManager.isWebpackRequired() ? require("serverless-webpack").lib.webpack.isLocal : false);
     }
 }
 
-export = Hybridless;
+export = hybridless;

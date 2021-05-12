@@ -6,9 +6,8 @@ export type DockerFiles = { name: string, dir: string, dest: string } [];
 //
 export default class Globals {
     public static PluginDefaultProvider: string = 'aws';
-    //
     public static DockerLatestTag: string = 'latest';
-    //Dependecies -- will be uncommented as implemented
+    //Dependecies
     public static Deps_Webpack = 'serverless-webpack';
     public static Deps_ECS = '@hybridless/serverless-ecs-plugin';
     //Defaults
@@ -18,7 +17,6 @@ export default class Globals {
     public static DefaultHealthCheckHealthyCount = 2;
     public static DefaultHealthCheckUnhealthCount = 5;
     public static DefaultLoadBalancerAdditionalTimeout = 1;
-
     //HTTPD stuff
         public static HTTPD_DefaultMemory = 1024;
         public static HTTPD_DefaultCPU = 512;
@@ -33,12 +31,12 @@ export default class Globals {
                 return 'task-httpd/Dockerfile-Httpd-PHP5'
             } else if (environment == OFunctionHttpdTaskRuntime.php7) {
                 return 'task-httpd/Dockerfile-Httpd-PHP7'
-            } throw new Error(`Unknown Httpd environment ${environment}, can't continue!`);
+            } throw new Error(`Unknown event *httpd* environment type! ${environment} is not a valid environment, can't continue!`);
         }
         public static HTTPD_HealthCheckByRuntime(environment: OFunctionHttpdTaskRuntime): string {
             if (environment == OFunctionHttpdTaskRuntime.nodejs10 || environment == OFunctionHttpdTaskRuntime.nodejs13) {
                 return `/healthCheck/${uuidv4()}`;
-            } throw new Error(`Unknown Httpd environment ${environment}, can't continue!`);
+            } throw new Error(`Unknown event *httpd* environment type! ${environment} is not a valid environment, can't continue!`);
         }
     //Process stuff
         public static Process_DefaultMemory = 1024;
@@ -49,7 +47,7 @@ export default class Globals {
                 return 'task-process/Dockerfile-Process-Nodejs10'
             } else if (environment == OFunctionProcessTaskRuntime.nodejs13) {
                 return 'task-process/Dockerfile-Process-Nodejs13'
-            } throw new Error(`Unknown process environment ${environment}, can't continue!`);
+            } throw new Error(`Unknown event *process* environment type! ${environment} is not a valid environment, can't continue!`);
         }
     //Lambda Container stuff
         public static LambdaContainer_DefaultMemory = 1024;
@@ -60,13 +58,6 @@ export default class Globals {
                 return 'lambda-container/Dockerfile-LambdaContainer-Nodejs10'
             } else if (environment == OFunctionLambdaContainerRuntime.nodejs12) {
                 return 'lambda-container/Dockerfile-LambdaContainer-Nodejs12';
-            } throw new Error(`Unknown process environment ${environment}, can't continue!`);
+            } throw new Error(`Unknown event *process* environment type! ${environment} is not a valid environment, can't continue!`);
         }
-
-
-    //Utils - Candidate
-    public static Sleep(delay): BPromise {
-        return new BPromise((resolve) => setTimeout(resolve, delay));
-    }
-
 }

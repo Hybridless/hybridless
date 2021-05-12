@@ -20,7 +20,7 @@ export abstract class FunctionBaseEvent <T> {
     }
     //Plugin life cycle - ordered by calling order
     public abstract spread(): BPromise; //1
-    public abstract checkDependecies(): BPromise; //2
+    public abstract checkDependencies(): BPromise; //2
     public abstract createRequiredResources(): BPromise; //3
     public abstract build(): BPromise; //4
     public abstract push(): BPromise; //5
