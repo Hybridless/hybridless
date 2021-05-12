@@ -1,0 +1,15 @@
+const Runtime = require("@hybridless/hybridless-runtime-nodejs-httpd");
+const runtimeInstance = new Runtime({
+  host: '0.0.0.0',
+  port: process.env.PORT,
+  timeout: process.env.TIMEOUT,
+  cors: (process.env.CORS ? JSON.parse(process.env.CORS) : null),
+  function: {
+    path: process.env.ENTRYPOINT,
+    handler: process.env.ENTRYPOINT_FUNC,
+    preload: true
+  },
+  healthCheckRoute: process.env.HEALTH_ROUTE,
+  baseDir: `${__dirname}/../app/`
+});
+runtimeInstance.start();

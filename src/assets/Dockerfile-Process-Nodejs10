@@ -1,0 +1,11 @@
+FROM 930uob4kkc.execute-api.us-west-2.amazonaws.com/node:10-alpine
+MAINTAINER gabriel@ikonintegration.com
+
+# Copy files
+COPY /usr/src/app/ /usr/src/app/
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+# Run the specified command within the container.
+ENTRYPOINT node -e "require('./$ENTRYPOINT').$ENTRYPOINT_FUNC()"

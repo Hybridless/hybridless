@@ -1,0 +1,10 @@
+FROM 930uob4kkc.execute-api.us-west-2.amazonaws.com/php:7-alpine
+MAINTAINER gabriel@ikonintegration.com
+
+# customize fastcgi
+RUN echo proxy_buffer_size          128k; >> /opt/docker/etc/nginx/conf.d/10-php.conf
+RUN echo proxy_buffers          4 256k; >> /opt/docker/etc/nginx/conf.d/10-php.conf
+RUN echo proxy_busy_buffers_size    256k; >> /opt/docker/etc/nginx/conf.d/10-php.conf
+
+# Copy files
+COPY /app/ /app/

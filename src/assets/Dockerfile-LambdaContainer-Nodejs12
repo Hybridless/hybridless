@@ -1,0 +1,8 @@
+FROM public.ecr.aws/lambda/nodejs:14
+MAINTAINER gabriel@ikonintegration.com
+
+# Copy function code
+COPY /usr/src/app/ ${LAMBDA_TASK_ROOT}
+
+# 
+ENTRYPOINT /lambda-entrypoint.sh "$ENTRYPOINT.$ENTRYPOINT_FUNC"

@@ -1,0 +1,8 @@
+bin/
+node_modules/
+.idea/
+.serverless/
+./resources/
+resources/assets/
+*.js
+*.js.map

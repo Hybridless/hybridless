@@ -1,0 +1,26 @@
+{
+  "name": "@hybridless/hybridless",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rm -rf ./*.js ./*.js.map ./bin/ ./.serverless/ ./resources/ ./core/",
+    "build": "npm run clean && tsc -p ./tsconfig.json && npm run copy:assets",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "copy:assets": "cp -R ./src/assets ./resources/assets"
+  },
+  "license": "GNU GPLv3",
+  "devDependencies": {
+    "typescript": "^4.0.5"
+  },
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "dockerode": "^3.2.1",
+    "json-stringify-safe": "^5.0.1",
+    "loadash": "^1.0.0",
+    "serverless": "^2.11.1",
+    "stack-trace": "0.0.10",
+    "tar-fs": "^2.1.1",
+    "uuid": "^8.3.1"
+  }
+}
