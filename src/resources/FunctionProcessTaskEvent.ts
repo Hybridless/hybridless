@@ -15,7 +15,25 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
     }
     /* Container Base Event Overwrites */
     protected getContainerFiles(): DockerFiles {
-        return Globals.Process_DockerFilesByRuntime((<OFunctionProcessTaskEvent>this.event).runtime, this.plugin.serverless.config.servicePath, (<OFunctionProcessTaskEvent>this.event).dockerFile);
+        const environment = (<OFunctionProcessTaskEvent>this.event).runtime;
+        const dockerFileName = Globals.Process_ImageByRuntime(environment);
+        const customDockerFile = (<OFunctionProcessTaskEvent>this.event).dockerFile;
+        const serverlessDir = this.plugin.serverless.config.servicePath;
+        const additionalDockerFiles = (<OFunctionProcessTaskEvent>this.event).additionalDockerFiles?.map((file) => {
+            return { name: file.from, dir: serverlessDir, dest: file.to }
+        });
+        //Get build directory
+        let safeDir: any = __dirname.split('/');
+        safeDir.splice(safeDir.length - 1, 1);
+        safeDir = safeDir.join('/');
+        //
+        return [
+            (customDockerFile ?
+                { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+                { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
+            { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
+            ...additionalDockerFiles
+        ];
     }
     protected getContainerEnvironments(): any {
         const event: OFunctionProcessTaskEvent = (<OFunctionProcessTaskEvent>this.event);

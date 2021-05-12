@@ -17,7 +17,40 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
     }
     /* Container Base Event Overwrites */
     protected getContainerFiles(): DockerFiles {
-        return Globals.HTTPD_DockerFilesByRuntime((<OFunctionHTTPDTaskEvent>this.event).runtime, this.plugin.serverless.config.servicePath, this.func.funcOptions.handler, this.healthRoute, (<OFunctionHTTPDTaskEvent>this.event).dockerFile);
+        const environment = (<OFunctionHTTPDTaskEvent>this.event).runtime;
+        const dockerFileName = Globals.HTTPD_ImageByRuntime(environment);
+        const customDockerFile = (<OFunctionHTTPDTaskEvent>this.event).dockerFile;
+        const serverlessDir = this.plugin.serverless.config.servicePath;
+        const additionalDockerFiles = (<OFunctionHTTPDTaskEvent>this.event).additionalDockerFiles?.map((file) => {
+            return { name: file.from, dir: serverlessDir, dest: file.to }
+        });
+        //Get build directory
+        let safeDir: any = __dirname.split('/');
+        safeDir.splice(safeDir.length - 1, 1);
+        safeDir = safeDir.join('/');
+        //Nodejs Specific
+        if (environment == OFunctionHttpdTaskRuntime.nodejs10 || environment == OFunctionHttpdTaskRuntime.nodejs13) {
+            return [
+                (customDockerFile ?
+                    { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+                    { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
+                { name: 'task-httpd/Index-Httpd-NodejsX', dir: safeDir + '/resources/assets', dest: 'proxy.js' },
+                { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
+                ...additionalDockerFiles
+            ];
+        } else { //assume php because `HTTPD_ImageByRuntime` call above throws if none of then
+            //get handler path and remove index.php 
+            const handler = this.func.funcOptions.handler;
+            const handleRootFolder = (handler.indexOf('.php') != -1 ? handler.split('/').splice(0, handler.split('/').length - 1).join('/') : handler);
+            return [
+                (customDockerFile ?
+                    { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+                    { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
+                { name: 'task-httpd/healthCheck.php', dir: safeDir + '/resources/assets', dest: `/app/${this.healthRoute}` },
+                { name: handleRootFolder, dir: serverlessDir, dest: '/app/' },
+                ...additionalDockerFiles
+            ];
+        }
     }
     protected getContainerEnvironments(): any {
         const event: OFunctionHTTPDTaskEvent = (<OFunctionHTTPDTaskEvent>this.event);
@@ -106,6 +139,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
         });
     }
 
+    /* Privates */
     private getPort(): number {
         const event: OFunctionHTTPDTaskEvent = <OFunctionHTTPDTaskEvent>this.event;
         const isPHP = (event.runtime == OFunctionHttpdTaskRuntime.php5 || event.runtime == OFunctionHttpdTaskRuntime.php7);

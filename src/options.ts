@@ -11,9 +11,13 @@ export interface OVPCOptions {
 
 //Types
 export enum OFunctionEventType {
+    //Task
     httpd = 'httpd',
-    lambda = 'lambda',
     process = 'process',
+    // schedulerTask = 'schedulerTask',
+    // agent = 'agent'
+    //Serverless
+    lambda = 'lambda',
     lambdaContainer = 'lambdaContainer'
 };
 export enum OFunctionHttpdTaskRuntime {
@@ -48,10 +52,14 @@ export interface OFunctionEvent {
     memory?: number; //defaults to 1024 - takes precedence over OFunction.memory
     role?: string;
 }
+//Container
+export interface OFunctionContainerBaseEvent extends OFunctionEvent {
+    dockerFile?: string;
+    additionalDockerFiles?: [{ from: string, to: string }];
+}
 
 //Container
-export interface OFunctionTaskBaseEvent extends OFunctionEvent {
-    dockerFile?: string;
+export interface OFunctionTaskBaseEvent extends OFunctionEvent, OFunctionContainerBaseEvent {
     //Service
     ec2LaunchType?: boolean; //defaults to false, if true will laucnh task into EC2
     newRelicKey?: string;//
@@ -101,7 +109,6 @@ export interface OFunctionHTTPDTaskEvent extends OFunctionTaskBaseEvent {
 export interface OFunctionProcessTaskEvent extends OFunctionTaskBaseEvent {
     ec2LaunchType?: boolean; //defaults to false, if true will laucnh task into EC2
     runtime: OFunctionProcessTaskRuntime;
-    dockerFile?: string;
 }
 
 //Lambda Events
@@ -129,9 +136,8 @@ export interface OFunctionLambdaEvent extends OFunctionLambdaBaseEvent {
     runtime: string;
     layers?: string[];
 }
-export interface OFunctionLambdaContainerEvent extends OFunctionLambdaBaseEvent {
+export interface OFunctionLambdaContainerEvent extends OFunctionLambdaBaseEvent, OFunctionContainerBaseEvent {
     runtime: OFunctionLambdaContainerRuntime;
-    dockerFile?: string;
 }
 
 //Function
