@@ -11,16 +11,15 @@
   },
   "license": "GNU GPLv3",
   "devDependencies": {
-    "typescript": "^4.0.5"
+    "typescript": "^4.2.4"
   },
   "dependencies": {
     "bluebird": "^3.7.2",
-    "dockerode": "^3.2.1",
+    "dockerode": "^3.3.0",
     "json-stringify-safe": "^5.0.1",
     "loadash": "^1.0.0",
-    "serverless": "^2.11.1",
     "stack-trace": "0.0.10",
     "tar-fs": "^2.1.1",
-    "uuid": "^8.3.1"
+    "uuid": "^8.3.2"
   }
 }
