@@ -239,6 +239,9 @@ class Hybridless {
         if (!this.serverless.service.custom.fargate) this.serverless.service.custom.fargate = [];
         this.serverless.service.custom.fargate.push(cluster);
     }
+    public async loadPlugin(plugin: any): BPromise<any> {
+        return await this.serverless.pluginManager.loadPlugin(plugin);
+    }
     private async _modifyExecutionRole(): BPromise {
         //Modify lambda execution role
         const policy = this.serverless.service.provider.compiledCloudFormationTemplate.Resources['IamRoleLambdaExecution'];

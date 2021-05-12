@@ -21,8 +21,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     public async spread(): BPromise { return BPromise.resolve(); }
     public async checkDependecies(): BPromise {
         return new BPromise(async (resolve, reject) => {
-            //this first assumption is wrong; todo: check project settings if not specified
-            if (!this.event['runtime'] || this.event['runtime'].indexOf('node') != -1) this.plugin.depManager.enableWebpack();
+            if (this.event['runtime'].indexOf('node') != -1 && !this.plugin.options.disableWebPack) this.plugin.depManager.enableWebpack();
             this.plugin.depManager.enableECSPlugin();
             resolve();
         });

@@ -42,7 +42,8 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
             (customDockerFile ?
                 { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
                 { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
-            { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' }
+            { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
+            ...additionalDockerFiles
         ];
     }
     protected getContainerEnvironments(): any {
@@ -54,7 +55,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         };
     }
     /* lambda helpers */
-    private async generateLambdaFunction(): Promise<any> {
+    private async generateLambdaFunction(): BPromise<any> {
         const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
         const proto = event.protocol || OFunctionLambdaProtocol.http;
         const allowsRouting = (proto == OFunctionLambdaProtocol.http);

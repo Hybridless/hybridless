@@ -23,7 +23,12 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
             resolve();
         });
     }
-    public async checkDependecies(): BPromise { return BPromise.resolve(); }
+    public async checkDependecies(): BPromise {
+        return new BPromise(async (resolve, reject) => {
+            if (this.event['runtime'].indexOf('node') != -1 && !this.plugin.options.disableWebPack) this.plugin.depManager.enableWebpack();
+            resolve();
+        });
+    }
     public async createRequiredResources(): BPromise { return BPromise.resolve(); }
     public async build(): BPromise { return BPromise.resolve(); }
     public async push(): BPromise { return BPromise.resolve(); }

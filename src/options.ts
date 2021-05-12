@@ -157,5 +157,6 @@ export interface OFunction {
 //Plugin
 export interface OPlugin {
     functions?: { key?: OFunction };
+    disableWebPack?: boolean;
     tags: string[];
 }
