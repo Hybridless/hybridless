@@ -44,7 +44,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                 ...(this.event.runtime ? { runtime: this.event.runtime } : {}),
                 ...(this.event.layers ? { layers: this.event.layers } : {}),
                 ...(this.event.reservedConcurrency ? { reservedConcurrency: this.event.reservedConcurrency } : {}),
-                tracing: true, //enable x-ray tracing by default,
+                tracing: (this.event.disableTracing ? false : true), //enable x-ray tracing by default,
                 versionFunctions: false, //disable function versions be default
                 //Lambda events (routes for us)
                 ...(sanitizedRoutes && sanitizedRoutes.length > 0 ? {

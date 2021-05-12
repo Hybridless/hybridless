@@ -38,9 +38,10 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
     }
     /* lambda helpers */
     private async generateLambdaFunction(): Promise<any> {
-        const proto = (<OFunctionLambdaContainerEvent>this.event).protocol || OFunctionLambdaProtocol.http;
+        const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
+        const proto = event.protocol || OFunctionLambdaProtocol.http;
         const allowsRouting = (proto == OFunctionLambdaProtocol.http);
-        const sanitizedRoutes = (allowsRouting ? (<OFunctionLambdaContainerEvent>this.event).routes : [null]);
+        const sanitizedRoutes = (allowsRouting ? event.routes : [null]);
         const repoName = await this._getECRRepo(true);
         return {
             [this._getFunctionName()]: {
@@ -54,28 +55,28 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
                 //default stuff
                 ...this.func.getVPC(true),
                 ...(this.func.funcOptions.timeout ? { timeout: this.func.funcOptions.timeout } : { timeout: Globals.HTTPD_DefaultTimeout }),
-                ...(this.func.funcOptions.memory || (<OFunctionLambdaContainerEvent>this.event).memory ? { memorySize: this.func.funcOptions.memory || (<OFunctionLambdaContainerEvent>this.event).memory } : {}),
-                ...((<OFunctionLambdaContainerEvent>this.event).reservedConcurrency ? { reservedConcurrency: (<OFunctionLambdaContainerEvent>this.event).reservedConcurrency } : {}),
-                tracing: true, //enable x-ray tracing by default,
+                ...(this.func.funcOptions.memory || event.memory ? { memorySize: this.func.funcOptions.memory || event.memory } : {}),
+                ...(event.reservedConcurrency ? { reservedConcurrency: event.reservedConcurrency } : {}),
+                tracing: (event.disableTracing ? false : true), //enable x-ray tracing by default,
                 versionFunctions: false, //disable function versions be default
-                //Lambda events (routes for us)
+                //Lambda events means routes on this scope
                 ...(sanitizedRoutes && sanitizedRoutes.length > 0 ? {
                     events: sanitizedRoutes.map((route) => {
-                        const proto = (<OFunctionLambdaContainerEvent>this.event).protocol || OFunctionLambdaProtocol.http;
+                        const proto = event.protocol || OFunctionLambdaProtocol.http;
                         proto == OFunctionLambdaProtocol.http
                         const sanitizedRoute = (!route || route.path == '*' ? '{proxy+}' : route.path);
                         return {
                             [this._getProtocolName(proto)]: {
                                 ...(allowsRouting && route ? { path: sanitizedRoute } : {}),
                                 ...(allowsRouting && route && route.method ? { method: route.method } : {}),
-                                ...((<OFunctionLambdaContainerEvent>this.event).cors ? { cors: (<OFunctionLambdaContainerEvent>this.event).cors } : {}),
+                                ...(event.cors ? { cors: event.cors } : {}),
                                 ...(proto == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
-                                ...((<OFunctionLambdaContainerEvent>this.event).prototocolArn ? { arn: (<OFunctionLambdaContainerEvent>this.event).prototocolArn } : {}),
-                                ...((<OFunctionLambdaContainerEvent>this.event).queueBatchSize ? { batchSize: (<OFunctionLambdaContainerEvent>this.event).queueBatchSize } : {}),
-                                ...((<OFunctionLambdaContainerEvent>this.event).schedulerRate ? { rate: (<OFunctionLambdaContainerEvent>this.event).schedulerRate } : {}),
-                                ...((<OFunctionLambdaContainerEvent>this.event).schedulerInput ? { input: (<OFunctionLambdaContainerEvent>this.event).schedulerInput } : {}),
-                                ...((<OFunctionLambdaContainerEvent>this.event).filterPolicy ? { filterPolicy: (<OFunctionLambdaContainerEvent>this.event).filterPolicy } : {}),
-                                ...((<OFunctionLambdaContainerEvent>this.event).cognitoAuthorizerArn ? {
+                                ...(event.prototocolArn ? { arn: event.prototocolArn } : {}),
+                                ...(event.queueBatchSize ? { batchSize: event.queueBatchSize } : {}),
+                                ...(event.schedulerRate ? { rate: event.schedulerRate } : {}),
+                                ...(event.schedulerInput ? { input: event.schedulerInput } : {}),
+                                ...(event.filterPolicy ? { filterPolicy: event.filterPolicy } : {}),
+                                ...(event.cognitoAuthorizerArn ? {
                                     "authorizer": {
                                         "type": "COGNITO_USER_POOLS",
                                         "authorizerId": { "Ref": this._getAuthorizerName() }

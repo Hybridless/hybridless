@@ -123,6 +123,7 @@ export interface OFunctionLambdaBaseEvent extends OFunctionEvent {
     schedulerInput?: string; //Only used when protocol is scheduler
     reservedConcurrency?: number;
     cognitoAuthorizerArn?: string;
+    disableTracing?: boolean; //XRay tracing is enabled by default
     filterPolicy?: object;
 }
 export interface OFunctionLambdaEvent extends OFunctionLambdaBaseEvent {
