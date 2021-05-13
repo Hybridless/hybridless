@@ -108,7 +108,14 @@ export interface OFunctionTaskBaseEvent extends OFunctionEvent, OFunctionContain
         targetValue: number;
     }
 }
-export interface OFunctionHTTPDTaskEvent extends OFunctionTaskBaseEvent {
+export interface OFunctionEC2TaskBaseEvent extends OFunctionEvent, OFunctionContainerBaseEvent {
+    ec2LaunchType?: true;
+    daemonType?: boolean;
+}
+export interface OFunctionFargateTaskBaseEvent extends OFunctionEvent, OFunctionContainerBaseEvent {
+    ec2LaunchType?: false | undefined;
+}
+export type OFunctionHTTPDTaskEvent = {
     runtime: OFunctionHttpdTaskRuntime; //@overwrite
     eventType: OFunctionEventType.httpd; //@overwrite
     //ALB listener layer
@@ -136,12 +143,13 @@ export interface OFunctionHTTPDTaskEvent extends OFunctionTaskBaseEvent {
     healthCheckTimeout?: number; //defaults to 10
     healthCheckHealthyCount?: number; //defaults to 2
     healthCheckUnhealthyCount?: number; //defaults to 5
-}
-export interface OFunctionProcessTaskEvent extends OFunctionTaskBaseEvent {
-    ec2LaunchType?: boolean; //defaults to false, if true will laucnh task into EC2
+} & OFunctionTaskBaseEvent //Task base
+  & (OFunctionEC2TaskBaseEvent | OFunctionFargateTaskBaseEvent);
+export type OFunctionProcessTaskEvent = {
     runtime: OFunctionProcessTaskRuntime;
     eventType: OFunctionEventType.process;
-}
+} & OFunctionTaskBaseEvent //Task base
+  & (OFunctionEC2TaskBaseEvent | OFunctionFargateTaskBaseEvent);
 
 
 /**
@@ -192,11 +200,16 @@ export interface OFunctionLambdaNoneEvent extends OFunctionEvent {
 export type OFunctionLambdaEvent = {
     layers?: string[];
     eventType: OFunctionEventType.lambda;
-} & OFunctionLambdaBaseEvent & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent);
+} & OFunctionLambdaBaseEvent  //lambda base
+  //Any lambda event source
+  & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent);
 export type OFunctionLambdaContainerEvent = {
     runtime: OFunctionLambdaContainerRuntime;
     eventType: OFunctionEventType.lambdaContainer;
-} & OFunctionLambdaBaseEvent & OFunctionContainerBaseEvent & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent);
+} & OFunctionLambdaBaseEvent //lambda base
+  & OFunctionContainerBaseEvent  //container base
+  //Any lambda event source
+  & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent);
 
 
 

@@ -103,6 +103,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                 //Service
                 desiredCount: (event.concurrency || Globals.HTTPD_DefaultConcurrency),
                 ec2LaunchType: !!event.ec2LaunchType,
+                ...(!!event.ec2LaunchType && event.daemonType ? { 'SchedulingStrategy': 'DAEMON' } : {}),
                 environment: {
                     ...this.plugin.getEnvironmentIvars(),
                     ...this.getContainerEnvironments(),
