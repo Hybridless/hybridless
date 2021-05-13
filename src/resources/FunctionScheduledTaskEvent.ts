@@ -2,7 +2,7 @@ import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEv
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionScheduledTaskEvent } from "../options";
+import { OFunctionScheduledTaskEvent, OFunctionScheduledTaskRuntime } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -25,15 +25,24 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
         let safeDir: any = __dirname.split('/');
         safeDir.splice(safeDir.length - 1, 1);
         safeDir = safeDir.join('/');
-        //
-        return [
-            (customDockerFile ?
-                { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
-                { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
-            ),
-            { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
-            ...additionalDockerFiles
-        ];
+        //Nodejs Specific
+        if (environment == OFunctionScheduledTaskRuntime.nodejs10 || environment == OFunctionScheduledTaskRuntime.nodejs13) {
+            return [
+                (customDockerFile ?
+                    { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+                    { name: Globals.Scheduled_ImageByRuntime(environment), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+                ),
+                { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
+                ...additionalDockerFiles
+            ];
+        } else if (environment == OFunctionScheduledTaskRuntime.container) {
+            return [
+                { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' },
+                ...additionalDockerFiles
+            ];
+        } else {
+            throw new Error(`Unrecognized Scheduled event type ${environment}!`);
+        }
     }
     protected getContainerEnvironments(): any {
         const event: OFunctionScheduledTaskEvent = (<OFunctionScheduledTaskEvent>this.event);
@@ -66,6 +75,7 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
                 ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: true } : {}),
                 taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
                 image: `${ECRRepoFullURL}`,
+                ...(event.entrypoint ? { entrypoint: event.entrypoint } : {}),
                 desiredCount: 0, //runs on demand
                 environment: {
                     ...this.plugin.getEnvironmentIvars(),

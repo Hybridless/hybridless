@@ -31,12 +31,12 @@ export default class Globals {
                 return 'task-httpd/Dockerfile-Httpd-PHP5'
             } else if (environment == OFunctionHttpdTaskRuntime.php7) {
                 return 'task-httpd/Dockerfile-Httpd-PHP7'
+            } else if (environment == OFunctionHttpdTaskRuntime.container) {
+                throw new Error(`Container environments requires dockerFile to be set!`);
             } throw new Error(`Unknown event *httpd* environment type! ${environment} is not a valid environment, can't continue!`);
         }
         public static HTTPD_HealthCheckByRuntime(environment: OFunctionHttpdTaskRuntime): string {
-            if (environment == OFunctionHttpdTaskRuntime.nodejs10 || environment == OFunctionHttpdTaskRuntime.nodejs13) {
-                return `/healthCheck/${uuidv4()}`;
-            } throw new Error(`Unknown event *httpd* environment type! ${environment} is not a valid environment, can't continue!`);
+            return `/healthCheck/${uuidv4()}`
         }
     //Process stuff
         public static Process_DefaultMemory = 1024;
@@ -47,6 +47,8 @@ export default class Globals {
                 return 'task-process/Dockerfile-Process-Nodejs10'
             } else if (environment == OFunctionProcessTaskRuntime.nodejs13) {
                 return 'task-process/Dockerfile-Process-Nodejs13'
+            } else if (environment == OFunctionProcessTaskRuntime.container) {
+                throw new Error(`Container environments requires dockerFile to be set!`);
             } throw new Error(`Unknown event *process* environment type! ${environment} is not a valid environment, can't continue!`);
         }
     //Scheduled stuff
@@ -58,7 +60,9 @@ export default class Globals {
                 return 'task-scheduled/Dockerfile-Scheduler-Nodejs10'
             } else if (environment == OFunctionScheduledTaskRuntime.nodejs13) {
                 return 'task-scheduled/Dockerfile-Scheduler-Nodejs13'
-            } throw new Error(`Unknown event *scheduled* environment type! ${environment} is not a valid environment, can't continue!`);
+            } else if (environment == OFunctionScheduledTaskRuntime.container) {
+                throw new Error(`Container environments requires dockerFile to be set!`);
+            }  throw new Error(`Unknown event *scheduled* environment type! ${environment} is not a valid environment, can't continue!`);
         }
     //Lambda Container stuff
         public static LambdaContainer_DefaultMemory = 1024;

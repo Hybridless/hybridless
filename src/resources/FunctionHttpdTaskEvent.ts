@@ -17,7 +17,6 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
     /* Container Base Event Overwrites */
     protected getContainerFiles(): DockerFiles {
         const environment = (<OFunctionHTTPDTaskEvent>this.event).runtime;
-        const dockerFileName = Globals.HTTPD_ImageByRuntime(environment);
         const customDockerFile = (<OFunctionHTTPDTaskEvent>this.event).dockerFile;
         const serverlessDir = this.plugin.serverless.config.servicePath;
         const additionalDockerFiles = ((<OFunctionHTTPDTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
@@ -32,32 +31,41 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
             return [
                 (customDockerFile ?
                     { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
-                    { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
+                    { name: Globals.HTTPD_ImageByRuntime(environment), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
                 { name: 'task-httpd/Index-Httpd-NodejsX', dir: safeDir + '/resources/assets', dest: 'proxy.js' },
                 { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
                 ...additionalDockerFiles
             ];
-        } else { //assume php because `HTTPD_ImageByRuntime` call above throws if none of then
+        } else if (environment == OFunctionHttpdTaskRuntime.php5 || environment == OFunctionHttpdTaskRuntime.php7) { 
             //get handler path and remove index.php 
             const handler = this.func.funcOptions.handler;
             const handleRootFolder = (handler.indexOf('.php') != -1 ? handler.split('/').splice(0, handler.split('/').length - 1).join('/') : handler);
             return [
                 (customDockerFile ?
                     { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
-                    { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+                    { name: Globals.HTTPD_ImageByRuntime(environment), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
                 ),
                 { name: 'task-httpd/healthCheck.php', dir: safeDir + '/resources/assets', dest: `/app/${this.healthRoute}` },
                 { name: handleRootFolder, dir: serverlessDir, dest: '/app/' },
                 ...additionalDockerFiles
             ];
+        } else if (environment == OFunctionHttpdTaskRuntime.container) {
+            return [
+                { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' },
+                ...additionalDockerFiles
+            ];
+        } else {
+            throw new Error(`Unrecognized HTTP event type ${environment}!`);
         }
     }
     protected getContainerEnvironments(): any {
         const event: OFunctionHTTPDTaskEvent = (<OFunctionHTTPDTaskEvent>this.event);
         const isPHP = (event.runtime == OFunctionHttpdTaskRuntime.php5 || event.runtime == OFunctionHttpdTaskRuntime.php7);
+        const isNodeJS = (event.runtime == OFunctionHttpdTaskRuntime.nodejs10 || event.runtime == OFunctionHttpdTaskRuntime.nodejs13);
+        const isPureContainer = (event.runtime == OFunctionHttpdTaskRuntime.container);
         return {
             //Plataform specific
-            ...(!isPHP ? {
+            ...(isNodeJS && {
                 'HYBRIDLESS_RUNTIME': true,
                 'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1,
                 'ENTRYPOINT': `./${this.func.getEntrypoint(this.event)}`,
@@ -66,17 +74,21 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                 'PORT': this.getPort(),
                 ...(event.cors ? { 'CORS': JSON.stringify(event.cors) } : {}),
                 'TIMEOUT': (this.func.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) * 1000,
-                // Analytics
-                ...(event.newRelicKey ? {
-                    'NEW_RELIC_APP_NAME': `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}`,
-                    'NEW_RELIC_LICENSE_KEY': event.newRelicKey,
-                    'NEW_RELIC_ENABLED': true,
-                    'NEW_RELIC_NO_CONFIG_FILE': true,
-                } : {
-                    'NEW_RELIC_ENABLED': false
-                }),
-            } : {
+            }),
+            ...(isPHP && {
                 'WEB_DOCUMENT_INDEX': this.func.getEntrypointFunction(this.event)
+            }),
+            ...(isPureContainer && {
+                'ENTRYPOINTY': event.entrypoint
+            }),
+            // Analytics
+            ...(event.newRelicKey ? {
+                'NEW_RELIC_APP_NAME': `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}`,
+                'NEW_RELIC_LICENSE_KEY': event.newRelicKey,
+                'NEW_RELIC_ENABLED': true,
+                'NEW_RELIC_NO_CONFIG_FILE': true,
+            } : {
+                'NEW_RELIC_ENABLED': false
             }),
             // General
             'STAGE': this.plugin.stage,
@@ -101,6 +113,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                 disableELB: false,
                 taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
                 image: `${ECRRepoFullURL}`,
+                ...(event.entrypoint ? { entrypoint: event.entrypoint } : {}),
                 //Service
                 desiredCount: (event.concurrency || Globals.HTTPD_DefaultConcurrency),
                 ec2LaunchType: !!event.ec2LaunchType,

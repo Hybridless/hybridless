@@ -2,7 +2,7 @@ import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEv
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionProcessTaskEvent } from "../options";
+import { OFunctionProcessTaskEvent, OFunctionProcessTaskRuntime } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -15,7 +15,6 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
     /* Container Base Event Overwrites */
     protected getContainerFiles(): DockerFiles {
         const environment = (<OFunctionProcessTaskEvent>this.event).runtime;
-        const dockerFileName = Globals.Process_ImageByRuntime(environment);
         const customDockerFile = (<OFunctionProcessTaskEvent>this.event).dockerFile;
         const serverlessDir = this.plugin.serverless.config.servicePath;
         const additionalDockerFiles = ((<OFunctionProcessTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
@@ -25,15 +24,24 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
         let safeDir: any = __dirname.split('/');
         safeDir.splice(safeDir.length - 1, 1);
         safeDir = safeDir.join('/');
-        //
-        return [
-            (customDockerFile ?
-                { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
-                { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
-            ),
-            { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
-            ...additionalDockerFiles
-        ];
+        //Nodejs Specific
+        if (environment == OFunctionProcessTaskRuntime.nodejs10 || environment == OFunctionProcessTaskRuntime.nodejs13) {
+            return [
+                (customDockerFile ?
+                    { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+                    { name: Globals.Process_ImageByRuntime(environment), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+                ),
+                { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
+                ...additionalDockerFiles
+            ];
+        } else if (environment == OFunctionProcessTaskRuntime.container) {
+            return [
+                { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' },
+                ...additionalDockerFiles
+            ];
+        } else {
+            throw new Error(`Unrecognized Process event type ${environment}!`);
+        }
     }
     protected getContainerEnvironments(): any {
         const event: OFunctionProcessTaskEvent = (<OFunctionProcessTaskEvent>this.event);
@@ -66,6 +74,7 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
                 ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: true } : {}),
                 taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
                 image: `${ECRRepoFullURL}`,
+                ...(event.entrypoint ? { entrypoint: event.entrypoint } : {}),
                 desiredCount: (event.concurrency || Globals.Process_DefaultConcurrency),
                 environment: {
                     ...this.plugin.getEnvironmentIvars(),

@@ -50,14 +50,17 @@ export enum OFunctionHttpdTaskRuntime {
     nodejs13 = 'nodejs13',
     php5 = 'php5',
     php7 = 'php7',
+    container = 'container'
 };
 export enum OFunctionProcessTaskRuntime {
     nodejs10 = 'nodejs10',
     nodejs13 = 'nodejs13',
+    container = 'container'
 };
 export enum OFunctionScheduledTaskRuntime {
     nodejs10 = 'nodejs10',
     nodejs13 = 'nodejs13',
+    container = 'container'
 };
 export enum OFunctionLambdaContainerRuntime {
     nodejs10 = 'nodejs10',
@@ -87,6 +90,7 @@ export interface OFunctionEvent {
 }
 export interface OFunctionContainerBaseEvent extends OFunctionEvent {
     dockerFile?: string;
+    entrypoint?: string; //incase of using container runtimes, you can always make custom entrypoints
     additionalDockerFiles?: [{ from: string, to: string }?];
 }
 

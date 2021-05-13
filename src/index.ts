@@ -313,7 +313,7 @@ class hybridless {
         //for each function, add entry!
         for (let funcName of Object.keys(_globalHybridless.options.functions)) {
             const func = _globalHybridless.options.functions[funcName];
-            const isNodeJS = (func.events.find((e) => (e['runtime'].toLowerCase().indexOf('node') != -1)));
+            const isNodeJS = (func.events.find((e) => (e.runtime.toLowerCase().indexOf('node') != -1)));
             //Handler is defined at root level
             if (func.handler && isNodeJS) {
                 //get handler without last component (function)
