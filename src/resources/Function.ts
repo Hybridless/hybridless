@@ -1,4 +1,4 @@
-import { OFunction, OFunctionEvent, OVPCOptions_Shared, OVPCOptions_Dedicated, OFunctionProcessTaskEvent, OFunctionHTTPDTaskEvent, OFunctionEventType, OFunctionLambdaEvent, OFunctionLambdaContainerEvent } from "../options";
+import { OFunction, OFunctionEvent, OVPCOptions_Shared, OVPCOptions_Dedicated, OFunctionProcessTaskEvent, OFunctionHTTPDTaskEvent, OFunctionEventType, OFunctionLambdaEvent, OFunctionLambdaContainerEvent, OFunctionScheduledTaskEvent } from "../options";
 import Hybridless = require("..");
 //Event types
 import { FunctionProcessTaskEvent } from "./FunctionProcessTaskEvent";
@@ -11,6 +11,7 @@ import { FunctionLambdaContainerEvent } from "./FunctionLambdaContainerEvent";
 import _ = require('lodash');
 import BPromise = require('bluebird');
 import Globals from "../core/Globals";
+import { FunctionScheduledTaskEvent } from "./FunctionScheduledTaskEvent";
 
 export class BaseFunction {
     public readonly funcOptions: OFunction;
@@ -99,13 +100,13 @@ export class BaseFunction {
     //Public getters
     public getEntrypoint(event: OFunctionEvent): string {
         //PHP function event?
-        if (event && event['runtime'] && event['runtime'].toLowerCase().indexOf('php') != -1) {
+        if (event && event.runtime && event.runtime.toLowerCase().indexOf('php') != -1) {
             //get handler without last component (function)
             let noFuncHandler: any = (event.handler || this.funcOptions.handler).split('/');
             noFuncHandler.splice(noFuncHandler.length - 1, 1);
             noFuncHandler = noFuncHandler.join('/');    
             return noFuncHandler;
-        } else if (event && event['runtime'] && event['runtime'].toLowerCase().indexOf('node') != -1) { //NodeJS event
+        } else if (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1) { //NodeJS event
             //get handler without last component (function)
             let noFuncHandler: any = (event.handler || this.funcOptions.handler).split('.');
             noFuncHandler.splice(noFuncHandler.length - 1, 1);
@@ -118,9 +119,9 @@ export class BaseFunction {
     public getEntrypointFunction(event: OFunctionEvent): string {
         let noFuncHandler: string = this.getEntrypoint(event);
         //PHP function event?
-        if (event && event['runtime'] && event['runtime'].toLowerCase().indexOf('php') != -1) {
+        if (event && event.runtime && event.runtime.toLowerCase().indexOf('php') != -1) {
             return (event.handler || this.funcOptions.handler).replace(noFuncHandler, '');
-        } else if (event && event['runtime'] && event['runtime'].toLowerCase().indexOf('node') != -1) { //NodeJS event
+        } else if (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1) { //NodeJS event
             return (event.handler || this.funcOptions.handler).replace(noFuncHandler + '.', '');
         } else {
             this.plugin.logger.error('Could not generate entrypoint for event! No runtime is specified..', event);
@@ -172,6 +173,8 @@ export class BaseFunction {
             return new FunctionLambdaEvent(plugin, func, <OFunctionLambdaEvent>event, index);
         } else if (event.eventType == OFunctionEventType.lambdaContainer) {
             return new FunctionLambdaContainerEvent(plugin, func, <OFunctionLambdaContainerEvent>event, index);
+        } else if (event.eventType == OFunctionEventType.scheduledTask) {
+            return new FunctionScheduledTaskEvent(plugin, func, <OFunctionScheduledTaskEvent>event, index);
         } return null;
     }
     public getVPC(wrapped: boolean): any {

@@ -157,7 +157,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -378,7 +379,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -496,37 +498,6 @@
                           "minItems": 0,
                           "type": "array"
                         },
-                        "autoScale": {
-                          "additionalProperties": false,
-                          "properties": {
-                            "cooldown": {
-                              "type": "number"
-                            },
-                            "cooldownIn": {
-                              "type": "number"
-                            },
-                            "cooldownOut": {
-                              "type": "number"
-                            },
-                            "max": {
-                              "type": "number"
-                            },
-                            "metric": {
-                              "type": "string"
-                            },
-                            "min": {
-                              "type": "number"
-                            },
-                            "targetValue": {
-                              "type": "number"
-                            }
-                          },
-                          "required": [
-                            "metric",
-                            "targetValue"
-                          ],
-                          "type": "object"
-                        },
                         "concurrency": {
                           "type": "number"
                         },
@@ -553,7 +524,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -608,37 +580,6 @@
                           "minItems": 0,
                           "type": "array"
                         },
-                        "autoScale": {
-                          "additionalProperties": false,
-                          "properties": {
-                            "cooldown": {
-                              "type": "number"
-                            },
-                            "cooldownIn": {
-                              "type": "number"
-                            },
-                            "cooldownOut": {
-                              "type": "number"
-                            },
-                            "max": {
-                              "type": "number"
-                            },
-                            "metric": {
-                              "type": "string"
-                            },
-                            "min": {
-                              "type": "number"
-                            },
-                            "targetValue": {
-                              "type": "number"
-                            }
-                          },
-                          "required": [
-                            "metric",
-                            "targetValue"
-                          ],
-                          "type": "object"
-                        },
                         "concurrency": {
                           "type": "number"
                         },
@@ -662,7 +603,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -731,7 +673,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -804,7 +747,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -861,7 +805,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -920,7 +865,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -979,7 +925,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -1033,7 +980,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -1138,7 +1086,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -1231,7 +1180,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -1308,7 +1258,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -1387,7 +1338,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -1466,7 +1418,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -1540,7 +1493,8 @@
                             "httpd",
                             "lambda",
                             "lambdaContainer",
-                            "process"
+                            "process",
+                            "schedulerTask"
                           ],
                           "type": "string"
                         },
@@ -1795,7 +1749,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2016,7 +1971,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2134,37 +2090,6 @@
                             "minItems": 0,
                             "type": "array"
                           },
-                          "autoScale": {
-                            "additionalProperties": false,
-                            "properties": {
-                              "cooldown": {
-                                "type": "number"
-                              },
-                              "cooldownIn": {
-                                "type": "number"
-                              },
-                              "cooldownOut": {
-                                "type": "number"
-                              },
-                              "max": {
-                                "type": "number"
-                              },
-                              "metric": {
-                                "type": "string"
-                              },
-                              "min": {
-                                "type": "number"
-                              },
-                              "targetValue": {
-                                "type": "number"
-                              }
-                            },
-                            "required": [
-                              "metric",
-                              "targetValue"
-                            ],
-                            "type": "object"
-                          },
                           "concurrency": {
                             "type": "number"
                           },
@@ -2191,7 +2116,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2246,37 +2172,6 @@
                             "minItems": 0,
                             "type": "array"
                           },
-                          "autoScale": {
-                            "additionalProperties": false,
-                            "properties": {
-                              "cooldown": {
-                                "type": "number"
-                              },
-                              "cooldownIn": {
-                                "type": "number"
-                              },
-                              "cooldownOut": {
-                                "type": "number"
-                              },
-                              "max": {
-                                "type": "number"
-                              },
-                              "metric": {
-                                "type": "string"
-                              },
-                              "min": {
-                                "type": "number"
-                              },
-                              "targetValue": {
-                                "type": "number"
-                              }
-                            },
-                            "required": [
-                              "metric",
-                              "targetValue"
-                            ],
-                            "type": "object"
-                          },
                           "concurrency": {
                             "type": "number"
                           },
@@ -2300,7 +2195,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2369,7 +2265,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2442,7 +2339,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2499,7 +2397,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2558,7 +2457,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2617,7 +2517,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2671,7 +2572,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2776,7 +2678,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2869,7 +2772,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -2946,7 +2850,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -3025,7 +2930,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -3104,7 +3010,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },
@@ -3178,7 +3085,8 @@
                               "httpd",
                               "lambda",
                               "lambdaContainer",
-                              "process"
+                              "process",
+                              "schedulerTask"
                             ],
                             "type": "string"
                           },

@@ -2,23 +2,23 @@ import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEv
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionProcessTaskEvent } from "../options";
+import { OFunctionScheduledTaskEvent } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
 import BPromise = require('bluebird');
 //
-export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
-    public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionProcessTaskEvent, index: number) {
+export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
+    public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionScheduledTaskEvent, index: number) {
         super(plugin, func, event, index);
     }
     /* Container Base Event Overwrites */
     protected getContainerFiles(): DockerFiles {
-        const environment = (<OFunctionProcessTaskEvent>this.event).runtime;
-        const dockerFileName = Globals.Process_ImageByRuntime(environment);
-        const customDockerFile = (<OFunctionProcessTaskEvent>this.event).dockerFile;
+        const environment = (<OFunctionScheduledTaskEvent>this.event).runtime;
+        const dockerFileName = Globals.Scheduled_ImageByRuntime(environment);
+        const customDockerFile = (<OFunctionScheduledTaskEvent>this.event).dockerFile;
         const serverlessDir = this.plugin.serverless.config.servicePath;
-        const additionalDockerFiles = ((<OFunctionProcessTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
+        const additionalDockerFiles = ((<OFunctionScheduledTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
             return { name: file.from, dir: serverlessDir, dest: file.to }
         });
         //Get build directory (todo: figureout oneliner)
@@ -36,7 +36,7 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
         ];
     }
     protected getContainerEnvironments(): any {
-        const event: OFunctionProcessTaskEvent = (<OFunctionProcessTaskEvent>this.event);
+        const event: OFunctionScheduledTaskEvent = (<OFunctionScheduledTaskEvent>this.event);
         return {
             'ENTRYPOINT': this.func.getEntrypoint(this.event),
             'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
@@ -55,23 +55,27 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
     public async getClusterTask(): BPromise {
         const TaskName = this._getTaskName();
         const ECRRepoFullURL = await this._getECRRepo(true);
-        const event: OFunctionProcessTaskEvent = (<OFunctionProcessTaskEvent>this.event);
+        const event: OFunctionScheduledTaskEvent = (<OFunctionScheduledTaskEvent>this.event);
         return new BPromise(async (resolve) => {
             resolve({
                 name: TaskName,
-                cpu: (event.cpu || Globals.Process_DefaultCPU),
-                memory: (event.memory || this.func.funcOptions.memory || Globals.Process_DefaultMemory),
+                cpu: (event.cpu || Globals.Scheduled_DefaultCPU),
+                memory: (event.memory || this.func.funcOptions.memory || Globals.Scheduled_DefaultMemory),
                 disableELB: true,
                 ec2LaunchType: !!event.ec2LaunchType,
                 ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: true } : {}),
                 taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
                 image: `${ECRRepoFullURL}`,
-                desiredCount: (event.concurrency || Globals.Process_DefaultConcurrency),
+                desiredCount: 0, //runs on demand
                 environment: {
                     ...this.plugin.getEnvironmentIvars(),
                     ...this.getContainerEnvironments(),
                 },
                 logsMultilinePattern: (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),
+                //scheduler
+                schedulerRate: event.schedulerRate, //creates event rule to invoke task the concurrency below or if not specified it will use 1
+                schedulerConcurrency: (event.concurrency || Globals.Scheduled_DefaultConcurrency),
+                ...(event.schedulerInput ? { schedulerInput: event.schedulerInput } : {}),
             });
         });
     }

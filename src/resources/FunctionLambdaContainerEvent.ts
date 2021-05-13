@@ -16,10 +16,10 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
     public async spread(): BPromise {
         return new BPromise(async (resolve) => {
             //generate lambda
-            const lambda = await this.generateLambdaFunction();
+            const lambda = await this._generateLambdaFunction();
             this.plugin.appendServerlessFunction(lambda);
             //Check if needs authorizer
-            const authorizer = this.generateCognitoAuthorizer();
+            const authorizer = this._generateCognitoAuthorizer();
             if (authorizer) this.plugin.appendResource(this._getAuthorizerName(), authorizer);
             resolve();
         });
@@ -55,7 +55,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         };
     }
     /* lambda helpers */
-    private async generateLambdaFunction(): BPromise<any> {
+    private async _generateLambdaFunction(): BPromise<any> {
         const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
         const allowsRouting = (this.event.runtime == OFunctionLambdaProtocol.http);
         const sanitizedRoutes = (allowsRouting ? (this.event as OFunctionLambdaHTTPEvent).routes : [null]); //important, leave one null object if not http
@@ -113,7 +113,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         };
     }
     /* Cognito authorizer stuff */
-    private generateCognitoAuthorizer(): any {
+    private _generateCognitoAuthorizer(): any {
         if ((this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn) {
             return {
                 'Type': 'AWS::ApiGateway::Authorizer',

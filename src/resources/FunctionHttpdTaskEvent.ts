@@ -44,7 +44,8 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
             return [
                 (customDockerFile ?
                     { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
-                    { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
+                    { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+                ),
                 { name: 'task-httpd/healthCheck.php', dir: safeDir + '/resources/assets', dest: `/app/${this.healthRoute}` },
                 { name: handleRootFolder, dir: serverlessDir, dest: '/app/' },
                 ...additionalDockerFiles

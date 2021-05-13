@@ -38,7 +38,7 @@ export enum OFunctionEventType {
     //Task
     httpd = 'httpd',
     process = 'process',
-    // schedulerTask = 'schedulerTask',
+    scheduledTask = 'schedulerTask',
     // agent = 'agent'
     //Serverless
     lambda = 'lambda',
@@ -51,6 +51,10 @@ export enum OFunctionHttpdTaskRuntime {
     php7 = 'php7',
 };
 export enum OFunctionProcessTaskRuntime {
+    nodejs10 = 'nodejs10',
+    nodejs13 = 'nodejs13',
+};
+export enum OFunctionScheduledTaskRuntime {
     nodejs10 = 'nodejs10',
     nodejs13 = 'nodejs13',
 };
@@ -97,16 +101,6 @@ export interface OFunctionTaskBaseEvent extends OFunctionEvent, OFunctionContain
     concurrency?: number; //defaults to 1
     cpu?: number; //defaults to 512
     logsMultilinePattern?: string; //defaults to '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))'
-    //AS
-    autoScale?: {
-        min?: number; //default to 1
-        max?: number; //default to 1
-        metric: string;
-        cooldown?: number; //defaults to 30
-        cooldownIn?: number; //defaults to cooldown but has priority over it
-        cooldownOut?: number; //defaults to cooldown but has priority over it
-        targetValue: number;
-    }
 }
 export interface OFunctionEC2TaskBaseEvent extends OFunctionEvent, OFunctionContainerBaseEvent {
     ec2LaunchType?: true;
@@ -143,11 +137,28 @@ export type OFunctionHTTPDTaskEvent = {
     healthCheckTimeout?: number; //defaults to 10
     healthCheckHealthyCount?: number; //defaults to 2
     healthCheckUnhealthyCount?: number; //defaults to 5
+    //AS
+    autoScale?: {
+        min?: number; //default to 1
+        max?: number; //default to 1
+        metric: string;
+        cooldown?: number; //defaults to 30
+        cooldownIn?: number; //defaults to cooldown but has priority over it
+        cooldownOut?: number; //defaults to cooldown but has priority over it
+        targetValue: number;
+    }
 } & OFunctionTaskBaseEvent //Task base
   & (OFunctionEC2TaskBaseEvent | OFunctionFargateTaskBaseEvent);
 export type OFunctionProcessTaskEvent = {
     runtime: OFunctionProcessTaskRuntime;
     eventType: OFunctionEventType.process;
+} & OFunctionTaskBaseEvent //Task base
+  & (OFunctionEC2TaskBaseEvent | OFunctionFargateTaskBaseEvent);
+export type OFunctionScheduledTaskEvent = {
+    runtime: OFunctionScheduledTaskRuntime;
+    eventType: OFunctionEventType.scheduledTask;
+    schedulerRate: string;
+    schedulerInput?: string | object;
 } & OFunctionTaskBaseEvent //Task base
   & (OFunctionEC2TaskBaseEvent | OFunctionFargateTaskBaseEvent);
 

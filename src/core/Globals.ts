@@ -1,4 +1,4 @@
-import { OFunctionProcessTaskRuntime, OFunctionHttpdTaskRuntime, OFunctionLambdaContainerRuntime } from "../options";
+import { OFunctionProcessTaskRuntime, OFunctionScheduledTaskRuntime, OFunctionHttpdTaskRuntime, OFunctionLambdaContainerRuntime } from "../options";
 import BPromise = require('bluebird');
 import { v4 as uuidv4 } from 'uuid';
 //
@@ -48,6 +48,17 @@ export default class Globals {
             } else if (environment == OFunctionProcessTaskRuntime.nodejs13) {
                 return 'task-process/Dockerfile-Process-Nodejs13'
             } throw new Error(`Unknown event *process* environment type! ${environment} is not a valid environment, can't continue!`);
+        }
+    //Scheduled stuff
+        public static Scheduled_DefaultMemory = 1024;
+        public static Scheduled_DefaultCPU = 512;
+        public static Scheduled_DefaultConcurrency = 1;
+        public static Scheduled_ImageByRuntime(environment: OFunctionScheduledTaskRuntime): string {
+            if (environment == OFunctionScheduledTaskRuntime.nodejs10) {
+                return 'task-scheduled/Dockerfile-Scheduler-Nodejs10'
+            } else if (environment == OFunctionScheduledTaskRuntime.nodejs13) {
+                return 'task-scheduled/Dockerfile-Scheduler-Nodejs13'
+            } throw new Error(`Unknown event *scheduled* environment type! ${environment} is not a valid environment, can't continue!`);
         }
     //Lambda Container stuff
         public static LambdaContainer_DefaultMemory = 1024;
