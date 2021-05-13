@@ -82,6 +82,29 @@
                           ],
                           "type": "object"
                         },
+                        "capacityProviderStrategy": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "base": {
+                                "type": "number"
+                              },
+                              "capacityProvider": {
+                                "type": "string"
+                              },
+                              "weight": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "base",
+                              "capacityProvider",
+                              "weight"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
                         "certificateArns": {
                           "items": {
                             "type": "string"
@@ -212,11 +235,69 @@
                         "newRelicKey": {
                           "type": "string"
                         },
+                        "placementConstraints": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "expression": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "distinctInstance",
+                                  "memberOf"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "expression",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "placementStrategies": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "field": {
+                                "enum": [
+                                  "string"
+                                ],
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "binpack",
+                                  "random",
+                                  "spread"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "field",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
                         "port": {
                           "type": "number"
                         },
                         "priority": {
                           "type": "number"
+                        },
+                        "propagateTags": {
+                          "enum": [
+                            "OFF",
+                            "SERVICE",
+                            "TASK"
+                          ],
+                          "type": "string"
                         },
                         "role": {
                           "type": "string"
@@ -307,6 +388,29 @@
                           ],
                           "type": "object"
                         },
+                        "capacityProviderStrategy": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "base": {
+                                "type": "number"
+                              },
+                              "capacityProvider": {
+                                "type": "string"
+                              },
+                              "weight": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "base",
+                              "capacityProvider",
+                              "weight"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
                         "certificateArns": {
                           "items": {
                             "type": "string"
@@ -434,11 +538,69 @@
                         "newRelicKey": {
                           "type": "string"
                         },
+                        "placementConstraints": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "expression": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "distinctInstance",
+                                  "memberOf"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "expression",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "placementStrategies": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "field": {
+                                "enum": [
+                                  "string"
+                                ],
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "binpack",
+                                  "random",
+                                  "spread"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "field",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
                         "port": {
                           "type": "number"
                         },
                         "priority": {
                           "type": "number"
+                        },
+                        "propagateTags": {
+                          "enum": [
+                            "OFF",
+                            "SERVICE",
+                            "TASK"
+                          ],
+                          "type": "string"
                         },
                         "role": {
                           "type": "string"
@@ -498,6 +660,29 @@
                           "minItems": 0,
                           "type": "array"
                         },
+                        "capacityProviderStrategy": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "base": {
+                                "type": "number"
+                              },
+                              "capacityProvider": {
+                                "type": "string"
+                              },
+                              "weight": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "base",
+                              "capacityProvider",
+                              "weight"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
                         "concurrency": {
                           "type": "number"
                         },
@@ -541,6 +726,64 @@
                         "newRelicKey": {
                           "type": "string"
                         },
+                        "placementConstraints": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "expression": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "distinctInstance",
+                                  "memberOf"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "expression",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "placementStrategies": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "field": {
+                                "enum": [
+                                  "string"
+                                ],
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "binpack",
+                                  "random",
+                                  "spread"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "field",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "propagateTags": {
+                          "enum": [
+                            "OFF",
+                            "SERVICE",
+                            "TASK"
+                          ],
+                          "type": "string"
+                        },
                         "role": {
                           "type": "string"
                         },
@@ -578,6 +821,29 @@
                           ],
                           "maxItems": 1,
                           "minItems": 0,
+                          "type": "array"
+                        },
+                        "capacityProviderStrategy": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "base": {
+                                "type": "number"
+                              },
+                              "capacityProvider": {
+                                "type": "string"
+                              },
+                              "weight": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "base",
+                              "capacityProvider",
+                              "weight"
+                            ],
+                            "type": "object"
+                          },
                           "type": "array"
                         },
                         "concurrency": {
@@ -618,6 +884,64 @@
                           "type": "number"
                         },
                         "newRelicKey": {
+                          "type": "string"
+                        },
+                        "placementConstraints": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "expression": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "distinctInstance",
+                                  "memberOf"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "expression",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "placementStrategies": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "field": {
+                                "enum": [
+                                  "string"
+                                ],
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "binpack",
+                                  "random",
+                                  "spread"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "field",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "propagateTags": {
+                          "enum": [
+                            "OFF",
+                            "SERVICE",
+                            "TASK"
+                          ],
                           "type": "string"
                         },
                         "role": {
@@ -1674,6 +1998,29 @@
                             ],
                             "type": "object"
                           },
+                          "capacityProviderStrategy": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "base": {
+                                  "type": "number"
+                                },
+                                "capacityProvider": {
+                                  "type": "string"
+                                },
+                                "weight": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "base",
+                                "capacityProvider",
+                                "weight"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
                           "certificateArns": {
                             "items": {
                               "type": "string"
@@ -1804,11 +2151,69 @@
                           "newRelicKey": {
                             "type": "string"
                           },
+                          "placementConstraints": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "distinctInstance",
+                                    "memberOf"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "expression",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "placementStrategies": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "field": {
+                                  "enum": [
+                                    "string"
+                                  ],
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "binpack",
+                                    "random",
+                                    "spread"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "field",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
                           "port": {
                             "type": "number"
                           },
                           "priority": {
                             "type": "number"
+                          },
+                          "propagateTags": {
+                            "enum": [
+                              "OFF",
+                              "SERVICE",
+                              "TASK"
+                            ],
+                            "type": "string"
                           },
                           "role": {
                             "type": "string"
@@ -1899,6 +2304,29 @@
                             ],
                             "type": "object"
                           },
+                          "capacityProviderStrategy": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "base": {
+                                  "type": "number"
+                                },
+                                "capacityProvider": {
+                                  "type": "string"
+                                },
+                                "weight": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "base",
+                                "capacityProvider",
+                                "weight"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
                           "certificateArns": {
                             "items": {
                               "type": "string"
@@ -2026,11 +2454,69 @@
                           "newRelicKey": {
                             "type": "string"
                           },
+                          "placementConstraints": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "distinctInstance",
+                                    "memberOf"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "expression",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "placementStrategies": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "field": {
+                                  "enum": [
+                                    "string"
+                                  ],
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "binpack",
+                                    "random",
+                                    "spread"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "field",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
                           "port": {
                             "type": "number"
                           },
                           "priority": {
                             "type": "number"
+                          },
+                          "propagateTags": {
+                            "enum": [
+                              "OFF",
+                              "SERVICE",
+                              "TASK"
+                            ],
+                            "type": "string"
                           },
                           "role": {
                             "type": "string"
@@ -2090,6 +2576,29 @@
                             "minItems": 0,
                             "type": "array"
                           },
+                          "capacityProviderStrategy": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "base": {
+                                  "type": "number"
+                                },
+                                "capacityProvider": {
+                                  "type": "string"
+                                },
+                                "weight": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "base",
+                                "capacityProvider",
+                                "weight"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
                           "concurrency": {
                             "type": "number"
                           },
@@ -2133,6 +2642,64 @@
                           "newRelicKey": {
                             "type": "string"
                           },
+                          "placementConstraints": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "distinctInstance",
+                                    "memberOf"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "expression",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "placementStrategies": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "field": {
+                                  "enum": [
+                                    "string"
+                                  ],
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "binpack",
+                                    "random",
+                                    "spread"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "field",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "propagateTags": {
+                            "enum": [
+                              "OFF",
+                              "SERVICE",
+                              "TASK"
+                            ],
+                            "type": "string"
+                          },
                           "role": {
                             "type": "string"
                           },
@@ -2170,6 +2737,29 @@
                             ],
                             "maxItems": 1,
                             "minItems": 0,
+                            "type": "array"
+                          },
+                          "capacityProviderStrategy": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "base": {
+                                  "type": "number"
+                                },
+                                "capacityProvider": {
+                                  "type": "string"
+                                },
+                                "weight": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "base",
+                                "capacityProvider",
+                                "weight"
+                              ],
+                              "type": "object"
+                            },
                             "type": "array"
                           },
                           "concurrency": {
@@ -2210,6 +2800,64 @@
                             "type": "number"
                           },
                           "newRelicKey": {
+                            "type": "string"
+                          },
+                          "placementConstraints": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "distinctInstance",
+                                    "memberOf"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "expression",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "placementStrategies": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "field": {
+                                  "enum": [
+                                    "string"
+                                  ],
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "binpack",
+                                    "random",
+                                    "spread"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "field",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "propagateTags": {
+                            "enum": [
+                              "OFF",
+                              "SERVICE",
+                              "TASK"
+                            ],
                             "type": "string"
                           },
                           "role": {

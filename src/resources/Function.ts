@@ -143,6 +143,7 @@ export class BaseFunction {
                 clusterName: ECSName,
                 tags: this.plugin.getDefaultTags(true),
                 services: tasks,
+                ...(this.funcOptions.enableContainerInsights ? { enableContainerInsights: true } : {}),
                 //Should specify custom cluster?
                 ...(this.funcOptions.ecsClusterArn && this.funcOptions.ecsClusterArn != 'null' && this.funcOptions.ecsIngressSecGroupId && this.funcOptions.ecsIngressSecGroupId != 'null' ?
                     { clusterArns: { ecsClusterArn: this.funcOptions.ecsClusterArn, ecsIngressSecGroupId: this.funcOptions.ecsIngressSecGroupId } } : { }),

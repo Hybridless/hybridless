@@ -15,6 +15,7 @@ export interface OFunction {
     //ECS cluster
     ecsClusterArn?: string;
     ecsIngressSecGroupId?: string;
+    enableContainerInsights?: boolean; //default is respecting account settings
     //ALB
     albListenerArn?: string;
     additionalALBTimeout?: number; //default to 1 second
