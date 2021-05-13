@@ -62,6 +62,7 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
                 memory: (event.memory || this.func.funcOptions.memory || Globals.Process_DefaultMemory),
                 disableELB: true,
                 ec2LaunchType: !!event.ec2LaunchType,
+                ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: true } : {}),
                 ...(event.autoScale && <unknown>event.autoScale != 'null' ? { autoScale: event.autoScale } : {}),
                 taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
                 image: `${ECRRepoFullURL}`,
