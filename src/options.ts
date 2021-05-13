@@ -1,13 +1,36 @@
-//follows serverless-fargate-plugin model for compatibility purposes :)
-export interface OVPCOptions {
+//Plugin
+export interface OPlugin {
+    functions: { [key: string]: OFunction } | { [key: string]: OFunction }[];
+    disableWebpack?: boolean;
+    tags?: string[];
+}
+//Function
+export interface OFunction {
+    handler: string;
+    vpc?: OVPCOptions;
+    timeout?: number; //Only works with lambda based
+    memory?: number; //defaults to 1024
+    events?: (OFunctionHTTPDTaskEvent | OFunctionProcessTaskEvent | OFunctionLambdaEvent | OFunctionLambdaContainerEvent)[];
+    //ECS cluster
+    ecsClusterArn?: string;
+    ecsIngressSecGroupId?: string;
+    //ALB
+    albListenerArn?: string;
+    additionalALBTimeout?: number; //default to 1 second
+}
+
+//follows @hybridless/serverless-ecs-plugin model for compatibility purposes :)
+export type OVPCOptions = OVPCOptions_DedicatedVPC | OVPCOptions_SpecifiedVPC;
+export interface OVPCOptions_DedicatedVPC {
     cidr: string;
     subnets: string[];
-    //Optional ivars to dictate if will use existing VPC 
-    //and subnets specified
+};
+export interface OVPCOptions_SpecifiedVPC {
+    //Optional ivars to dictate if will use existing VPC and subnets specified
     vpcId: string;
     securityGroupIds: string[];
     subnetIds: string[];
-}
+};
 
 //Types
 export enum OFunctionEventType {
@@ -44,21 +67,27 @@ export enum OFunctionLambdaProtocol {
     none = 'none'
 };
 
-//Events
+
+/**
+ ** BASE EVENTS **
+**/
 export interface OFunctionEvent {
+    runtime: string;
     eventType: OFunctionEventType;
     handler?: string; //this, takes precende over function handler - Usefulll for multi-purpose clusters
     enabled?: boolean; //defaults to true
     memory?: number; //defaults to 1024 - takes precedence over OFunction.memory
     role?: string;
 }
-//Container
 export interface OFunctionContainerBaseEvent extends OFunctionEvent {
     dockerFile?: string;
-    additionalDockerFiles?: [{ from: string, to: string }];
+    additionalDockerFiles?: [{ from: string, to: string }?];
 }
 
-//Container
+
+/**
+ ** TASK BASED **
+**/
 export interface OFunctionTaskBaseEvent extends OFunctionEvent, OFunctionContainerBaseEvent {
     //Service
     ec2LaunchType?: boolean; //defaults to false, if true will laucnh task into EC2
@@ -79,7 +108,8 @@ export interface OFunctionTaskBaseEvent extends OFunctionEvent, OFunctionContain
     }
 }
 export interface OFunctionHTTPDTaskEvent extends OFunctionTaskBaseEvent {
-    runtime: OFunctionHttpdTaskRuntime;
+    runtime: OFunctionHttpdTaskRuntime; //@overwrite
+    eventType: OFunctionEventType.httpd; //@overwrite
     //ALB listener layer
     routes?: {
         path: string;
@@ -109,11 +139,21 @@ export interface OFunctionHTTPDTaskEvent extends OFunctionTaskBaseEvent {
 export interface OFunctionProcessTaskEvent extends OFunctionTaskBaseEvent {
     ec2LaunchType?: boolean; //defaults to false, if true will laucnh task into EC2
     runtime: OFunctionProcessTaskRuntime;
+    eventType: OFunctionEventType.process;
 }
 
-//Lambda Events
-export interface OFunctionLambdaBaseEvent extends OFunctionEvent {
-    routes?: {
+
+/**
+ ** LAMBDA BASED **
+**/
+export type OFunctionLambdaBaseEvent = {
+    reservedConcurrency?: number;
+    disableTracing?: boolean; //XRay tracing is enabled by default
+    protocol: OFunctionLambdaProtocol;
+}
+
+export interface OFunctionLambdaHTTPEvent extends OFunctionEvent {
+    routes: {
         path: string;
         method: string;
     }[];
@@ -122,41 +162,38 @@ export interface OFunctionLambdaBaseEvent extends OFunctionEvent {
         headers: string[];
         allowCredentials: boolean;
     }
-    protocol?: OFunctionLambdaProtocol; //defaults to HTTP 
-    prototocolArn?: any; //Only used when protocol is dynamostreams or sqs
-    queueBatchSize?: number; //Only used when protocol is sqs
-    schedulerRate?: string; //Only used when protocol is scheduler
-    schedulerInput?: string; //Only used when protocol is scheduler
-    reservedConcurrency?: number;
-    cognitoAuthorizerArn?: string;
-    disableTracing?: boolean; //XRay tracing is enabled by default
+    protocol: OFunctionLambdaProtocol.http;
+    cognitoAuthorizerArn?: string; //assumption
+}
+export interface OFunctionLambdaSQSEvent extends OFunctionEvent {
+    protocol: OFunctionLambdaProtocol.sqs;
+    prototocolArn?: any; 
+    queueBatchSize?: number; 
+}
+export interface OFunctionLambdaSNSEvent extends OFunctionEvent {
+    protocol: OFunctionLambdaProtocol.sns;
+    prototocolArn?: any; 
     filterPolicy?: object;
 }
-export interface OFunctionLambdaEvent extends OFunctionLambdaBaseEvent {
-    runtime: string;
+export interface OFunctionLambdaSchedulerEvent extends OFunctionEvent {
+    protocol: OFunctionLambdaProtocol.scheduler;
+    schedulerRate?: string; 
+    schedulerInput?: string; 
+}
+export interface OFunctionLambdaDynamoStreamsEvent extends OFunctionEvent {
+    protocol: OFunctionLambdaProtocol.dynamostreams;
+    prototocolArn?: any; 
+}
+export interface OFunctionLambdaNoneEvent extends OFunctionEvent {
+    protocol: OFunctionLambdaProtocol.none;
+}
+//Final types
+export type OFunctionLambdaEvent = {
     layers?: string[];
-}
-export interface OFunctionLambdaContainerEvent extends OFunctionLambdaBaseEvent, OFunctionContainerBaseEvent {
+    eventType: OFunctionEventType.lambda;
+} & OFunctionLambdaBaseEvent & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent);
+export type OFunctionLambdaContainerEvent = {
     runtime: OFunctionLambdaContainerRuntime;
-}
+    eventType: OFunctionEventType.lambdaContainer;
+} & OFunctionLambdaBaseEvent & OFunctionContainerBaseEvent & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent);
 
-//Function
-export interface OFunction {
-    handler: string;
-    vpc?: OVPCOptions;
-    timeout?: number; //Only works with lambda based
-    memory?: number; //defaults to 1024
-    events?: (OFunctionHTTPDTaskEvent | OFunctionProcessTaskEvent | OFunctionLambdaEvent | OFunctionLambdaContainerEvent)[];
-    //ECS cluster
-    ecsClusterArn?: string;
-    ecsIngressSecGroupId?: string;
-    //ALB
-    albListenerArn?: string;
-    additionalALBTimeout?: number; //default to 1 second
-}
-//Plugin
-export interface OPlugin {
-    functions?: { key?: OFunction };
-    disableWebPack?: boolean;
-    tags: string[];
-}

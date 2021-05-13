@@ -1,0 +1,2623 @@
+{
+  "additionalProperties": false,
+  "properties": {
+    "disableWebpack": {
+      "type": "boolean"
+    },
+    "functions": {
+      "anyOf": [
+        {
+          "additionalProperties": {
+            "additionalProperties": false,
+            "properties": {
+              "additionalALBTimeout": {
+                "type": "number"
+              },
+              "albListenerArn": {
+                "type": "string"
+              },
+              "ecsClusterArn": {
+                "type": "string"
+              },
+              "ecsIngressSecGroupId": {
+                "type": "string"
+              },
+              "events": {
+                "items": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "additionalDockerFiles": {
+                          "items": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "maxItems": 1,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "autoScale": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "cooldown": {
+                              "type": "number"
+                            },
+                            "cooldownIn": {
+                              "type": "number"
+                            },
+                            "cooldownOut": {
+                              "type": "number"
+                            },
+                            "max": {
+                              "type": "number"
+                            },
+                            "metric": {
+                              "type": "string"
+                            },
+                            "min": {
+                              "type": "number"
+                            },
+                            "targetValue": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "metric",
+                            "targetValue"
+                          ],
+                          "type": "object"
+                        },
+                        "certificateArns": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "cognitoAuthorizer": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "clientId": {
+                              "type": "string"
+                            },
+                            "poolArn": {
+                              "type": "string"
+                            },
+                            "poolDomain": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "clientId",
+                            "poolArn",
+                            "poolDomain"
+                          ],
+                          "type": "object"
+                        },
+                        "concurrency": {
+                          "type": "number"
+                        },
+                        "cors": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "allowCredentials": {
+                              "type": "boolean"
+                            },
+                            "headers": {
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "origin": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "allowCredentials",
+                            "headers",
+                            "origin"
+                          ],
+                          "type": "object"
+                        },
+                        "cpu": {
+                          "type": "number"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "ec2LaunchType": {
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "healthCheckHealthyCount": {
+                          "type": "number"
+                        },
+                        "healthCheckInterval": {
+                          "type": "number"
+                        },
+                        "healthCheckTimeout": {
+                          "type": "number"
+                        },
+                        "healthCheckUnhealthyCount": {
+                          "type": "number"
+                        },
+                        "hostname": {
+                          "anyOf": [
+                            {
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "limitSourceIPs": {
+                          "anyOf": [
+                            {
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "logsMultilinePattern": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "newRelicKey": {
+                          "type": "string"
+                        },
+                        "port": {
+                          "type": "number"
+                        },
+                        "priority": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "routes": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "method": {
+                                "type": "string"
+                              },
+                              "path": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "method",
+                              "path"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "runtime": {
+                          "enum": [
+                            "nodejs10",
+                            "nodejs13",
+                            "php5",
+                            "php7"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "additionalDockerFiles": {
+                          "items": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "maxItems": 1,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "autoScale": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "cooldown": {
+                              "type": "number"
+                            },
+                            "cooldownIn": {
+                              "type": "number"
+                            },
+                            "cooldownOut": {
+                              "type": "number"
+                            },
+                            "max": {
+                              "type": "number"
+                            },
+                            "metric": {
+                              "type": "string"
+                            },
+                            "min": {
+                              "type": "number"
+                            },
+                            "targetValue": {
+                              "type": "number"
+                            }
+                          },
+                          "required": [
+                            "metric",
+                            "targetValue"
+                          ],
+                          "type": "object"
+                        },
+                        "concurrency": {
+                          "type": "number"
+                        },
+                        "cpu": {
+                          "type": "number"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "ec2LaunchType": {
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "logsMultilinePattern": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "newRelicKey": {
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "enum": [
+                            "nodejs10",
+                            "nodejs13"
+                          ],
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "cognitoAuthorizerArn": {
+                          "type": "string"
+                        },
+                        "cors": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "allowCredentials": {
+                              "type": "boolean"
+                            },
+                            "headers": {
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "origin": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "allowCredentials",
+                            "headers",
+                            "origin"
+                          ],
+                          "type": "object"
+                        },
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "layers": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "http"
+                          ],
+                          "type": "string"
+                        },
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "routes": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "method": {
+                                "type": "string"
+                              },
+                              "path": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "method",
+                              "path"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "routes",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "layers": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "sqs"
+                          ],
+                          "type": "string"
+                        },
+                        "prototocolArn": {},
+                        "queueBatchSize": {
+                          "type": "number"
+                        },
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "filterPolicy": {
+                          "additionalProperties": true,
+                          "properties": {},
+                          "type": "object"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "layers": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "sns"
+                          ],
+                          "type": "string"
+                        },
+                        "prototocolArn": {},
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "layers": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "scheduler"
+                          ],
+                          "type": "string"
+                        },
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        },
+                        "schedulerInput": {
+                          "type": "string"
+                        },
+                        "schedulerRate": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "layers": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "dynamostreams"
+                          ],
+                          "type": "string"
+                        },
+                        "prototocolArn": {},
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "layers": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "additionalDockerFiles": {
+                          "items": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "maxItems": 1,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "cognitoAuthorizerArn": {
+                          "type": "string"
+                        },
+                        "cors": {
+                          "additionalProperties": false,
+                          "properties": {
+                            "allowCredentials": {
+                              "type": "boolean"
+                            },
+                            "headers": {
+                              "items": {
+                                "type": "string"
+                              },
+                              "type": "array"
+                            },
+                            "origin": {
+                              "type": "string"
+                            }
+                          },
+                          "required": [
+                            "allowCredentials",
+                            "headers",
+                            "origin"
+                          ],
+                          "type": "object"
+                        },
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "http"
+                          ],
+                          "type": "string"
+                        },
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "routes": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "method": {
+                                "type": "string"
+                              },
+                              "path": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "method",
+                              "path"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "routes",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "additionalDockerFiles": {
+                          "items": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "maxItems": 1,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "sqs"
+                          ],
+                          "type": "string"
+                        },
+                        "prototocolArn": {},
+                        "queueBatchSize": {
+                          "type": "number"
+                        },
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "additionalDockerFiles": {
+                          "items": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "maxItems": 1,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "filterPolicy": {
+                          "additionalProperties": true,
+                          "properties": {},
+                          "type": "object"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "sns"
+                          ],
+                          "type": "string"
+                        },
+                        "prototocolArn": {},
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "additionalDockerFiles": {
+                          "items": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "maxItems": 1,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "scheduler"
+                          ],
+                          "type": "string"
+                        },
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        },
+                        "schedulerInput": {
+                          "type": "string"
+                        },
+                        "schedulerRate": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "additionalDockerFiles": {
+                          "items": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "maxItems": 1,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "dynamostreams"
+                          ],
+                          "type": "string"
+                        },
+                        "prototocolArn": {},
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "additionalDockerFiles": {
+                          "items": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "maxItems": 1,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "protocol": {
+                          "enum": [
+                            "none"
+                          ],
+                          "type": "string"
+                        },
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                },
+                "type": "array"
+              },
+              "handler": {
+                "type": "string"
+              },
+              "memory": {
+                "type": "number"
+              },
+              "timeout": {
+                "type": "number"
+              },
+              "vpc": {
+                "anyOf": [
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "cidr": {
+                        "type": "string"
+                      },
+                      "subnets": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      }
+                    },
+                    "required": [
+                      "cidr",
+                      "subnets"
+                    ],
+                    "type": "object"
+                  },
+                  {
+                    "additionalProperties": false,
+                    "properties": {
+                      "securityGroupIds": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "subnetIds": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
+                      "vpcId": {
+                        "type": "string"
+                      }
+                    },
+                    "required": [
+                      "securityGroupIds",
+                      "subnetIds",
+                      "vpcId"
+                    ],
+                    "type": "object"
+                  }
+                ]
+              }
+            },
+            "required": [
+              "handler"
+            ],
+            "type": "object"
+          },
+          "type": "object"
+        },
+        {
+          "items": {
+            "additionalProperties": {
+              "additionalProperties": false,
+              "properties": {
+                "additionalALBTimeout": {
+                  "type": "number"
+                },
+                "albListenerArn": {
+                  "type": "string"
+                },
+                "ecsClusterArn": {
+                  "type": "string"
+                },
+                "ecsIngressSecGroupId": {
+                  "type": "string"
+                },
+                "events": {
+                  "items": {
+                    "anyOf": [
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "from": {
+                                    "type": "string"
+                                  },
+                                  "to": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "from",
+                                  "to"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "maxItems": 1,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "autoScale": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "cooldown": {
+                                "type": "number"
+                              },
+                              "cooldownIn": {
+                                "type": "number"
+                              },
+                              "cooldownOut": {
+                                "type": "number"
+                              },
+                              "max": {
+                                "type": "number"
+                              },
+                              "metric": {
+                                "type": "string"
+                              },
+                              "min": {
+                                "type": "number"
+                              },
+                              "targetValue": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "metric",
+                              "targetValue"
+                            ],
+                            "type": "object"
+                          },
+                          "certificateArns": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "cognitoAuthorizer": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "clientId": {
+                                "type": "string"
+                              },
+                              "poolArn": {
+                                "type": "string"
+                              },
+                              "poolDomain": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "clientId",
+                              "poolArn",
+                              "poolDomain"
+                            ],
+                            "type": "object"
+                          },
+                          "concurrency": {
+                            "type": "number"
+                          },
+                          "cors": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "allowCredentials": {
+                                "type": "boolean"
+                              },
+                              "headers": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "origin": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "allowCredentials",
+                              "headers",
+                              "origin"
+                            ],
+                            "type": "object"
+                          },
+                          "cpu": {
+                            "type": "number"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "ec2LaunchType": {
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "healthCheckHealthyCount": {
+                            "type": "number"
+                          },
+                          "healthCheckInterval": {
+                            "type": "number"
+                          },
+                          "healthCheckTimeout": {
+                            "type": "number"
+                          },
+                          "healthCheckUnhealthyCount": {
+                            "type": "number"
+                          },
+                          "hostname": {
+                            "anyOf": [
+                              {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "limitSourceIPs": {
+                            "anyOf": [
+                              {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "logsMultilinePattern": {
+                            "type": "string"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "newRelicKey": {
+                            "type": "string"
+                          },
+                          "port": {
+                            "type": "number"
+                          },
+                          "priority": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "routes": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "method": {
+                                  "type": "string"
+                                },
+                                "path": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "method",
+                                "path"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "runtime": {
+                            "enum": [
+                              "nodejs10",
+                              "nodejs13",
+                              "php5",
+                              "php7"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "from": {
+                                    "type": "string"
+                                  },
+                                  "to": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "from",
+                                  "to"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "maxItems": 1,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "autoScale": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "cooldown": {
+                                "type": "number"
+                              },
+                              "cooldownIn": {
+                                "type": "number"
+                              },
+                              "cooldownOut": {
+                                "type": "number"
+                              },
+                              "max": {
+                                "type": "number"
+                              },
+                              "metric": {
+                                "type": "string"
+                              },
+                              "min": {
+                                "type": "number"
+                              },
+                              "targetValue": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "metric",
+                              "targetValue"
+                            ],
+                            "type": "object"
+                          },
+                          "concurrency": {
+                            "type": "number"
+                          },
+                          "cpu": {
+                            "type": "number"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "ec2LaunchType": {
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "logsMultilinePattern": {
+                            "type": "string"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "newRelicKey": {
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "enum": [
+                              "nodejs10",
+                              "nodejs13"
+                            ],
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "cognitoAuthorizerArn": {
+                            "type": "string"
+                          },
+                          "cors": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "allowCredentials": {
+                                "type": "boolean"
+                              },
+                              "headers": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "origin": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "allowCredentials",
+                              "headers",
+                              "origin"
+                            ],
+                            "type": "object"
+                          },
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "layers": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "http"
+                            ],
+                            "type": "string"
+                          },
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "routes": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "method": {
+                                  "type": "string"
+                                },
+                                "path": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "method",
+                                "path"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "routes",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "layers": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "sqs"
+                            ],
+                            "type": "string"
+                          },
+                          "prototocolArn": {},
+                          "queueBatchSize": {
+                            "type": "number"
+                          },
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "filterPolicy": {
+                            "additionalProperties": true,
+                            "properties": {},
+                            "type": "object"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "layers": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "sns"
+                            ],
+                            "type": "string"
+                          },
+                          "prototocolArn": {},
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "layers": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "scheduler"
+                            ],
+                            "type": "string"
+                          },
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          },
+                          "schedulerInput": {
+                            "type": "string"
+                          },
+                          "schedulerRate": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "layers": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "dynamostreams"
+                            ],
+                            "type": "string"
+                          },
+                          "prototocolArn": {},
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "layers": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "none"
+                            ],
+                            "type": "string"
+                          },
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "from": {
+                                    "type": "string"
+                                  },
+                                  "to": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "from",
+                                  "to"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "maxItems": 1,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "cognitoAuthorizerArn": {
+                            "type": "string"
+                          },
+                          "cors": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "allowCredentials": {
+                                "type": "boolean"
+                              },
+                              "headers": {
+                                "items": {
+                                  "type": "string"
+                                },
+                                "type": "array"
+                              },
+                              "origin": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "allowCredentials",
+                              "headers",
+                              "origin"
+                            ],
+                            "type": "object"
+                          },
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "http"
+                            ],
+                            "type": "string"
+                          },
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "routes": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "method": {
+                                  "type": "string"
+                                },
+                                "path": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "method",
+                                "path"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "routes",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "from": {
+                                    "type": "string"
+                                  },
+                                  "to": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "from",
+                                  "to"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "maxItems": 1,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "sqs"
+                            ],
+                            "type": "string"
+                          },
+                          "prototocolArn": {},
+                          "queueBatchSize": {
+                            "type": "number"
+                          },
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "from": {
+                                    "type": "string"
+                                  },
+                                  "to": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "from",
+                                  "to"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "maxItems": 1,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "filterPolicy": {
+                            "additionalProperties": true,
+                            "properties": {},
+                            "type": "object"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "sns"
+                            ],
+                            "type": "string"
+                          },
+                          "prototocolArn": {},
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "from": {
+                                    "type": "string"
+                                  },
+                                  "to": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "from",
+                                  "to"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "maxItems": 1,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "scheduler"
+                            ],
+                            "type": "string"
+                          },
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          },
+                          "schedulerInput": {
+                            "type": "string"
+                          },
+                          "schedulerRate": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "from": {
+                                    "type": "string"
+                                  },
+                                  "to": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "from",
+                                  "to"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "maxItems": 1,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "dynamostreams"
+                            ],
+                            "type": "string"
+                          },
+                          "prototocolArn": {},
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "from": {
+                                    "type": "string"
+                                  },
+                                  "to": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "from",
+                                  "to"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "maxItems": 1,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "protocol": {
+                            "enum": [
+                              "none"
+                            ],
+                            "type": "string"
+                          },
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      }
+                    ]
+                  },
+                  "type": "array"
+                },
+                "handler": {
+                  "type": "string"
+                },
+                "memory": {
+                  "type": "number"
+                },
+                "timeout": {
+                  "type": "number"
+                },
+                "vpc": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "cidr": {
+                          "type": "string"
+                        },
+                        "subnets": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        }
+                      },
+                      "required": [
+                        "cidr",
+                        "subnets"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "securityGroupIds": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "subnetIds": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "vpcId": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "securityGroupIds",
+                        "subnetIds",
+                        "vpcId"
+                      ],
+                      "type": "object"
+                    }
+                  ]
+                }
+              },
+              "required": [
+                "handler"
+              ],
+              "type": "object"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        }
+      ]
+    },
+    "tags": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array"
+    }
+  },
+  "required": [
+    "functions"
+  ],
+  "type": "object"
+}

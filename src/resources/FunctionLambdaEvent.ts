@@ -2,7 +2,7 @@ import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent"; //base class
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionLambdaEvent, OFunctionLambdaProtocol } from "../options";
+import { OFunctionHTTPDTaskEvent, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
 //
 import BPromise = require('bluebird');
 import Globals from "../core/Globals";
@@ -25,7 +25,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
     }
     public async checkDependencies(): BPromise {
         return new BPromise(async (resolve, reject) => {
-            if (this.event['runtime'].indexOf('node') != -1 && !this.plugin.options.disableWebPack) this.plugin.depManager.enableWebpack();
+            if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('node') != -1 && !this.plugin.options.disableWebpack) this.plugin.depManager.enableWebpack();
             resolve();
         });
     }
@@ -35,9 +35,8 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 
     /* lambda helpers */
     private generateLambdaFunction(): any {
-        const proto = this.event.protocol || OFunctionLambdaProtocol.http;
-        const allowsRouting = (proto == OFunctionLambdaProtocol.http);
-        const sanitizedRoutes = (allowsRouting ? this.event.routes : [null]);
+        const allowsRouting = (this.event.runtime == OFunctionLambdaProtocol.http);
+        const sanitizedRoutes = (allowsRouting ? (this.event as OFunctionLambdaHTTPEvent).routes : [null]); //important, leave one null object if not http
         return {
             [this._getFunctionName()]: {
                 name: `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}`,
@@ -52,23 +51,26 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                 tracing: (this.event.disableTracing ? false : true), //enable x-ray tracing by default,
                 versionFunctions: false, //disable function versions be default
                 //Lambda events (routes for us)
-                ...(sanitizedRoutes && sanitizedRoutes.length > 0 ? {
+                ...(this.event.protocol != OFunctionLambdaProtocol.none ? {
                     events: sanitizedRoutes.map((route) => {
-                        const proto = this.event.protocol || OFunctionLambdaProtocol.http;
-                        proto == OFunctionLambdaProtocol.http
-                        const sanitizedRoute = (!route || route.path == '*' ? '{proxy+}' : route.path);
                         return {
-                            [this._getProtocolName(proto)]: {
-                                ...(allowsRouting && route ? { path: sanitizedRoute } : {}),
-                                ...(allowsRouting && route && route.method ? { method: route.method } : {}),
-                                ...(this.event.cors ? { cors: this.event.cors } : {}),
-                                ...(proto == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
-                                ...(this.event.prototocolArn ? { arn: this.event.prototocolArn } : {}),
-                                ...(this.event.queueBatchSize ? { batchSize: this.event.queueBatchSize } : {}),
-                                ...(this.event.schedulerRate ? { rate: this.event.schedulerRate } : {}),
-                                ...(this.event.schedulerInput ? { input: this.event.schedulerInput } : {}),
-                                ...(this.event.filterPolicy ? { filterPolicy: this.event.filterPolicy } : {}),
-                                ...(this.event.cognitoAuthorizerArn ? { 
+                            [this._getProtocolName(this.event.protocol)]: {
+                                //multiple
+                                ...((this.event as OFunctionLambdaSNSEvent).prototocolArn ? { arn: (this.event as OFunctionLambdaSNSEvent).prototocolArn } : {}),
+                                //sqs
+                                ...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
+                                //ddbstreams
+                                ...(this.event.protocol == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
+                                //scheduler
+                                ...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: (this.event as OFunctionLambdaSchedulerEvent).schedulerRate } : {}),
+                                ...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? { input: (this.event as OFunctionLambdaSchedulerEvent).schedulerInput } : {}),
+                                //sns
+                                ...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
+                                //http
+                                ...(route ? { path: (route.path == '*' ? '{proxy+}' : route.path) } : {}),
+                                ...(route ? { method: route.method } : {}),
+                                ...((this.event as OFunctionLambdaHTTPEvent).cors ? { cors: (this.event as OFunctionLambdaHTTPEvent).cors } : {}),
+                                ...((this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn ? { 
                                     "authorizer": {
                                         "type": "COGNITO_USER_POOLS",
                                         "authorizerId": { "Ref": this._getAuthorizerName() }
@@ -84,7 +86,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
     }
     /* Cognito authorizer */
     private generateCognitoAuthorizer(): any {
-        if (this.event.cognitoAuthorizerArn) {
+        if ((this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn) {
             return {
                 'Type': 'AWS::ApiGateway::Authorizer',
                 'Properties': {
@@ -93,7 +95,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                     'Name': this._getAuthorizerName(),
                     'RestApiId': { 'Ref': 'ApiGatewayRestApi' },
                     'Type': 'COGNITO_USER_POOLS',
-                    'ProviderARNs': [ this.event.cognitoAuthorizerArn ]
+                    'ProviderARNs': [(this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn ]
                 }
             }
         } return null;

@@ -13,7 +13,6 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
     public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionHTTPDTaskEvent, index: number) {
         super(plugin, func, event, index);
         this.healthRoute = Globals.HTTPD_HealthCheckByRuntime(event.runtime);
-        plugin.containerFunctions = true;
     }
     /* Container Base Event Overwrites */
     protected getContainerFiles(): DockerFiles {

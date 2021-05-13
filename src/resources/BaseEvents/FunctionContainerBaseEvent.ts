@@ -20,7 +20,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     public async spread(): BPromise { return BPromise.resolve(); }
     public async checkDependencies(): BPromise {
         return new BPromise(async (resolve, reject) => {
-            if (this.event['runtime'].indexOf('node') != -1 && !this.plugin.options.disableWebPack) this.plugin.depManager.enableWebpack();
+            if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('node') != -1 && !this.plugin.options.disableWebpack) this.plugin.depManager.enableWebpack();
             this.plugin.depManager.enableECSPlugin();
             resolve();
         });
@@ -28,9 +28,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     public async createRequiredResources(): BPromise {
         const ECRRepoName = this._getECRRepoName();
         //Check if existing repo exists
-        const ecrs = await this.plugin.serverless.getProvider('aws').request(
-            'ECR', 'describeRepositories', {}
-        );
+        const ecrs = await this.plugin.serverless.getProvider('aws').request('ECR', 'describeRepositories', {});
         if (ecrs) {
             const existingECR = ecrs.repositories.find((repo) => repo.repositoryName == ECRRepoName);
             if (existingECR) {
@@ -46,7 +44,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
             const ECRRepoURL: string = <string> await this._getECRRepo(true);
             //Build image
             const files = this.getContainerFiles();
-            await this.plugin.docker.buildImage(files, localImageName, this.event['runtime']);
+            await this.plugin.docker.buildImage(files, localImageName, this.event.runtime);
             //Prepare to push to registry by tagging it 
             const tagResp = await this._runCommand(`docker tag ${localImageName}:${Globals.DockerLatestTag} ${ECRRepoURL}`, '');
             if (tagResp.stderr) reject(tagResp.stderr);
@@ -107,34 +105,27 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     private async _createECRRepo(ECRRepoName: string): BPromise {
         //Create ECR
         this.plugin.logger.info(`Creating ECR repo ${ECRRepoName}..`);
-        const createECR = await this.plugin.serverless.getProvider('aws').request(
-            'ECR',
-            'createRepository',
-            { repositoryName: ECRRepoName, imageTagMutability: 'MUTABLE', tags: this.plugin.getDefaultTags() }
-        );
+        const createECR = await this.plugin.serverless.getProvider('aws').request( 'ECR', 'createRepository', { 
+            repositoryName: ECRRepoName, imageTagMutability: 'MUTABLE', tags: this.plugin.getDefaultTags() 
+        });
         if (createECR) {
             //Setup ECR lifecycle policy
             this.plugin.logger.info(`Setting ECR repo ${ECRRepoName} lifecycle policy..`);
             const accID = await this.plugin.getAccountID();
-            return await this.plugin.serverless.getProvider('aws').request(
-                'ECR',
-                'putLifecyclePolicy',
-                {
+            return await this.plugin.serverless.getProvider('aws').request('ECR', 'putLifecyclePolicy', {
                     repositoryName: ECRRepoName, registryId: accID, lifecyclePolicyText: JSON.stringify({
-                        "rules": [
-                            {
-                                "rulePriority": 1,
-                                "description": "Keep only one untagged image, expire all others",
-                                "selection": {
-                                    "tagStatus": "untagged",
-                                    "countType": "imageCountMoreThan",
-                                    "countNumber": 1
-                                },
-                                "action": {
-                                    "type": "expire"
-                                }
+                        "rules": [{
+                            "rulePriority": 1,
+                            "description": "Keep only one untagged image, expire all others",
+                            "selection": {
+                                "tagStatus": "untagged",
+                                "countType": "imageCountMoreThan",
+                                "countNumber": 1
+                            },
+                            "action": {
+                                "type": "expire"
                             }
-                        ]
+                        }]
                     })
                 }
             );

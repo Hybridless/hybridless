@@ -1,4 +1,4 @@
-import { OFunction, OFunctionEvent, OFunctionProcessTaskEvent, OFunctionHTTPDTaskEvent, OFunctionEventType, OFunctionLambdaEvent, OFunctionLambdaContainerEvent } from "../options";
+import { OFunction, OFunctionEvent, OVPCOptions_SpecifiedVPC, OVPCOptions_DedicatedVPC, OFunctionProcessTaskEvent, OFunctionHTTPDTaskEvent, OFunctionEventType, OFunctionLambdaEvent, OFunctionLambdaContainerEvent } from "../options";
 import Hybridless = require("..");
 //Event types
 import { FunctionProcessTaskEvent } from "./FunctionProcessTaskEvent";
@@ -99,13 +99,13 @@ export class BaseFunction {
     //Public getters
     public getEntrypoint(event: OFunctionEvent): string {
         //PHP function event?
-        if (event && event['runtime'].toLowerCase().indexOf('php') != -1) {
+        if (event && event['runtime'] && event['runtime'].toLowerCase().indexOf('php') != -1) {
             //get handler without last component (function)
             let noFuncHandler: any = (event.handler || this.funcOptions.handler).split('/');
             noFuncHandler.splice(noFuncHandler.length - 1, 1);
             noFuncHandler = noFuncHandler.join('/');    
             return noFuncHandler;
-        } else if (event && event['runtime'].toLowerCase().indexOf('node') != -1) { //NodeJS event
+        } else if (event && event['runtime'] && event['runtime'].toLowerCase().indexOf('node') != -1) { //NodeJS event
             //get handler without last component (function)
             let noFuncHandler: any = (event.handler || this.funcOptions.handler).split('.');
             noFuncHandler.splice(noFuncHandler.length - 1, 1);
@@ -118,9 +118,9 @@ export class BaseFunction {
     public getEntrypointFunction(event: OFunctionEvent): string {
         let noFuncHandler: string = this.getEntrypoint(event);
         //PHP function event?
-        if (event && event['runtime'].toLowerCase().indexOf('php') != -1) {
+        if (event && event['runtime'] && event['runtime'].toLowerCase().indexOf('php') != -1) {
             return (event.handler || this.funcOptions.handler).replace(noFuncHandler, '');
-        } else if (event && event['runtime'].toLowerCase().indexOf('node') != -1) { //NodeJS event
+        } else if (event && event['runtime'] && event['runtime'].toLowerCase().indexOf('node') != -1) { //NodeJS event
             return (event.handler || this.funcOptions.handler).replace(noFuncHandler + '.', '');
         } else {
             this.plugin.logger.error('Could not generate entrypoint for event! No runtime is specified..', event);
@@ -176,8 +176,8 @@ export class BaseFunction {
     }
     public getVPC(wrapped: boolean): any {
         if (this.funcOptions.vpc) {
-            if ((this.funcOptions.vpc.vpcId && this.funcOptions.vpc.vpcId != 'null') || 
-                (this.funcOptions.vpc.cidr && this.funcOptions.vpc.cidr != 'null')) {
+            if (((this.funcOptions.vpc as OVPCOptions_SpecifiedVPC).vpcId && (this.funcOptions.vpc as OVPCOptions_SpecifiedVPC).vpcId != 'null') ||
+                 ((this.funcOptions.vpc as OVPCOptions_DedicatedVPC).cidr && (this.funcOptions.vpc as OVPCOptions_DedicatedVPC).cidr != 'null')) {
                     return (wrapped ? {vpc: this.funcOptions.vpc} : {});
                 }
         } return (wrapped ? {} : null);

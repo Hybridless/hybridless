@@ -23,11 +23,11 @@ export default class DepsManager {
         const pluginsList = this.plugin.service.plugins;
         //Check for each requirement
         if (this.requiresWebpack && !this._pluginInstalledServerless(pluginsList, Globals.Deps_Webpack)) {
-            console.info('Webpack plugin is required, enabling it!');
+            this.plugin.logger.info('Webpack plugin is required, enabling it!');
             await this.plugin.serverless.pluginManager.addPlugin(require(Globals.Deps_Webpack));
         }
         if (this.requiresECS && !this._pluginInstalledServerless(pluginsList, Globals.Deps_ECS)) {
-            console.info('ECS plugin is required, enabling it!');
+            this.plugin.logger.info('ECS plugin is required, enabling it!');
             await this.plugin.serverless.pluginManager.addPlugin(require(Globals.Deps_ECS));
         }
         return BPromise.resolve();

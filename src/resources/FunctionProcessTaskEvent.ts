@@ -11,7 +11,6 @@ import BPromise = require('bluebird');
 export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
     public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionProcessTaskEvent, index: number) {
         super(plugin, func, event, index);
-        plugin.containerFunctions = true;
     }
     /* Container Base Event Overwrites */
     protected getContainerFiles(): DockerFiles {
@@ -22,7 +21,7 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
         const additionalDockerFiles = ((<OFunctionProcessTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
             return { name: file.from, dir: serverlessDir, dest: file.to }
         });
-        //Get build directory
+        //Get build directory (todo: figureout oneliner)
         let safeDir: any = __dirname.split('/');
         safeDir.splice(safeDir.length - 1, 1);
         safeDir = safeDir.join('/');

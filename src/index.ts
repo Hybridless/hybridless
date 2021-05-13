@@ -9,6 +9,8 @@ import BPromise = require('bluebird');
 import DepsManager from "./core/DepsManager";
 import Globals from "./core/Globals";
 //
+const PluginOptionsSchema = require('./options.json');
+//
 let _globalHybridless: hybridless = null;
 //
 class hybridless {
@@ -37,6 +39,8 @@ class hybridless {
         this.docker = new Docker(this);
         this.depManager = new DepsManager(this);
         this.functions = [];
+        //Schema
+        this.serverless.configSchemaHandler.defineTopLevelProperty('hybridless', PluginOptionsSchema);
         //Commands
         this.commands = {
             hybridless: { 
@@ -104,7 +108,7 @@ class hybridless {
             this.logger.log('Setting up plugin...');
             //Main ivars
             const rawOptions = (this.serverless.pluginManager.serverlessConfigFile ? this.serverless.pluginManager.serverlessConfigFile.hybridless : this.serverless.configurationInput.hybridless);
-            let tmpOptions: any = await this.serverless.variables.populateObject(rawOptions);
+            let tmpOptions: OPlugin = await this.serverless.variables.populateObject(rawOptions);
             //Normalize events -- in case of importing files, functions come in array
             if (Array.isArray(tmpOptions.functions)) {
                 const tmp = tmpOptions.functions;
@@ -285,14 +289,14 @@ class hybridless {
                 policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.push('ecs-tasks.amazonaws.com');
 
             } 
-        } else if (this.depManager.isECSRequired()) console.error('Could not find IamRoleLambdaExecution policy for appending trust relation with ECS.');
+        } else if (this.depManager.isECSRequired()) this.logger.error('Could not find IamRoleLambdaExecution policy for appending trust relation with ECS.');
         if (policy && this.serverless.service.provider?.iam?.servicesPrincipal) {
             for (let principal of this.serverless.service.provider?.iam?.servicesPrincipal) {
                 if (policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.indexOf(principal) == -1) {
                     policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.push(principal);
                 }
             }
-        } else if (this.serverless.service.provider?.iam?.servicesPrincipal) console.error('Could not find IamRoleLambdaExecution policy for appending trust relation with additional specified services.');
+        } else if (this.serverless.service.provider?.iam?.servicesPrincipal) this.logger.error('Could not find IamRoleLambdaExecution policy for appending trust relation with additional specified services.');
         return BPromise.resolve();
     }
 
