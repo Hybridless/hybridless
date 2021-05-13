@@ -4,6 +4,7 @@ export interface OPlugin {
     disableWebpack?: boolean;
     tags?: string[];
 }
+
 //Function
 export interface OFunction {
     handler: string;
@@ -197,3 +198,15 @@ export type OFunctionLambdaContainerEvent = {
     eventType: OFunctionEventType.lambdaContainer;
 } & OFunctionLambdaBaseEvent & OFunctionContainerBaseEvent & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent);
 
+
+
+
+//Services principal helper
+export const OIAMServicesPrincipal = {
+    type: 'array',
+    items: {
+        type: 'string'
+    },
+    maxItems: 1,
+    minItems: 0,
+};

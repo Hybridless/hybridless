@@ -1,5 +1,5 @@
 import { BaseFunction } from "./resources/Function";
-import { OPlugin } from "./options";
+import { OIAMServicesPrincipal, OPlugin } from "./options";
 //
 import Logger from "./core/Logger";
 import Docker from "./core/Docker";
@@ -161,6 +161,8 @@ class hybridless {
             for (let func of this.functions) await func.checkDependencies();
             //Check with manager
             await this.depManager.loadDependecies();
+            //Validate schema
+            this.validateExistingServerlessConfiguration();
             //
             resolve();
         }); 
@@ -181,6 +183,7 @@ class hybridless {
         });
     }
     private async compile(): BPromise {
+        //Additional iam schema
         return new BPromise.resolve()
             .then(() => (!this.depManager.isWebpackRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('webpack:validate')))
             .then(() => (!this.depManager.isWebpackRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('webpack:compile')))
@@ -263,9 +266,6 @@ class hybridless {
     public appendResource(serviceKey: string, service: any): void {
         _.set(this.serverless, `service.resources.Resources.${serviceKey}`, service);
     }
-    public appendComponent(componentKey: string, component: any): void {
-        _.set(this.serverless, `service.${componentKey}`, component);
-    }
     public appendServerlessFunction(func: any): void {
         if (!this.serverless.service.functions) this.serverless.service.functions = {};
         this.serverless.service.functions = {
@@ -274,12 +274,18 @@ class hybridless {
         };
     }
     public appendECSCluster(clusterName: string, cluster: any): void {
-        if (!this.serverless.service.custom) this.serverless.service.custom = {};
-        if (!this.serverless.service.custom.ecs) this.serverless.service.custom.ecs = [];
-        this.serverless.service.custom.ecs.push(cluster);
+        if (!this.serverless.service) this.serverless.service = {};
+        if (!this.serverless.service.ecs) this.serverless.service.ecs = [];
+        this.serverless.service.ecs.push(cluster);
     }
     public async loadPlugin(plugin: any): BPromise<any> {
         return await this.serverless.pluginManager.loadPlugin(plugin);
+    }
+    private validateExistingServerlessConfiguration(): void {
+        //TODO: find better way of reissuing validation from in-memory service 
+        let configClone = _.cloneDeep(this.serverless.service);
+        ['serverless', 'serviceObject', 'pluginsData', 'serviceFilename', 'initialServerlessConfig', 'isDashboardMonitoringPreconfigured'].forEach((k) => delete configClone[k]);
+        this.serverless.configSchemaHandler.validateConfig(configClone);
     }
     private async _modifyExecutionRole(): BPromise {
         //Modify lambda execution role

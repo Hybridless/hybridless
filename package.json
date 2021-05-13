@@ -1,6 +1,6 @@
 {
   "name": "@hybridless/hybridless",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -17,21 +17,19 @@
     "typescript-json-schema": "^0.50.0"
   },
   "dependencies": {
-    "@hybridless/serverless-ecs-plugin": "0.0.1",
+    "@babel/core": "^7.14.2",
+    "@hybridless/serverless-ecs-plugin": "0.0.3",
+    "babel-loader": "^8.2.2",
     "bluebird": "^3.7.2",
     "dockerode": "^3.3.0",
     "json-schema-ref-parser": "^9.0.7",
     "json-stringify-safe": "^5.0.1",
     "loadash": "^1.0.0",
+    "serverless-webpack": "^5.5.0",
     "stack-trace": "0.0.10",
     "tar-fs": "^2.1.1",
     "uuid": "^8.3.2",
-  },
-  "peerDependencies": {
-    "@babel/core": "7.x.x",
-    "babel-loader": "8.x.x",
-    "serverless-webpack": "5.x.x",
-    "webpack": "5.x.x",
-    "webpack-node-externals": "3.x.x"
+    "webpack": "^5.37.0",
+    "webpack-node-externals": "^3.0.0"
   }
 }
