@@ -111,6 +111,10 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                 },
                 ...(event.autoScale && <unknown>event.autoScale != 'null' ? { autoScale: event.autoScale } : {}),
                 logsMultilinePattern: (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),
+                ...(event.placementStrategies && <unknown>event.placementStrategies != 'null' ? { placementStrategies: event.placementStrategies } : {}),
+                ...(event.placementConstraints && <unknown>event.placementConstraints != 'null' ? { placementConstraints: event.placementConstraints } : {}),
+                ...(event.capacityProviderStrategy && <unknown>event.capacityProviderStrategy != 'null' ? { capacityProviderStrategy: event.capacityProviderStrategy } : {}),
+                ...(event.propagateTags && <unknown>event.propagateTags != 'null' ? { propagateTags: event.propagateTags } : {}),
                 //ALB
                 ...(event.hostname && event.hostname != 'null' ? { hostname: event.hostname } : {}),
                 ...(event.limitSourceIPs && event.limitSourceIPs != 'null' ? { limitSourceIPs: event.limitSourceIPs } : {}),

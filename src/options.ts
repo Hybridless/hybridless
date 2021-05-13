@@ -97,6 +97,10 @@ export interface OFunctionTaskBaseEvent extends OFunctionEvent, OFunctionContain
     //Service
     ec2LaunchType?: boolean; //defaults to false, if true will laucnh task into EC2
     newRelicKey?: string;//
+    propagateTags?: OPropagateTagsType; //defaults to off
+    placementConstraints?: { expression: string, type: 'distinctInstance' | 'memberOf' }[];
+    placementStrategies?: { field: 'string', type: 'binpack' | 'random' | 'spread' }[];
+    capacityProviderStrategy?: { base: number, capacityProvider: string, weight: number }[];
     //Task
     concurrency?: number; //defaults to 1
     cpu?: number; //defaults to 512
@@ -225,7 +229,12 @@ export type OFunctionLambdaContainerEvent = {
 
 
 
-//Services principal helper
+//Misc
+export enum OPropagateTagsType {
+    OFF = 'OFF', 
+    SERVICE = 'SERVICE', 
+    TASK = 'TASK'
+};
 export const OIAMServicesPrincipal = {
     type: 'array',
     items: {
