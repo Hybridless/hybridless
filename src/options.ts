@@ -20,12 +20,12 @@ export interface OFunction {
 }
 
 //follows @hybridless/serverless-ecs-plugin model for compatibility purposes :)
-export type OVPCOptions = OVPCOptions_DedicatedVPC | OVPCOptions_SpecifiedVPC;
-export interface OVPCOptions_DedicatedVPC {
+export type OVPCOptions = OVPCOptions_Dedicated | OVPCOptions_Shared;
+export interface OVPCOptions_Dedicated {
     cidr: string;
     subnets: string[];
 };
-export interface OVPCOptions_SpecifiedVPC {
+export interface OVPCOptions_Shared {
     //Optional ivars to dictate if will use existing VPC and subnets specified
     vpcId: string;
     securityGroupIds: string[];

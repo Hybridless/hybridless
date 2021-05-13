@@ -10,7 +10,7 @@ import DepsManager from "./core/DepsManager";
 import Globals from "./core/Globals";
 //
 const PluginOptionsSchema = require('./options.json');
-//
+//Global reference for static usage on webpack entrypoint or other references
 let _globalHybridless: hybridless = null;
 //
 class hybridless {
@@ -273,10 +273,10 @@ class hybridless {
             ...func
         };
     }
-    public appendFargateCluster(clusterName: string, cluster: any): void {
+    public appendECSCluster(clusterName: string, cluster: any): void {
         if (!this.serverless.service.custom) this.serverless.service.custom = {};
-        if (!this.serverless.service.custom.fargate) this.serverless.service.custom.fargate = [];
-        this.serverless.service.custom.fargate.push(cluster);
+        if (!this.serverless.service.custom.ecs) this.serverless.service.custom.ecs = [];
+        this.serverless.service.custom.ecs.push(cluster);
     }
     public async loadPlugin(plugin: any): BPromise<any> {
         return await this.serverless.pluginManager.loadPlugin(plugin);
