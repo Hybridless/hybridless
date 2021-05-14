@@ -73,6 +73,7 @@ export enum OFunctionLambdaProtocol {
     sqs = 'sqs',
     sns = 'sns',
     scheduler = 'scheduler',
+    cloudWatch = 'cloudWatch',
     s3 = 's3',
     none = 'none'
 };
@@ -208,7 +209,7 @@ export interface OFunctionLambdaSNSEvent extends OFunctionEvent {
 export interface OFunctionLambdaSchedulerEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.scheduler;
     schedulerRate?: string; 
-    schedulerInput?: string; 
+    schedulerInput?: string | any; 
 }
 export interface OFunctionLambdaDynamoStreamsEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.dynamostreams;
@@ -221,6 +222,13 @@ export interface OFunctionLambdaS3Event extends OFunctionEvent {
     s3bucketExisting?: boolean;
     s3rules?: { [key in ('prefix'|'suffix')]?: string }[];
 }
+export interface OFunctionLambdaCloudWatchEvent extends OFunctionEvent {
+    protocol: OFunctionLambdaProtocol.cloudWatch;
+    cloudWatchEventSource: string;
+    cloudWatchDetailType: string;
+    cloudWatchDetailState?: string;
+    cloudWatchInput?: string | any;
+}
 export interface OFunctionLambdaNoneEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.none;
 }
@@ -232,7 +240,7 @@ export type OFunctionLambdaEvent = {
   //Any lambda event source
   & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | 
      OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent |
-     OFunctionLambdaS3Event);
+     OFunctionLambdaS3Event | OFunctionLambdaCloudWatchEvent);
 export type OFunctionLambdaContainerEvent = {
     runtime: OFunctionLambdaContainerRuntime;
     eventType: OFunctionEventType.lambdaContainer;
@@ -241,7 +249,7 @@ export type OFunctionLambdaContainerEvent = {
   //Any lambda event source
   & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | 
      OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent |
-     OFunctionLambdaS3Event);
+     OFunctionLambdaS3Event | OFunctionLambdaCloudWatchEvent);
 
 
 

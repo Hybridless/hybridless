@@ -2,7 +2,7 @@ import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent"; //base class
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionHTTPDTaskEvent, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionHTTPDTaskEvent, OFunctionLambdaCloudWatchEvent, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
 //
 import BPromise = require('bluebird');
 import Globals from "../core/Globals";
@@ -63,7 +63,10 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                                 ...(this.event.protocol == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
                                 //scheduler
                                 ...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: (this.event as OFunctionLambdaSchedulerEvent).schedulerRate } : {}),
-                                ...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? { input: (this.event as OFunctionLambdaSchedulerEvent).schedulerInput } : {}),
+                                ...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? { input: 
+                                    typeof (this.event as OFunctionLambdaSchedulerEvent).schedulerInput == 'string' ? 
+                                        (this.event as OFunctionLambdaSchedulerEvent).schedulerInput : JSON.stringify((this.event as OFunctionLambdaSchedulerEvent).schedulerInput)
+                                } : {}),
                                 //sns
                                 ...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
                                 //s3
@@ -73,6 +76,16 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                                     ...((this.event as OFunctionLambdaS3Event).s3bucketExisting ? { existing: true } : {}),
                                     ...((this.event as OFunctionLambdaS3Event).s3rules ? { rules: (this.event as OFunctionLambdaS3Event).s3rules } : {}),
                                 }} : {}),
+                                //cloud watch
+                                ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource ? { 
+                                    input: (typeof (this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource == 'string' ?
+                                            (this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource : JSON.stringify((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource)),
+                                    event: {
+                                        ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource ? { source: [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource] } : {}),
+                                        ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType ? { 'detail-type': [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType] } : {}),
+                                        ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailState ? { detail: { state: [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType] } } : {}),
+                                    }
+                                } : {}),
                                 //http
                                 ...(route ? { path: (route.path == '*' ? '{proxy+}' : route.path) } : {}),
                                 ...(route ? { method: route.method } : {}),
@@ -87,10 +100,13 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                         };
                     })
                 } : {}),
-
             }
         };
     }
+    cloudWatchEventSource: string;
+    cloudWatchDetailType: string;
+    cloudWatchDetailState?: string;
+    cloudWatchInput?: string | any;
     /* Cognito authorizer */
     private _generateCognitoAuthorizer(): any {
         if ((this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn) {
@@ -111,6 +127,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
     private _getProtocolName(proto: OFunctionLambdaProtocol): string {
         if (proto == OFunctionLambdaProtocol.dynamostreams) return 'stream';
         else if (proto == OFunctionLambdaProtocol.scheduler) return 'schedule';
+        else if (proto == OFunctionLambdaProtocol.cloudWatch) return 'cloudwatchEvent';
         return proto;
     }
     private _getFunctionName(suffix?: string): string {
