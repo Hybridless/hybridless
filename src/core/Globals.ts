@@ -7,6 +7,7 @@ export type DockerFiles = { name: string, dir: string, dest: string } [];
 export default class Globals {
     public static PluginDefaultProvider: string = 'aws';
     public static DockerLatestTag: string = 'latest';
+    public static DockerPreDeploymentTag: string = 'previous';
     //Dependecies
     public static Deps_Webpack = 'serverless-webpack';
     public static Deps_ECS = '@hybridless/serverless-ecs-plugin';

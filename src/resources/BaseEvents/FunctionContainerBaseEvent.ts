@@ -16,7 +16,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
         super(plugin, func, event, index);
     }
 
-    //Plugin lifecycle
+    //Plugin function lifecycle
     public async spread(): BPromise { return BPromise.resolve(); }
     public async checkDependencies(): BPromise {
         return new BPromise(async (resolve, reject) => {
@@ -58,6 +58,8 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
             //Authenticate with registry
             const authResp = await this._runCommand(`aws ecr get-login-password --region ${this.plugin.region} | docker login -u AWS ${ECRRepoURL} --password-stdin`, '');
             if (authResp.stderr && authResp.stderr.includes('ERROR')) reject(authResp.stderr);
+            //Retag latest image if available
+            await this._retagLastestImage();
             //Push to ECR
             this.plugin.logger.info(`Pushing docker image on repo ${this._getECRRepoName()}..`);
             const pushResp = await this._runCommand(`docker push ${ECRRepoURL}`, '');
@@ -72,33 +74,16 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     protected getContainerEnvironments(): any { return {}; } 
     public async getClusterTask(): BPromise { return BPromise.resolve(); }
 
-    //Private Naming
+    //Private
     protected _getECRRepoName(): string {
         return `${this.plugin.getName()}/${this.func.getName()}.${this.index}-${this.plugin.stage}.v2`.toLowerCase();
     }
-    protected async _getECRRepo(includeRepoName: boolean) {
+    protected async _getECRRepo(includeRepoName: boolean, usePreDeploymentTag?: boolean) {
         const accID = await this.plugin.getAccountID();
         return `${accID}.dkr.ecr.${this.plugin.region}.amazonaws.com` + (includeRepoName ? `/${this._getECRRepoName()}:${Globals.DockerLatestTag}` : '');
     }
     protected _getTaskName(): string {
         return this.plugin.provider.naming.getNormalizedFunctionName(`Task${this.index}`);
-    }
-
-    //Helper
-    private async _runCommand(command, params): BPromise {
-        return new BPromise( async (resolve, reject) => {
-            let resp = {};
-            if (!params) params = [];
-            let formattedParams = params.join(' ');
-            try {
-                //@ts-ignore
-                const resp = await executor(command + ' ' + formattedParams);
-                resolve(resp);
-            } catch (err) {
-                this.plugin.logger.error('Error while running command', err);
-                reject(err);
-            }
-        });
     }
 
     //AWS Shorcut
@@ -130,5 +115,33 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
                 }
             );
         } else return BPromise.reject('Could not create ECR repo!');
+    }
+    private async _retagLastestImage(): BPromise {
+        //todo: couldn't find list/query image by specified tag, investigate
+        const ecrImages = await this.plugin.serverless.getProvider('aws').request('ECR', 'listImages', { filter: { tagStatus: 'TAGGED' } });
+        if (ecrImages) {
+            const image = ecrImages.imageIds.find((image) => image.imageTag == Globals.DockerLatestTag);
+            if (image) {
+                this.plugin.logger.info(`ECR repo ${this._getECRRepoName()} does have a previous latest image, moving it to ${Globals.DockerPreDeploymentTag} tag!`);
+                const retagResp = await this._runCommand(`docker tag ${this._getECRRepo(true, false)} ${this._getECRRepo(true, true)}`, '');
+                if (retagResp.stderr && retagResp.stderr.includes('ERROR')) BPromise.reject(retagResp.stderr);
+            }
+        } return BPromise.resolve();
+    }
+
+    //CMD helper
+    private async _runCommand(command, params): BPromise {
+        return new BPromise(async (resolve, reject) => {
+            if (!params) params = [];
+            let formattedParams = params.join(' ');
+            try {
+                //@ts-ignore
+                const resp = await executor(command + ' ' + formattedParams);
+                resolve(resp);
+            } catch (err) {
+                this.plugin.logger.error('Error while running command', err);
+                reject(err);
+            }
+        });
     }
 }
