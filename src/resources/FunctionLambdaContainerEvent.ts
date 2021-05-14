@@ -2,7 +2,7 @@ import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEv
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaContainerEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaContainerEvent, OFunctionLambdaContainerRuntime, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaHTTPLoadBalancerEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -21,6 +21,11 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
             //Check if needs authorizer
             const authorizer = this._generateCognitoAuthorizer();
             if (authorizer) this.plugin.appendResource(this._getAuthorizerName(), authorizer);
+            //Check if using protocol httpAlb and listenerArn is not available
+            if ((this.event as OFunctionLambdaEvent).protocol == OFunctionLambdaProtocol.httpAlb &&
+                !this.func.funcOptions.albListenerArn) {
+                    this.plugin.logger.error(`Function event of type httpAlb does require upper element (function) to have albListenerArn set! can't continue.`);
+            }
             resolve();
         });
     }
@@ -47,18 +52,19 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         ];
     }
     protected getContainerEnvironments(): any {
-        const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
         return {
             'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1,
             'ENTRYPOINT': `${this.func.getEntrypoint(this.event)}`,
             'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
+            //When using ALB with lambda, CORS should be implemented at code level (this might be a wrong assumption, more reasearch is needed)
+            ...(this.event.runtime == OFunctionLambdaProtocol.httpAlb && (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors ? { 'CORS': JSON.stringify((this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors) } : {}),
         };
     }
     /* lambda helpers */
     private async _generateLambdaFunction(): BPromise<any> {
         const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
-        const allowsRouting = (this.event.runtime == OFunctionLambdaProtocol.http);
-        const sanitizedRoutes = (allowsRouting ? (this.event as OFunctionLambdaHTTPEvent).routes : [null]); //important, leave one null object if not http
+        const acceptsRouting = (this.event.runtime == OFunctionLambdaProtocol.http || this.event.runtime == OFunctionLambdaProtocol.httpAlb);
+        const sanitizedRoutes = (acceptsRouting ? (this.event as OFunctionLambdaHTTPEvent || this.event as OFunctionLambdaHTTPLoadBalancerEvent).routes : [null]); //important, leave one null object if not http
         const repoName = await this._getECRRepo(true);
         return {
             [this._getFunctionName()]: {
@@ -77,74 +83,117 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
                 tracing: (event.disableTracing ? false : true), //enable x-ray tracing by default,
                 versionFunctions: false, //disable function versions be default
                 //Lambda events means routes on this scope
-                ...(sanitizedRoutes && sanitizedRoutes.length > 0 ? {
-                    events: sanitizedRoutes.map((route) => {
-                        const proto = event.protocol || OFunctionLambdaProtocol.http;
-                        proto == OFunctionLambdaProtocol.http
-                        return {
-                            [this._getProtocolName(proto)]: {
-                                //multiple
-                                ...((this.event as OFunctionLambdaSNSEvent).prototocolArn ? { arn: (this.event as OFunctionLambdaSNSEvent).prototocolArn } : {}),
-                                //sqs
-                                ...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
-                                //ddbstreams
-                                ...((<OFunctionLambdaContainerEvent>this.event).protocol == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
-                                //scheduler
-                                ...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: (this.event as OFunctionLambdaSchedulerEvent).schedulerRate } : {}),
-                                ...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? { input: 
-                                    typeof (this.event as OFunctionLambdaSchedulerEvent).schedulerInput == 'string' ? 
-                                        (this.event as OFunctionLambdaSchedulerEvent).schedulerInput : JSON.stringify((this.event as OFunctionLambdaSchedulerEvent).schedulerInput)
-                                } : {}),
-                                //sns
-                                ...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
-                                //s3
-                                ...((this.event as OFunctionLambdaS3Event).s3bucket ? { s3: {
-                                    bucket: (this.event as OFunctionLambdaS3Event).s3bucket,
-                                    ...((this.event as OFunctionLambdaS3Event).s3event ? { event: (this.event as OFunctionLambdaS3Event).s3event } : {}),
-                                    ...((this.event as OFunctionLambdaS3Event).s3bucketExisting ? { existing: true } : {}),
-                                    ...((this.event as OFunctionLambdaS3Event).s3rules ? { rules: (this.event as OFunctionLambdaS3Event).s3rules } : {}),
-                                }} : {}),
-                                //cloudwatch
-                                ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource ? {
-                                    input: (typeof (this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource == 'string' ?
-                                        (this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource : JSON.stringify((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource)),
-                                    event: {
-                                        ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource ? { source: [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource] } : {}),
-                                        ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType ? { 'detail-type': [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType] } : {}),
-                                        ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailState ? { detail: { state: [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType] } } : {}),
-                                    }
-                                } : {}),
-                                //cloudwatch log streams
-                                ...((this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogGroup ? {
-                                    logGroup: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogGroup,
-                                    ...((this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter ? { filter: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter } : {}),
-                                } : {}),
-                                //cognito triggers
-                                ...((this.event as OFunctionLambdaCognitoTrigger).cognitoTrigger ? {
-                                    pool: (this.event as OFunctionLambdaCognitoTrigger).cognitoUserPoolArn,
-                                    trigger: (this.event as OFunctionLambdaCognitoTrigger).cognitoTrigger,
-                                } : {}),
-                                //http
-                                ...(route ? { path: (route.path == '*' ? '{proxy+}' : route.path) } : {}),
-                                ...(route ? { method: route.method } : {}),
-                                ...((this.event as OFunctionLambdaHTTPEvent).cors ? { cors: (this.event as OFunctionLambdaHTTPEvent).cors } : {}),
-                                ...((this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn ? {
-                                    "authorizer": {
-                                        "type": "COGNITO_USER_POOLS",
-                                        "authorizerId": { "Ref": this._getAuthorizerName() }
-                                    }
-                                } : {}),
-                            }
-                        };
-                    })
-                } : {}),
-
+                ...this._getLambdaEvents(sanitizedRoutes, event)
             }
         };
     }
+
+    /* Events */
+    private _getLambdaEvents(sanitizedRoutes, event): object {
+        return (sanitizedRoutes && sanitizedRoutes.length > 0 ? {
+            events: sanitizedRoutes.map((route) => {
+                return {
+                    [this._getProtocolName(event.protocol)]: {
+                        //multiple
+                        ...((this.event as OFunctionLambdaSNSEvent).prototocolArn ? { arn: (this.event as OFunctionLambdaSNSEvent).prototocolArn } : {}),
+                        //sqs
+                        ...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
+                        //ddbstreams
+                        ...((<OFunctionLambdaContainerEvent>this.event).protocol == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
+                        //scheduler
+                        ...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: (this.event as OFunctionLambdaSchedulerEvent).schedulerRate } : {}),
+                        ...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? {
+                            input:
+                                typeof (this.event as OFunctionLambdaSchedulerEvent).schedulerInput == 'string' ?
+                                    (this.event as OFunctionLambdaSchedulerEvent).schedulerInput : JSON.stringify((this.event as OFunctionLambdaSchedulerEvent).schedulerInput)
+                        } : {}),
+                        //sns
+                        ...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
+                        //s3
+                        ...((this.event as OFunctionLambdaS3Event).s3bucket ? {
+                            s3: {
+                                bucket: (this.event as OFunctionLambdaS3Event).s3bucket,
+                                ...((this.event as OFunctionLambdaS3Event).s3event ? { event: (this.event as OFunctionLambdaS3Event).s3event } : {}),
+                                ...((this.event as OFunctionLambdaS3Event).s3bucketExisting ? { existing: true } : {}),
+                                ...((this.event as OFunctionLambdaS3Event).s3rules ? { rules: (this.event as OFunctionLambdaS3Event).s3rules } : {}),
+                            }
+                        } : {}),
+                        //cloudwatch
+                        ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource ? {
+                            input: (typeof (this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource == 'string' ?
+                                (this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource : JSON.stringify((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource)),
+                            event: {
+                                ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource ? { source: [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource] } : {}),
+                                ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType ? { 'detail-type': [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType] } : {}),
+                                ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailState ? { detail: { state: [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType] } } : {}),
+                            }
+                        } : {}),
+                        //cloudwatch log streams
+                        ...((this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogGroup ? {
+                            logGroup: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogGroup,
+                            ...((this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter ? { filter: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter } : {}),
+                        } : {}),
+                        //cognito triggers
+                        ...((this.event as OFunctionLambdaCognitoTrigger).cognitoTrigger ? {
+                            pool: (this.event as OFunctionLambdaCognitoTrigger).cognitoUserPoolArn,
+                            trigger: (this.event as OFunctionLambdaCognitoTrigger).cognitoTrigger,
+                        } : {}),
+                        //http (API gateway)
+                        ...((this.event as OFunctionLambdaHTTPEvent).protocol == OFunctionLambdaProtocol.http ? {
+                            path: (route.path == '*' ? '{proxy+}' : route.path),
+                            method: route.method || 'ANY',
+                            ...((this.event as OFunctionLambdaHTTPEvent).cors ? { cors: (this.event as OFunctionLambdaHTTPEvent).cors } : {}),
+                            ...((this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn ? {
+                                "authorizer": {
+                                    "type": "COGNITO_USER_POOLS",
+                                    "authorizerId": { "Ref": this._getAuthorizerName() }
+                                }
+                            } : {}),
+                        } : {}),
+                        //http (load balancer)
+                        ...((this.event as OFunctionLambdaHTTPLoadBalancerEvent).protocol == OFunctionLambdaProtocol.httpAlb ? {
+                            listenerArn: this.func.funcOptions.albListenerArn,
+                            priority: route.priority || 1,
+                            conditions: {
+                                path: (route.path == '*' ? '{proxy+}' : route.path),
+                                ...(route && route.method ? { method: route.method } : {}),
+                                ...(route && route.hostname ? { host: route.hostname } : {}),
+                                ...((this.event as OFunctionLambdaHTTPLoadBalancerEvent).limitHeader ? {
+                                    header: { name: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).limitHeader.name, values: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).limitHeader.value }
+                                } : {}),
+                                ...((this.event as OFunctionLambdaHTTPLoadBalancerEvent).limitSourceIPs ? {
+                                    ip: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).limitSourceIPs
+                                } : {}),
+                            },
+                            ...((this.event as OFunctionLambdaHTTPLoadBalancerEvent).healthCheckRoute ? {
+                                healthCheck: {
+                                    path: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).healthCheckRoute,
+                                    intervalSeconds: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).healthCheckInterval || Globals.DefaultHealthCheckInterval,
+                                    timeoutSeconds: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).healthCheckTimeout || Globals.DefaultHealthCheckTimeout,
+                                    healthyThresholdCount: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).healthCheckHealthyCount || Globals.DefaultHealthCheckHealthyCount,
+                                    unhealthyThresholdCount: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).healthCheckUnhealthyCount || Globals.DefaultHealthCheckUnhealthCount,
+                                }
+                            } : {}),
+                            ...((this.event as OFunctionLambdaHTTPLoadBalancerEvent).cognitoAuthorizer ? {
+                                authorizers: {
+                                    authorizer: {
+                                        type: 'cognito',
+                                        userPoolArn: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cognitoAuthorizer.poolArn,
+                                        userPoolClientId: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cognitoAuthorizer.clientId,
+                                        userPoolDomain: (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cognitoAuthorizer.poolDomain,
+                                    }
+                                }
+                            } : {}),
+                        } : {}),
+                    }
+                };
+            })
+        } : {});
+    }
     /* Cognito authorizer stuff */
     private _generateCognitoAuthorizer(): any {
-        if ((this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn) {
+        if ((this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn && 
+            (this.event as OFunctionLambdaHTTPEvent).protocol == OFunctionLambdaProtocol.http) {
             return {
                 'Type': 'AWS::ApiGateway::Authorizer',
                 'Properties': {
@@ -165,6 +214,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         else if (proto == OFunctionLambdaProtocol.cloudWatch) return 'cloudwatchEvent';
         else if (proto == OFunctionLambdaProtocol.cloudWatchLogstream) return 'cloudwatchLog';
         else if (proto == OFunctionLambdaProtocol.cognito) return 'cognitoUserPool';
+        else if (proto == OFunctionLambdaProtocol.httpAlb) return 'alb';
         return proto;
     }
     private _getFunctionName(suffix?: string): string {

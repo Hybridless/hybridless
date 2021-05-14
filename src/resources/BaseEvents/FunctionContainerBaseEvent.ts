@@ -67,7 +67,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
         });
     }
     
-    //Super support
+    //subclasses support
     protected getContainerFiles(): DockerFiles { return null; }
     protected getContainerEnvironments(): any { return {}; } 
     public async getClusterTask(): BPromise { return BPromise.resolve(); }

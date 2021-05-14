@@ -69,6 +69,7 @@ export enum OFunctionLambdaContainerRuntime {
 };
 export enum OFunctionLambdaProtocol {
     http = 'http',
+    httpAlb = 'httpLoadBalancer',
     dynamostreams = 'dynamostreams',
     sqs = 'sqs',
     sns = 'sns',
@@ -128,7 +129,8 @@ export type OFunctionHTTPDTaskEvent = {
     //ALB listener layer
     routes?: {
         path: string;
-        method: string;
+        method?: string;
+        priority?: number; //defaults to 1
     }[];
     cors?: {
         origin: string;
@@ -137,7 +139,7 @@ export type OFunctionHTTPDTaskEvent = {
     }
     hostname?: string | string[];
     limitSourceIPs?: string | string[];
-    priority?: number; //Router priority, usefull for leaving wildcard routes to be the last resort
+    limitHeaders?: { name: string, value: string | string[] }[]; //optional limit headers on ELB
     port?: number; // HTTPD port (the port exposed on the container image) - if not specified random port will be used - usefull for busy private subnets - If port is not specified, it will use 80 for non SSL and 443 for SSL
     certificateArns?: any[]; //certificateArn - if present it will use HTTPS
     cognitoAuthorizer?: {
@@ -150,6 +152,7 @@ export type OFunctionHTTPDTaskEvent = {
     healthCheckTimeout?: number; //defaults to 10
     healthCheckHealthyCount?: number; //defaults to 2
     healthCheckUnhealthyCount?: number; //defaults to 5
+    healthCheckRoute?: string; //default will use auto generated health route
     //AS
     autoScale?: {
         min?: number; //default to 1
@@ -188,7 +191,7 @@ export type OFunctionLambdaBaseEvent = {
 export interface OFunctionLambdaHTTPEvent extends OFunctionEvent {
     routes: {
         path: string;
-        method: string;
+        method?: string;
     }[];
     cors?: {
         origin: string;
@@ -197,6 +200,35 @@ export interface OFunctionLambdaHTTPEvent extends OFunctionEvent {
     }
     protocol: OFunctionLambdaProtocol.http;
     cognitoAuthorizerArn?: any; //assumption
+}
+export interface OFunctionLambdaHTTPLoadBalancerEvent extends OFunctionEvent {
+    routes: {
+        path: string;
+        method?: string | string[];
+        priority?: number; //default to 1
+    }[];
+    cors?: {
+        origin: string;
+        headers: string[];
+        allowCredentials: boolean;
+    }
+    //ALB
+    protocol: OFunctionLambdaProtocol.httpAlb;
+    hostname?: string | string[];
+    limitSourceIPs?: string | string[];
+    //todo: PR serverless to support multiple headers
+    limitHeader?: { name: string, value: string | string[] }; //optional limit headers on ELB
+    cognitoAuthorizer?: {
+        poolDomain: string;
+        poolArn: any;
+        clientId: string;
+    };
+    //health check
+    healthCheckInterval?: number; //defaults to 15,
+    healthCheckTimeout?: number; //defaults to 10
+    healthCheckHealthyCount?: number; //defaults to 2
+    healthCheckUnhealthyCount?: number; //defaults to 5
+    healthCheckRoute?: string; //required to enable health checks
 }
 export interface OFunctionLambdaSQSEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.sqs;
@@ -253,7 +285,7 @@ export type OFunctionLambdaEvent = {
   & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | 
      OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent |
      OFunctionLambdaS3Event | OFunctionLambdaCloudWatchEvent | OFunctionLambdaCloudWatchLogStream |
-     OFunctionLambdaCognitoTrigger);
+     OFunctionLambdaCognitoTrigger | OFunctionLambdaHTTPLoadBalancerEvent);
 export type OFunctionLambdaContainerEvent = {
     runtime: OFunctionLambdaContainerRuntime;
     eventType: OFunctionEventType.lambdaContainer;
@@ -263,7 +295,7 @@ export type OFunctionLambdaContainerEvent = {
   & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | 
      OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent |
      OFunctionLambdaS3Event | OFunctionLambdaCloudWatchEvent | OFunctionLambdaCloudWatchLogStream |
-     OFunctionLambdaCognitoTrigger);
+     OFunctionLambdaCognitoTrigger | OFunctionLambdaHTTPLoadBalancerEvent);
 
 
 

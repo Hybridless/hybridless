@@ -109,7 +109,6 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                 cpu: (event.cpu || Globals.HTTPD_DefaultCPU),
                 memory: (event.memory || this.func.funcOptions.memory || Globals.HTTPD_DefaultMemory),
                 port: this.getPort(),
-                ...(event.priority && event.priority != -1 ? { priority: event.priority } : {}),
                 disableELB: false,
                 taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
                 image: `${ECRRepoFullURL}`,
@@ -131,15 +130,19 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                 //ALB
                 ...(event.hostname && event.hostname != 'null' ? { hostname: event.hostname } : {}),
                 ...(event.limitSourceIPs && event.limitSourceIPs != 'null' ? { limitSourceIPs: event.limitSourceIPs } : {}),
-                healthCheckUri: this.healthRoute,
+                ...(event.limitHeaders ? {
+                    limitHeaders: event.limitHeaders.map((h) => ({ Name: h.name, Value: h.value }))
+                } : {}),
+                path: event.routes.map((route: any) => {
+                    return { path: route.path, method: route.method || 'ANY', priority: route.priority || 1 };
+                }),
+                //Health check
+                healthCheckUri: (event.healthCheckRoute || this.healthRoute),
                 healthCheckProtocol: 'HTTP',
                 healthCheckInterval: (event.healthCheckInterval || Globals.DefaultHealthCheckInterval),
                 healthCheckTimeout: (event.healthCheckTimeout || Globals.DefaultHealthCheckTimeout),
                 healthCheckHealthyCount: (event.healthCheckHealthyCount ||Globals.DefaultHealthCheckHealthyCount),
                 healthCheckUnhealthyCount: (event.healthCheckUnhealthyCount ||Globals.DefaultHealthCheckUnhealthCount),
-                path: event.routes.map((route: any ) => {
-                    return { path: route.path, method: route.method };
-                }),
                 protocols: [{ 
                     protocol: (event.certificateArns ? 'HTTPS' : 'HTTP'),
                     ...(event.certificateArns ? {
