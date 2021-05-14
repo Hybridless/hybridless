@@ -2,7 +2,7 @@ import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEv
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaContainerEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaContainerEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -119,6 +119,11 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
                                     logGroup: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogGroup,
                                     ...((this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter ? { filter: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter } : {}),
                                 } : {}),
+                                //cognito triggers
+                                ...((this.event as OFunctionLambdaCognitoTrigger).cognitoTrigger ? {
+                                    pool: (this.event as OFunctionLambdaCognitoTrigger).cognitoUserPoolArn,
+                                    trigger: (this.event as OFunctionLambdaCognitoTrigger).cognitoTrigger,
+                                } : {}),
                                 //http
                                 ...(route ? { path: (route.path == '*' ? '{proxy+}' : route.path) } : {}),
                                 ...(route ? { method: route.method } : {}),
@@ -159,6 +164,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         else if (proto == OFunctionLambdaProtocol.scheduler) return 'schedule';
         else if (proto == OFunctionLambdaProtocol.cloudWatch) return 'cloudwatchEvent';
         else if (proto == OFunctionLambdaProtocol.cloudWatchLogstream) return 'cloudwatchLog';
+        else if (proto == OFunctionLambdaProtocol.cognito) return 'cognitoUserPool';
         return proto;
     }
     private _getFunctionName(suffix?: string): string {

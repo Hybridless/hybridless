@@ -2,7 +2,7 @@ import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent"; //base class
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionHTTPDTaskEvent, OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionHTTPDTaskEvent, OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
 //
 import BPromise = require('bluebird');
 import Globals from "../core/Globals";
@@ -91,6 +91,11 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                                     logGroup: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogGroup,
                                     ...((this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter ? { filter: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter } : {}),
                                 } : {}),
+                                //cognito triggers
+                                ...((this.event as OFunctionLambdaCognitoTrigger).cognitoTrigger ? {
+                                    pool: (this.event as OFunctionLambdaCognitoTrigger).cognitoUserPoolArn,
+                                    trigger: (this.event as OFunctionLambdaCognitoTrigger).cognitoTrigger,
+                                } : {}),
                                 //http
                                 ...(route ? { path: (route.path == '*' ? '{proxy+}' : route.path) } : {}),
                                 ...(route ? { method: route.method } : {}),
@@ -130,6 +135,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
         else if (proto == OFunctionLambdaProtocol.scheduler) return 'schedule';
         else if (proto == OFunctionLambdaProtocol.cloudWatch) return 'cloudwatchEvent';
         else if (proto == OFunctionLambdaProtocol.cloudWatchLogstream) return 'cloudwatchLog';
+        else if (proto == OFunctionLambdaProtocol.cognito) return 'cognitoUserPool';
         return proto;
     }
     private _getFunctionName(suffix?: string): string {

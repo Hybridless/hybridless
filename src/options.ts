@@ -13,11 +13,11 @@ export interface OFunction {
     memory?: number; //defaults to 1024
     events?: (OFunctionHTTPDTaskEvent | OFunctionProcessTaskEvent | OFunctionLambdaEvent | OFunctionLambdaContainerEvent)[];
     //ECS cluster
-    ecsClusterArn?: string;
+    ecsClusterArn?: any;
     ecsIngressSecGroupId?: string;
     enableContainerInsights?: boolean; //default is respecting account settings
     //ALB
-    albListenerArn?: string;
+    albListenerArn?: any;
     additionalALBTimeout?: number; //default to 1 second
 }
 
@@ -75,6 +75,7 @@ export enum OFunctionLambdaProtocol {
     scheduler = 'scheduler',
     cloudWatch = 'cloudWatch',
     cloudWatchLogstream = 'cloudWatchLogstream',
+    cognito = 'cognito',
     s3 = 's3',
     none = 'none'
 };
@@ -138,10 +139,10 @@ export type OFunctionHTTPDTaskEvent = {
     limitSourceIPs?: string | string[];
     priority?: number; //Router priority, usefull for leaving wildcard routes to be the last resort
     port?: number; // HTTPD port (the port exposed on the container image) - if not specified random port will be used - usefull for busy private subnets - If port is not specified, it will use 80 for non SSL and 443 for SSL
-    certificateArns?: string[]; //certificateArn - if present it will use HTTPS
+    certificateArns?: any[]; //certificateArn - if present it will use HTTPS
     cognitoAuthorizer?: {
         poolDomain: string;
-        poolArn: string;
+        poolArn: any;
         clientId: string;
     };
     //health check
@@ -195,7 +196,7 @@ export interface OFunctionLambdaHTTPEvent extends OFunctionEvent {
         allowCredentials: boolean;
     }
     protocol: OFunctionLambdaProtocol.http;
-    cognitoAuthorizerArn?: string; //assumption
+    cognitoAuthorizerArn?: any; //assumption
 }
 export interface OFunctionLambdaSQSEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.sqs;
@@ -235,6 +236,11 @@ export interface OFunctionLambdaCloudWatchLogStream extends OFunctionEvent {
     cloudWatchLogGroup: string;
     cloudWatchLogFilter?: string;
 }
+export interface OFunctionLambdaCognitoTrigger extends OFunctionEvent {
+    protocol: OFunctionLambdaProtocol.cognito;
+    cognitoUserPoolArn: any;
+    cognitoTrigger: string;
+}
 export interface OFunctionLambdaNoneEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.none;
 }
@@ -246,7 +252,8 @@ export type OFunctionLambdaEvent = {
   //Any lambda event source
   & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | 
      OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent |
-     OFunctionLambdaS3Event | OFunctionLambdaCloudWatchEvent | OFunctionLambdaCloudWatchLogStream);
+     OFunctionLambdaS3Event | OFunctionLambdaCloudWatchEvent | OFunctionLambdaCloudWatchLogStream |
+     OFunctionLambdaCognitoTrigger);
 export type OFunctionLambdaContainerEvent = {
     runtime: OFunctionLambdaContainerRuntime;
     eventType: OFunctionEventType.lambdaContainer;
@@ -255,7 +262,8 @@ export type OFunctionLambdaContainerEvent = {
   //Any lambda event source
   & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | 
      OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent |
-     OFunctionLambdaS3Event | OFunctionLambdaCloudWatchEvent | OFunctionLambdaCloudWatchLogStream);
+     OFunctionLambdaS3Event | OFunctionLambdaCloudWatchEvent | OFunctionLambdaCloudWatchLogStream |
+     OFunctionLambdaCognitoTrigger);
 
 
 
