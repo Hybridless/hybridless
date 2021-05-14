@@ -2,7 +2,7 @@ import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent"; //base class
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionHTTPDTaskEvent, OFunctionLambdaCloudWatchEvent, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionHTTPDTaskEvent, OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
 //
 import BPromise = require('bluebird');
 import Globals from "../core/Globals";
@@ -70,13 +70,13 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                                 //sns
                                 ...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
                                 //s3
-                                ...((this.event as OFunctionLambdaS3Event).s3bucket ? { s3: {
+                                ...((this.event as OFunctionLambdaS3Event).s3bucket ? {
                                     bucket: (this.event as OFunctionLambdaS3Event).s3bucket,
                                     ...((this.event as OFunctionLambdaS3Event).s3event ? { event: (this.event as OFunctionLambdaS3Event).s3event } : {}),
                                     ...((this.event as OFunctionLambdaS3Event).s3bucketExisting ? { existing: true } : {}),
                                     ...((this.event as OFunctionLambdaS3Event).s3rules ? { rules: (this.event as OFunctionLambdaS3Event).s3rules } : {}),
-                                }} : {}),
-                                //cloud watch
+                                } : {}),
+                                //cloudwatch
                                 ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource ? { 
                                     input: (typeof (this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource == 'string' ?
                                             (this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource : JSON.stringify((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchEventSource)),
@@ -85,6 +85,11 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                                         ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType ? { 'detail-type': [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType] } : {}),
                                         ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailState ? { detail: { state: [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType] } } : {}),
                                     }
+                                } : {}),
+                                //cloudwatch log streams
+                                ...((this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogGroup ? {
+                                    logGroup: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogGroup,
+                                    ...((this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter ? { filter: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter } : {}),
                                 } : {}),
                                 //http
                                 ...(route ? { path: (route.path == '*' ? '{proxy+}' : route.path) } : {}),
@@ -103,10 +108,6 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
             }
         };
     }
-    cloudWatchEventSource: string;
-    cloudWatchDetailType: string;
-    cloudWatchDetailState?: string;
-    cloudWatchInput?: string | any;
     /* Cognito authorizer */
     private _generateCognitoAuthorizer(): any {
         if ((this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn) {
@@ -128,6 +129,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
         if (proto == OFunctionLambdaProtocol.dynamostreams) return 'stream';
         else if (proto == OFunctionLambdaProtocol.scheduler) return 'schedule';
         else if (proto == OFunctionLambdaProtocol.cloudWatch) return 'cloudwatchEvent';
+        else if (proto == OFunctionLambdaProtocol.cloudWatchLogstream) return 'cloudwatchLog';
         return proto;
     }
     private _getFunctionName(suffix?: string): string {

@@ -2,7 +2,7 @@ import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEv
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaContainerEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaContainerEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -95,6 +95,8 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
                                     typeof (this.event as OFunctionLambdaSchedulerEvent).schedulerInput == 'string' ? 
                                         (this.event as OFunctionLambdaSchedulerEvent).schedulerInput : JSON.stringify((this.event as OFunctionLambdaSchedulerEvent).schedulerInput)
                                 } : {}),
+                                //sns
+                                ...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
                                 //s3
                                 ...((this.event as OFunctionLambdaS3Event).s3bucket ? { s3: {
                                     bucket: (this.event as OFunctionLambdaS3Event).s3bucket,
@@ -112,8 +114,11 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
                                         ...((this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailState ? { detail: { state: [(this.event as OFunctionLambdaCloudWatchEvent).cloudWatchDetailType] } } : {}),
                                     }
                                 } : {}),
-                                //sns
-                                ...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
+                                //cloudwatch log streams
+                                ...((this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogGroup ? {
+                                    logGroup: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogGroup,
+                                    ...((this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter ? { filter: (this.event as OFunctionLambdaCloudWatchLogStream).cloudWatchLogFilter } : {}),
+                                } : {}),
                                 //http
                                 ...(route ? { path: (route.path == '*' ? '{proxy+}' : route.path) } : {}),
                                 ...(route ? { method: route.method } : {}),
@@ -152,6 +157,8 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
     private _getProtocolName(proto: OFunctionLambdaProtocol): string {
         if (proto == OFunctionLambdaProtocol.dynamostreams) return 'stream';
         else if (proto == OFunctionLambdaProtocol.scheduler) return 'schedule';
+        else if (proto == OFunctionLambdaProtocol.cloudWatch) return 'cloudwatchEvent';
+        else if (proto == OFunctionLambdaProtocol.cloudWatchLogstream) return 'cloudwatchLog';
         return proto;
     }
     private _getFunctionName(suffix?: string): string {
