@@ -73,6 +73,7 @@ export enum OFunctionLambdaProtocol {
     sqs = 'sqs',
     sns = 'sns',
     scheduler = 'scheduler',
+    s3 = 's3',
     none = 'none'
 };
 
@@ -213,6 +214,13 @@ export interface OFunctionLambdaDynamoStreamsEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.dynamostreams;
     prototocolArn?: any; 
 }
+export interface OFunctionLambdaS3Event extends OFunctionEvent {
+    protocol: OFunctionLambdaProtocol.s3;
+    s3bucket: string;
+    s3event?: string;
+    s3bucketExisting?: boolean;
+    s3rules?: { [key in ('prefix'|'suffix')]?: string }[];
+}
 export interface OFunctionLambdaNoneEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.none;
 }
@@ -222,14 +230,18 @@ export type OFunctionLambdaEvent = {
     eventType: OFunctionEventType.lambda;
 } & OFunctionLambdaBaseEvent  //lambda base
   //Any lambda event source
-  & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent);
+  & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | 
+     OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent |
+     OFunctionLambdaS3Event);
 export type OFunctionLambdaContainerEvent = {
     runtime: OFunctionLambdaContainerRuntime;
     eventType: OFunctionEventType.lambdaContainer;
 } & OFunctionLambdaBaseEvent //lambda base
   & OFunctionContainerBaseEvent  //container base
   //Any lambda event source
-  & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent);
+  & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent | 
+     OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent |
+     OFunctionLambdaS3Event);
 
 
 
@@ -240,11 +252,12 @@ export enum OPropagateTagsType {
     SERVICE = 'SERVICE', 
     TASK = 'TASK'
 };
-export const OIAMServicesPrincipal = {
-    type: 'array',
-    items: {
-        type: 'string'
-    },
-    maxItems: 1,
-    minItems: 0,
-};
+//Failed attempt to include servicePrincipal to IAM
+// export const OIAMServicesPrincipal = {
+//     type: 'array',
+//     items: {
+//         type: 'string'
+//     },
+//     maxItems: 1,
+//     minItems: 0,
+// };

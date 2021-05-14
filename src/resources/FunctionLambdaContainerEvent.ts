@@ -2,7 +2,7 @@ import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEv
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionLambdaContainerEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionLambdaContainerEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -92,6 +92,13 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
                                 //scheduler
                                 ...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: (this.event as OFunctionLambdaSchedulerEvent).schedulerRate } : {}),
                                 ...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? { input: (this.event as OFunctionLambdaSchedulerEvent).schedulerInput } : {}),
+                                //s3
+                                ...((this.event as OFunctionLambdaS3Event).s3bucket ? { s3: {
+                                    bucket: (this.event as OFunctionLambdaS3Event).s3bucket,
+                                    ...((this.event as OFunctionLambdaS3Event).s3event ? { event: (this.event as OFunctionLambdaS3Event).s3event } : {}),
+                                    ...((this.event as OFunctionLambdaS3Event).s3bucketExisting ? { existing: true } : {}),
+                                    ...((this.event as OFunctionLambdaS3Event).s3rules ? { rules: (this.event as OFunctionLambdaS3Event).s3rules } : {}),
+                                }} : {}),
                                 //sns
                                 ...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
                                 //http

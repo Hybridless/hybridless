@@ -1,5 +1,5 @@
 import { BaseFunction } from "./resources/Function";
-import { OIAMServicesPrincipal, OPlugin } from "./options";
+import { OPlugin } from "./options";
 //
 import Logger from "./core/Logger";
 import Docker from "./core/Docker";
@@ -12,7 +12,8 @@ import Globals from "./core/Globals";
 const PluginOptionsSchema = require('./options.json');
 //Global reference for static usage on webpack entrypoint or other references
 let _globalHybridless: hybridless = null;
-//
+
+/* Hybridless */
 class hybridless {
     //Plugin stub
     private readonly hooks: {[key: string]: Function};
@@ -102,7 +103,8 @@ class hybridless {
         };
     }
 
-    /* Live-cycle */
+
+    /* Life-cycle */
     private async setup(): BPromise {
         return new BPromise( async (resolve) => {
             this.logger.log('Setting up plugin...');
@@ -262,7 +264,7 @@ class hybridless {
     }
 
 
-    //Resources managements
+    /* Resources Management */
     public appendResource(serviceKey: string, service: any): void {
         _.set(this.serverless, `service.resources.Resources.${serviceKey}`, service);
     }

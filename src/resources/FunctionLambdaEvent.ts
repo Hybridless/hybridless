@@ -2,7 +2,7 @@ import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent"; //base class
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionHTTPDTaskEvent, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionHTTPDTaskEvent, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
 //
 import BPromise = require('bluebird');
 import Globals from "../core/Globals";
@@ -66,6 +66,13 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                                 ...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? { input: (this.event as OFunctionLambdaSchedulerEvent).schedulerInput } : {}),
                                 //sns
                                 ...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
+                                //s3
+                                ...((this.event as OFunctionLambdaS3Event).s3bucket ? { s3: {
+                                    bucket: (this.event as OFunctionLambdaS3Event).s3bucket,
+                                    ...((this.event as OFunctionLambdaS3Event).s3event ? { event: (this.event as OFunctionLambdaS3Event).s3event } : {}),
+                                    ...((this.event as OFunctionLambdaS3Event).s3bucketExisting ? { existing: true } : {}),
+                                    ...((this.event as OFunctionLambdaS3Event).s3rules ? { rules: (this.event as OFunctionLambdaS3Event).s3rules } : {}),
+                                }} : {}),
                                 //http
                                 ...(route ? { path: (route.path == '*' ? '{proxy+}' : route.path) } : {}),
                                 ...(route ? { method: route.method } : {}),

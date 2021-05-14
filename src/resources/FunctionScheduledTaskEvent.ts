@@ -15,7 +15,6 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
     /* Container Base Event Overwrites */
     protected getContainerFiles(): DockerFiles {
         const environment = (<OFunctionScheduledTaskEvent>this.event).runtime;
-        const dockerFileName = Globals.Scheduled_ImageByRuntime(environment);
         const customDockerFile = (<OFunctionScheduledTaskEvent>this.event).dockerFile;
         const serverlessDir = this.plugin.serverless.config.servicePath;
         const additionalDockerFiles = ((<OFunctionScheduledTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
