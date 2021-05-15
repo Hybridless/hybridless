@@ -21,9 +21,7 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Sync Docker Image to Registry
-        # You may pin to the exact commit or the version.
-        # uses: onichandame/docker-registry-sync-action@299248f5fcdacb8229dba17caf36178e85137208
-        uses: onichandame/docker-registry-sync-action@1.0.0
+        uses: onichandame/docker-registry-sync-action@master
         with:
           # the source repository
           source_repository: docker.io/${{ matrix.repo }}
