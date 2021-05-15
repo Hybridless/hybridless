@@ -16,8 +16,8 @@ jobs:
     strategy:
       matrix:
         repo: 
-          - node:alpine12
-          - node:alpine14
+          - node:12-alpine
+          - node:14-alpine
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Sync Docker Image to Registry
