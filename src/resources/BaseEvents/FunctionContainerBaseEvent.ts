@@ -15,7 +15,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     private readonly currentTag: string;
     public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionEvent, index: number) {
         super(plugin, func, event, index);
-        this.currentTag = 'dede';
+        this.currentTag = Date.now() + '';
     }
 
     //Plugin function lifecycle
