@@ -10,7 +10,7 @@
           "additionalProperties": {
             "additionalProperties": false,
             "properties": {
-              "additionalALBTimeout": {
+              "albAdditionalTimeout": {
                 "type": "number"
               },
               "albListenerArn": {
@@ -1959,7 +1959,7 @@
             "additionalProperties": {
               "additionalProperties": false,
               "properties": {
-                "additionalALBTimeout": {
+                "albAdditionalTimeout": {
                   "type": "number"
                 },
                 "albListenerArn": {

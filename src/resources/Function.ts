@@ -31,6 +31,7 @@ export class BaseFunction {
     }
 
     //Plugin life cycle
+    //spread functions, cluster tasks and clusters
     public async spread(): BPromise {
         //For type of event, spread the function
         return new BPromise( async (resolve) => {
@@ -54,6 +55,7 @@ export class BaseFunction {
             resolve();
         });
     }
+    //check what deps. need to be enabled
     public async checkDependencies(): BPromise {
         //For type of event, check function dependencies
         return new BPromise(async (resolve) => {
@@ -63,6 +65,7 @@ export class BaseFunction {
             resolve();
         });
     }
+    //create event extra required resources (ECR for example)
     public async createRequiredResources(): BPromise {
         //For type of event, check function dependencies
         return new BPromise(async (resolve) => {
@@ -72,6 +75,7 @@ export class BaseFunction {
             resolve();
         });
     }
+    //build events (images)
     public async build(): BPromise {
         //For type of event, compile the function
         return new BPromise(async (resolve) => {
@@ -84,6 +88,7 @@ export class BaseFunction {
             resolve();
         });
     }
+    //push events (images)
     public async push(): BPromise {
         //For type of event, spread the function
         return new BPromise(async (resolve) => {
@@ -91,6 +96,19 @@ export class BaseFunction {
                 if (event && event.isEnabled()) {
                     this.plugin.logger.log(`Pushing event ${this.functionName}:${event.eventType}...`);
                     await event.push();
+                }
+            };
+            resolve();
+        });
+    }
+    //rollback events (images tagging)
+    public async rollback(): BPromise {
+        //For type of event, compile the function
+        return new BPromise(async (resolve) => {
+            for (let event of this.events) {
+                if (event && event.isEnabled()) {
+                    this.plugin.logger.log(`Rolling back event ${this.functionName}:${event.eventType}...`);
+                    await event.rollback();
                 }
             };
             resolve();
@@ -134,9 +152,9 @@ export class BaseFunction {
     //private sub logic
     private _spreadCluster(tasks): BPromise {
         return new BPromise( (resolve) => {
-            //Check if needs ELB, we check against HTTPD because we can have proc. and httpd mixed in same cluster but still
+            //Check if needs ALB, we check against HTTPD because we can have proc. and httpd mixed in same cluster but still
             //requiring loadbalancer
-            const needsELB = !!(this.events.find(e => (e instanceof FunctionHTTPDTaskEvent)));
+            const needsALB = !!(this.events.find(e => (e instanceof FunctionHTTPDTaskEvent)));
             //Write ecs task
             const ECSName = this.getName();
             const EBSResource = {
@@ -149,13 +167,11 @@ export class BaseFunction {
                     { clusterArns: { ecsClusterArn: this.funcOptions.ecsClusterArn, ecsIngressSecGroupId: this.funcOptions.ecsIngressSecGroupId } } : { }),
                 //VPC
                 ...this.getVPC(true),
-                //needs pulic IP to be able to retrieve ECS info -- in most of the cases
-                //however when alb is disabled this param is disreguarded
-                public: true, /*  */
-                disableELB: !needsELB,
+                albPrivate: !!this.funcOptions.albIsPrivate,
+                albDisabled: !needsALB,
                 ...(this.funcOptions.albListenerArn && this.funcOptions.albListenerArn != 'null' ? { albListenerArn: this.funcOptions.albListenerArn } : {}),
                 //We need to have an additional gap on the ALB timeout
-                timeout: (this.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) + (this.funcOptions.additionalALBTimeout || Globals.DefaultLoadBalancerAdditionalTimeout),
+                timeout: (this.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) + (this.funcOptions.albAdditionalTimeout || Globals.DefaultLoadBalancerAdditionalTimeout),
             };
             this.plugin.appendECSCluster(ECSName, EBSResource);
             //

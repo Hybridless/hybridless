@@ -32,6 +32,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
     public async createRequiredResources(): BPromise { return BPromise.resolve(); }
     public async build(): BPromise { return BPromise.resolve(); }
     public async push(): BPromise { return BPromise.resolve(); }
+    public async rollback(): BPromise { return BPromise.resolve(); }
 
     /* lambda helpers */
     private _generateLambdaFunction(): any {

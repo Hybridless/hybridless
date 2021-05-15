@@ -24,6 +24,7 @@ export abstract class FunctionBaseEvent <T> {
     public abstract createRequiredResources(): BPromise; //3
     public abstract build(): BPromise; //4
     public abstract push(): BPromise; //5
+    public abstract rollback(): BPromise; //optional 6
     //Helper
     public isEnabled(): boolean {
         const e = <OFunctionEvent><unknown>this.event;

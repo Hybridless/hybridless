@@ -68,7 +68,9 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
             resolve();
         });
     }
-    
+    public async rollback(): BPromise {
+        return await this._retagLastestImage(true);
+    }
     //subclasses support
     protected getContainerFiles(): DockerFiles { return null; }
     protected getContainerEnvironments(): any { return {}; } 
@@ -116,16 +118,17 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
             );
         } else return BPromise.reject('Could not create ECR repo!');
     }
-    private async _retagLastestImage(): BPromise {
+    private async _retagLastestImage(reverseOperation?: boolean): BPromise {
         //todo: couldn't find list/query image by specified tag, investigate
         const ecrImages = await this.plugin.serverless.getProvider('aws').request('ECR', 'listImages', { filter: { tagStatus: 'TAGGED' } });
         if (ecrImages) {
-            const image = ecrImages.imageIds.find((image) => image.imageTag == Globals.DockerLatestTag);
+            const image = ecrImages.imageIds.find((image) => image.imageTag == (reverseOperation ? Globals.DockerPreDeploymentTag : Globals.DockerLatestTag));
             if (image) {
-                this.plugin.logger.info(`ECR repo ${this._getECRRepoName()} does have a previous latest image, moving it to ${Globals.DockerPreDeploymentTag} tag!`);
-                const retagResp = await this._runCommand(`docker tag ${this._getECRRepo(true, false)} ${this._getECRRepo(true, true)}`, '');
+                if (reverseOperation) this.plugin.logger.info(`Reverting image:latest for ECR repo ${this._getECRRepoName()}!`);
+                else this.plugin.logger.info(`ECR repo ${this._getECRRepoName()} does have a previous latest image, moving it to ${Globals.DockerPreDeploymentTag} tag!`);
+                const retagResp = await this._runCommand(`docker tag ${this._getECRRepo(true, reverseOperation)} ${this._getECRRepo(true, !reverseOperation)}`, '');
                 if (retagResp.stderr && retagResp.stderr.includes('ERROR')) BPromise.reject(retagResp.stderr);
-            }
+            } else if (reverseOperation) this.plugin.logger.info(`ECR repo ${this._getECRRepoName()} does NOT have a previous latest image, revert might not be required!`);
         } return BPromise.resolve();
     }
 

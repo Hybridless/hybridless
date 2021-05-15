@@ -82,6 +82,7 @@ class hybridless {
             'hybridless:push:push': () => BPromise.bind(this).then(this.push), //6
             'hybridless:predeploy:pack': () => BPromise.bind(this).then(this.finish), //7
             'hybridless:predeploy:compileCloudFormation': () => BPromise.bind(this).then(this.compileCloudFormation), //7, 8
+            'hybridless:rollback:rollbackContainers': () => BPromise.bind(this).then(this.rollbackContainers), //Optional 9
             // Real hooks
             'before:package:initialize': () => {
                 return BPromise.bind(this)
@@ -99,12 +100,17 @@ class hybridless {
             'package:compileFunctions': () => {
                 return BPromise.bind(this)
                     .then(() => this.serverless.pluginManager.spawn('hybridless:predeploy')) //7, 8
+            },
+            'rollback:initialize': () => {
+                return BPromise.bind(this)
+                    .then(() => this.serverless.pluginManager.spawn('hybridless:rollback')) //Optional 9
             }
         };
     }
 
 
     /* Life-cycle */
+    //setup plugin
     private async setup(): BPromise {
         return new BPromise( async (resolve) => {
             this.logger.log('Setting up plugin...');
@@ -128,6 +134,7 @@ class hybridless {
             resolve();
         });
     }
+    //spread functions, cluster, tasks -- propagates to functions
     private async spread(): BPromise {
         return new BPromise( async (resolve) => {
             this.logger.log('Spreading components...');
@@ -157,6 +164,7 @@ class hybridless {
             resolve();
         });
     }
+    //Check dependencies, install and validate spreaded configuration -- propagates to functions
     private async checkDependencies(): BPromise {
         return new BPromise(async (resolve) => {
             //For each function
@@ -169,6 +177,7 @@ class hybridless {
             resolve();
         }); 
     }
+    //create extra resources (ECR, policies) -- propagates to functions
     private async createResouces(): BPromise {
         return new BPromise(async (resolve) => {
             //No components specified, don't process
@@ -184,6 +193,7 @@ class hybridless {
             resolve();
         });
     }
+    //compile code
     private async compile(): BPromise {
         //Additional iam schema
         return new BPromise.resolve()
@@ -191,6 +201,7 @@ class hybridless {
             .then(() => (!this.depManager.isWebpackRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('webpack:compile')))
             .then(() => (!this.depManager.isWebpackRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('webpack:package')));
     }
+    //build images -- propagates to functions
     private async build(): BPromise { 
         return new BPromise( async (resolve) => {
             //No components specified, don't process
@@ -208,6 +219,7 @@ class hybridless {
             resolve();
         }); 
     }
+    //retag and push images -- propagates to functions
     private async push(): BPromise {
         return new BPromise(async (resolve) => {
             //No components specified, don't process
@@ -223,15 +235,21 @@ class hybridless {
             resolve();
         });
     }
+    //modify execution role (add ECS and additional principals)
     private async finish(): BPromise {
         return new BPromise(async (resolve) => {
             await this._modifyExecutionRole();
             resolve();
         });
     }
+    //compile cloud formation (ecs)
     private async compileCloudFormation(): BPromise {
         return new BPromise.resolve()
             .then(() => (!this.depManager.isECSRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('serverless-ecs-plugin:compile')));
+    }
+    //rollback image tags from previous -- propagates to functions
+    private async rollbackContainers(): BPromise {
+
     }
     
 
@@ -245,6 +263,7 @@ class hybridless {
             }));
         } return [];
     }
+    //get service name
     public getName(): string {
         return this.provider.naming.getNormalizedFunctionName(`${this.service.service}`.replace(/-/g,''));
     }
@@ -280,15 +299,6 @@ class hybridless {
         if (!this.serverless.service.ecs) this.serverless.service.ecs = [];
         this.serverless.service.ecs.push(cluster);
     }
-    public async loadPlugin(plugin: any): BPromise<any> {
-        return await this.serverless.pluginManager.loadPlugin(plugin);
-    }
-    private validateExistingServerlessConfiguration(): void {
-        //TODO: find better way of reissuing validation from in-memory service 
-        let configClone = _.cloneDeep(this.serverless.service);
-        ['serverless', 'serviceObject', 'pluginsData', 'serviceFilename', 'initialServerlessConfig', 'isDashboardMonitoringPreconfigured'].forEach((k) => delete configClone[k]);
-        this.serverless.configSchemaHandler.validateConfig(configClone);
-    }
     private async _modifyExecutionRole(): BPromise {
         //Modify lambda execution role
         const policy = this.serverless.service.provider.compiledCloudFormationTemplate.Resources['IamRoleLambdaExecution'];
@@ -306,6 +316,17 @@ class hybridless {
             }
         } else if (this.serverless.service.provider?.iam?.servicesPrincipal) this.logger.error('Could not find IamRoleLambdaExecution policy for appending trust relation with additional specified services.');
         return BPromise.resolve();
+    }
+
+    /* Plugin Helper */
+    public async loadPlugin(plugin: any): BPromise<any> {
+        return await this.serverless.pluginManager.loadPlugin(plugin);
+    }
+    private validateExistingServerlessConfiguration(): void {
+        //TODO: find better way of reissuing validation from in-memory service 
+        let configClone = _.cloneDeep(this.serverless.service);
+        ['serverless', 'serviceObject', 'pluginsData', 'serviceFilename', 'initialServerlessConfig', 'isDashboardMonitoringPreconfigured'].forEach((k) => delete configClone[k]);
+        this.serverless.configSchemaHandler.validateConfig(configClone);
     }
 
 

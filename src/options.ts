@@ -18,7 +18,8 @@ export interface OFunction {
     enableContainerInsights?: boolean; //default is respecting account settings
     //ALB
     albListenerArn?: any;
-    additionalALBTimeout?: number; //default to 1 second
+    albIsPrivate?: boolean;
+    albAdditionalTimeout?: number; //defaults to 1 second
 }
 
 //follows @hybridless/serverless-ecs-plugin model for compatibility purposes :)
@@ -139,8 +140,8 @@ export type OFunctionHTTPDTaskEvent = {
     }
     hostname?: string | string[];
     limitSourceIPs?: string | string[];
-    limitHeaders?: { name: string, value: string | string[] }[]; //optional limit headers on ELB
-    port?: number; // HTTPD port (the port exposed on the container image) - if not specified random port will be used - usefull for busy private subnets - If port is not specified, it will use 80 for non SSL and 443 for SSL
+    limitHeaders?: { name: string, value: string | string[] }[]; //optional limit headers on ALB
+    port?: number; // HTTPD port (the port exposed on the container image) - If port is not specified, it will use 80 for non SSL and 443 for SSL
     certificateArns?: any[]; //certificateArn - if present it will use HTTPS
     cognitoAuthorizer?: {
         poolDomain: string;
@@ -217,7 +218,7 @@ export interface OFunctionLambdaHTTPLoadBalancerEvent extends OFunctionEvent {
     hostname?: string | string[];
     limitSourceIPs?: string | string[];
     //todo: PR serverless to support multiple headers
-    limitHeader?: { name: string, value: string | string[] }; //optional limit headers on ELB
+    limitHeader?: { name: string, value: string | string[] }; //optional limit headers on ALB
     cognitoAuthorizer?: {
         poolDomain: string;
         poolArn: any;
