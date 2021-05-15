@@ -31,3 +31,7 @@ jobs:
           source_password: ${{ secrets.DOCKER_HUB_PASS }}
           # the target repository
           target_repository: ghcr.io/hybridless/${{ matrix.repo }}
+          # the username for the target registry
+          target_username: ${{ secrets.GH_REGISTRY_USERNAME }}
+          # the password for the source registry
+          target_password: ${{ secrets.GH_REGISTRY_TOKEN }}
