@@ -17,7 +17,15 @@ jobs:
       matrix:
         repo: 
           - node:12-alpine
+          - node:13-alpine
           - node:14-alpine
+          - node:15-alpine
+          - node:12-slim
+          - node:13-slim
+          - node:14-slim
+          - node:15-slim
+          - webdevops/php-nginx:alpine-php5
+          - webdevops/php-nginx:alpine-php7
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Sync Docker Image to Registry
