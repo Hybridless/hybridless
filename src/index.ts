@@ -80,9 +80,9 @@ class hybridless {
             'hybridless:prebuild:compile': () => BPromise.bind(this).then(this.compile), //4
             'hybridless:build:build': () => BPromise.bind(this).then(this.build), //5
             'hybridless:push:push': () => BPromise.bind(this).then(this.push), //6
-            'hybridless:predeploy:pack': () => BPromise.bind(this).then(this.finish), //7
+            'hybridless:predeploy:pack': () => BPromise.bind(this).then(this.modifyExecutionRole), //7
             'hybridless:predeploy:compileCloudFormation': () => BPromise.bind(this).then(this.compileCloudFormation), //7, 8
-            'hybridless:rollback:rollbackContainers': () => BPromise.bind(this).then(this.rollbackContainers), //Optional 9
+            'hybridless:cleanup:cleanupContainers': () => BPromise.bind(this).then(this.cleanupContainers), //9
             // Real hooks
             'before:package:initialize': () => {
                 return BPromise.bind(this)
@@ -103,7 +103,7 @@ class hybridless {
             },
             'rollback:initialize': () => {
                 return BPromise.bind(this)
-                    .then(() => this.serverless.pluginManager.spawn('hybridless:rollback')) //Optional 9
+                    .then(() => this.serverless.pluginManager.spawn('hybridless:cleanup')) //Optional 9
             }
         };
     }
@@ -236,7 +236,7 @@ class hybridless {
         });
     }
     //modify execution role (add ECS and additional principals)
-    private async finish(): BPromise {
+    private async modifyExecutionRole(): BPromise {
         return new BPromise(async (resolve) => {
             await this._modifyExecutionRole();
             resolve();
@@ -247,9 +247,15 @@ class hybridless {
         return new BPromise.resolve()
             .then(() => (!this.depManager.isECSRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('serverless-ecs-plugin:compile')));
     }
-    //rollback image tags from previous -- propagates to functions
-    private async rollbackContainers(): BPromise {
-
+    //Cleanup old containers from registry
+    private async cleanupContainers(): BPromise {
+        return new BPromise(async (resolve) => {
+            //For each function
+            this.logger.log('Cleaning up functions...');
+            for (let func of this.functions) await func.cleanup();
+            //
+            resolve();
+        });
     }
     
 

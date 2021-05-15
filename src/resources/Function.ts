@@ -102,13 +102,13 @@ export class BaseFunction {
         });
     }
     //rollback events (images tagging)
-    public async rollback(): BPromise {
+    public async cleanup(): BPromise {
         //For type of event, compile the function
         return new BPromise(async (resolve) => {
             for (let event of this.events) {
                 if (event && event.isEnabled()) {
-                    this.plugin.logger.log(`Rolling back event ${this.functionName}:${event.eventType}...`);
-                    await event.rollback();
+                    this.plugin.logger.log(`Cleaning up ${this.functionName}:${event.eventType}...`);
+                    await event.cleanup();
                 }
             };
             resolve();

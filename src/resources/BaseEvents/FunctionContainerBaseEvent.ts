@@ -12,8 +12,10 @@ import Globals, { DockerFiles } from "../../core/Globals";
 const executor = util.promisify(child.exec);
 //
 export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent> {
+    private readonly currentTag: string;
     public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionEvent, index: number) {
         super(plugin, func, event, index);
+        this.currentTag = 'dede';
     }
 
     //Plugin function lifecycle
@@ -41,12 +43,12 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     public async build(): BPromise {
         return new BPromise( async (resolve, reject) => {
             const localImageName = this._getECRRepoName();
-            const ECRRepoURL: string = <string> await this._getECRRepo(true);
+            const ECRRepoURL: string = (await this._getFullECRRepoImageURL());
             //Build image
             const files = this.getContainerFiles();
             await this.plugin.docker.buildImage(files, localImageName, this.event.runtime);
             //Prepare to push to registry by tagging it 
-            const tagResp = await this._runCommand(`docker tag ${localImageName}:${Globals.DockerLatestTag} ${ECRRepoURL}`, '');
+            const tagResp = await this._runCommand(`docker tag ${localImageName}:${this.currentTag} ${ECRRepoURL}`, '');
             if (tagResp.stderr) reject(tagResp.stderr);
             //
             resolve();
@@ -54,22 +56,22 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     }
     public async push(): BPromise {
         return new BPromise(async (resolve, reject) => {
-            const ECRRepoURL: string = <string>await this._getECRRepo(true);
+            const ECRRepoURL: string = (await this._getFullECRRepoImageURL());
             //Authenticate with registry
             const authResp = await this._runCommand(`aws ecr get-login-password --region ${this.plugin.region} | docker login -u AWS ${ECRRepoURL} --password-stdin`, '');
             if (authResp.stderr && authResp.stderr.includes('ERROR')) reject(authResp.stderr);
-            //Retag latest image if available
-            await this._retagLastestImage();
             //Push to ECR
             this.plugin.logger.info(`Pushing docker image on repo ${this._getECRRepoName()}..`);
             const pushResp = await this._runCommand(`docker push ${ECRRepoURL}`, '');
             if (pushResp.stderr && pushResp.stderr.includes('ERROR')) reject(pushResp.stderr);
+            else this.plugin.logger.info(`Image tag: ${this.currentTag}`);
             //
             resolve();
         });
     }
-    public async rollback(): BPromise {
-        return await this._retagLastestImage(true);
+    public async cleanup(): BPromise {
+        const ECRRepoName = this._getECRRepoName();
+        return await this._cleanupOldImages(ECRRepoName);
     }
     //subclasses support
     protected getContainerFiles(): DockerFiles { return null; }
@@ -77,12 +79,12 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     public async getClusterTask(): BPromise { return BPromise.resolve(); }
 
     //Private
-    protected _getECRRepoName(): string {
+    private _getECRRepoName(): string {
         return `${this.plugin.getName()}/${this.func.getName()}.${this.index}-${this.plugin.stage}.v2`.toLowerCase();
     }
-    protected async _getECRRepo(includeRepoName: boolean, usePreDeploymentTag?: boolean) {
+    protected async _getFullECRRepoImageURL() {
         const accID = await this.plugin.getAccountID();
-        return `${accID}.dkr.ecr.${this.plugin.region}.amazonaws.com` + (includeRepoName ? `/${this._getECRRepoName()}:${Globals.DockerLatestTag}` : '');
+        return `${accID}.dkr.ecr.${this.plugin.region}.amazonaws.com` + `/${this._getECRRepoName()}:${this.currentTag}`;
     }
     protected _getTaskName(): string {
         return this.plugin.provider.naming.getNormalizedFunctionName(`Task${this.index}`);
@@ -98,38 +100,44 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
         if (createECR) {
             //Setup ECR lifecycle policy
             this.plugin.logger.info(`Setting ECR repo ${ECRRepoName} lifecycle policy..`);
-            const accID = await this.plugin.getAccountID();
             return await this.plugin.serverless.getProvider('aws').request('ECR', 'putLifecyclePolicy', {
-                    repositoryName: ECRRepoName, registryId: accID, lifecyclePolicyText: JSON.stringify({
-                        "rules": [{
-                            "rulePriority": 1,
-                            "description": "Keep only one untagged image, expire all others",
-                            "selection": {
-                                "tagStatus": "untagged",
-                                "countType": "imageCountMoreThan",
-                                "countNumber": 1
-                            },
-                            "action": {
-                                "type": "expire"
-                            }
-                        }]
-                    })
-                }
-            );
+                repositoryName: ECRRepoName, lifecyclePolicyText: JSON.stringify({
+                    "rules": [{
+                        "rulePriority": 1,
+                        "description": "Keep last 100 items (failsafe policy)",
+                        "selection": {
+                            "tagStatus": "any",
+                            "countType": "imageCountMoreThan",
+                            "countNumber": 100 //100 failed deployments should be more than enough :p
+                        },
+                        "action": {
+                            "type": "expire"
+                        }
+                    }]
+                })
+            });
         } else return BPromise.reject('Could not create ECR repo!');
     }
-    private async _retagLastestImage(reverseOperation?: boolean): BPromise {
-        //todo: couldn't find list/query image by specified tag, investigate
-        const ecrImages = await this.plugin.serverless.getProvider('aws').request('ECR', 'listImages', { filter: { tagStatus: 'TAGGED' } });
+    private async _cleanupOldImages(ECRRepoName: string): BPromise {
+        //Find ECR repo images
+        this.plugin.logger.info(`Cleaning up old ECR images from: ${ECRRepoName}..`);
+        const ecrImages = await this.plugin.serverless.getProvider('aws').request('ECR', 'listImages', {
+            repositoryName: ECRRepoName, maxResults: 100
+        });
         if (ecrImages) {
-            const image = ecrImages.imageIds.find((image) => image.imageTag == (reverseOperation ? Globals.DockerPreDeploymentTag : Globals.DockerLatestTag));
-            if (image) {
-                if (reverseOperation) this.plugin.logger.info(`Reverting image:latest for ECR repo ${this._getECRRepoName()}!`);
-                else this.plugin.logger.info(`ECR repo ${this._getECRRepoName()} does have a previous latest image, moving it to ${Globals.DockerPreDeploymentTag} tag!`);
-                const retagResp = await this._runCommand(`docker tag ${this._getECRRepo(true, reverseOperation)} ${this._getECRRepo(true, !reverseOperation)}`, '');
-                if (retagResp.stderr && retagResp.stderr.includes('ERROR')) BPromise.reject(retagResp.stderr);
-            } else if (reverseOperation) this.plugin.logger.info(`ECR repo ${this._getECRRepoName()} does NOT have a previous latest image, revert might not be required!`);
-        } return BPromise.resolve();
+            //filter out by removing just deployed image
+            const removeImages = ecrImages.filter((i) => i.imageTag != this.currentTag);
+            //remove images if found
+            if (removeImages.length > 0) {
+                this.plugin.logger.info(`Cleaning up ${removeImages.length} unused images on ECR repo ${ECRRepoName}..`);
+                return await this.plugin.serverless.getProvider('aws').request('ECR', 'deleteBatchImage', {
+                    repositoryName: ECRRepoName, imageIds: removeImages,
+                });
+            } else {
+                this.plugin.logger.warn(`No images found on ECR repo ${ECRRepoName} to be cleaned; This should not happen unless you have manually changed the ECR lifecycle policy.`);
+                return BPromise.resolve(); //dont need to throw for this :) 
+            } 
+        } else return BPromise.reject('Could not find ECR repo images!');
     }
 
     //CMD helper

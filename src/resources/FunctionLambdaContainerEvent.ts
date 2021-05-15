@@ -65,7 +65,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
         const acceptsRouting = (this.event.runtime == OFunctionLambdaProtocol.http || this.event.runtime == OFunctionLambdaProtocol.httpAlb);
         const sanitizedRoutes = (acceptsRouting ? (this.event as OFunctionLambdaHTTPEvent || this.event as OFunctionLambdaHTTPLoadBalancerEvent).routes : [null]); //important, leave one null object if not http
-        const repoName = await this._getECRRepo(true);
+        const repoName = await this._getFullECRRepoImageURL();
         return {
             [this._getFunctionName()]: {
                 name: `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}`,
