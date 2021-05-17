@@ -108,7 +108,6 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                 //Task
                 cpu: (event.cpu || Globals.HTTPD_DefaultCPU),
                 memory: (event.memory || this.func.funcOptions.memory || Globals.HTTPD_DefaultMemory),
-                port: this.getPort(),
                 taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
                 image: `${ECRRepoFullURL}`,
                 ...(event.entrypoint ? { entrypoint: event.entrypoint } : {}),
@@ -143,6 +142,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                 healthCheckHealthyCount: (event.healthCheckHealthyCount ||Globals.DefaultHealthCheckHealthyCount),
                 healthCheckUnhealthyCount: (event.healthCheckUnhealthyCount ||Globals.DefaultHealthCheckUnhealthCount),
                 listeners: [{
+                    port: this.getPort(),
                     albProtocol: (event.certificateArns ? 'HTTPS' : 'HTTP'),
                     ...(event.certificateArns ? {
                         'certificateArns': event.certificateArns

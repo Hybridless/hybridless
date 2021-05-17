@@ -2999,6 +2999,12 @@
                   {
                     "additionalProperties": false,
                     "properties": {
+                      "albSubnetIds": {
+                        "items": {
+                          "type": "string"
+                        },
+                        "type": "array"
+                      },
                       "securityGroupIds": {
                         "items": {
                           "type": "string"
@@ -6026,6 +6032,12 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "albSubnetIds": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
                         "securityGroupIds": {
                           "items": {
                             "type": "string"
