@@ -46,7 +46,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
             const ECRRepoURL: string = (await this._getFullECRRepoImageURL());
             //Build image
             const files = this.getContainerFiles();
-            await this.plugin.docker.buildImage(files, localImageName, this.event.runtime);
+            await this.plugin.docker.buildImage(files, `${localImageName}:${this.currentTag}`, this.event.runtime);
             //Prepare to push to registry by tagging it 
             const tagResp = await this._runCommand(`docker tag ${localImageName}:${this.currentTag} ${ECRRepoURL}`, '');
             if (tagResp.stderr) reject(tagResp.stderr);
@@ -124,13 +124,13 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
         const ecrImages = await this.plugin.serverless.getProvider('aws').request('ECR', 'listImages', {
             repositoryName: ECRRepoName, maxResults: 100
         });
-        if (ecrImages) {
+        if (ecrImages && ecrImages.imageIds) {
             //filter out by removing just deployed image
-            const removeImages = ecrImages.filter((i) => i.imageTag != this.currentTag);
+            const removeImages = ecrImages.imageIds.filter((i) => i.imageTag != this.currentTag);
             //remove images if found
             if (removeImages.length > 0) {
                 this.plugin.logger.info(`Cleaning up ${removeImages.length} unused images on ECR repo ${ECRRepoName}..`);
-                return await this.plugin.serverless.getProvider('aws').request('ECR', 'deleteBatchImage', {
+                return await this.plugin.serverless.getProvider('aws').request('ECR', 'batchDeleteImage', {
                     repositoryName: ECRRepoName, imageIds: removeImages,
                 });
             } else {

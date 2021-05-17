@@ -65,7 +65,11 @@ class hybridless {
                     },
                     predeploy: {
                         type: 'entrypoint',
-                        lifecycleEvents: ['pack']
+                        lifecycleEvents: ['compileCloudFormation', 'pack']
+                    },
+                    cleanup: {
+                        type: 'entrypoint',
+                        lifecycleEvents: ['cleanupContainers']
                     }
                 }
             }
@@ -80,8 +84,8 @@ class hybridless {
             'hybridless:prebuild:compile': () => BPromise.bind(this).then(this.compile), //4
             'hybridless:build:build': () => BPromise.bind(this).then(this.build), //5
             'hybridless:push:push': () => BPromise.bind(this).then(this.push), //6
-            'hybridless:predeploy:pack': () => BPromise.bind(this).then(this.modifyExecutionRole), //7
-            'hybridless:predeploy:compileCloudFormation': () => BPromise.bind(this).then(this.compileCloudFormation), //7, 8
+            'hybridless:predeploy:compileCloudFormation': () => BPromise.bind(this).then(this.compileCloudFormation), //7
+            'hybridless:predeploy:pack': () => BPromise.bind(this).then(this.modifyExecutionRole), //8
             'hybridless:cleanup:cleanupContainers': () => BPromise.bind(this).then(this.cleanupContainers), //9
             // Real hooks
             'before:package:initialize': () => {
@@ -97,7 +101,7 @@ class hybridless {
                     .then(() => this.serverless.pluginManager.spawn('hybridless:build')) //5
                     .then(() => this.serverless.pluginManager.spawn('hybridless:push')) //6
             },
-            'package:compileFunctions': () => {
+            'deploy:compileFunctions': () => {
                 return BPromise.bind(this)
                     .then(() => this.serverless.pluginManager.spawn('hybridless:predeploy')) //7, 8
             },
@@ -306,6 +310,7 @@ class hybridless {
         this.serverless.service.ecs.push(cluster);
     }
     private async _modifyExecutionRole(): BPromise {
+        console.log(this.serverless.service.provider.compiledCloudFormationTemplate)
         //Modify lambda execution role
         const policy = this.serverless.service.provider.compiledCloudFormationTemplate.Resources['IamRoleLambdaExecution'];
         if (policy && this.depManager.isECSRequired()) {
