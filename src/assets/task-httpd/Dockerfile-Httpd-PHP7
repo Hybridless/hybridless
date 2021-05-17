@@ -1,4 +1,4 @@
-FROM 930uob4kkc.execute-api.us-west-2.amazonaws.com/php:7-alpine
+FROM ghcr.io/hybridless/webdevops/php-nginx:alpine-php7
 MAINTAINER gabriel@ikonintegration.com
 
 # customize fastcgi

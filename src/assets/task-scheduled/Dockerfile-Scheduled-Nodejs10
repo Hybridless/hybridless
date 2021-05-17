@@ -1,4 +1,4 @@
-FROM 930uob4kkc.execute-api.us-west-2.amazonaws.com/node:10-alpine
+FROM ghcr.io/hybridless/node:10-alpine
 MAINTAINER gabriel@ikonintegration.com
 
 # Copy files
