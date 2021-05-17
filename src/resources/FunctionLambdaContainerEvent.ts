@@ -32,7 +32,6 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
     /* Container Base Event Overwrites */
     protected getContainerFiles(): DockerFiles {
         const environment = (<OFunctionLambdaContainerEvent>this.event).runtime;
-        const dockerFileName = Globals.LambdaContainer_ImageByRuntime(environment);
         const customDockerFile = (<OFunctionLambdaContainerEvent>this.event).dockerFile;
         const serverlessDir = this.plugin.serverless.config.servicePath;
         const additionalDockerFiles = ((<OFunctionLambdaContainerEvent>this.event).additionalDockerFiles || []).map((file) => {
@@ -46,18 +45,19 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         return [
             (customDockerFile ?
                 { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
-                { name: dockerFileName, dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
+                { name: Globals.LambdaContainer_ImageByRuntime(environment), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
             { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
             ...additionalDockerFiles
         ];
     }
     protected getContainerEnvironments(): any {
+        const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
         return {
             'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1,
             'ENTRYPOINT': `${this.func.getEntrypoint(this.event)}`,
             'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
             //When using ALB with lambda, CORS should be implemented at code level (this might be a wrong assumption, more reasearch is needed)
-            ...(this.event.runtime == OFunctionLambdaProtocol.httpAlb && (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors ? { 'CORS': JSON.stringify((this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors) } : {}),
+            ...(event.protocol == OFunctionLambdaProtocol.httpAlb && (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors ? { 'CORS': JSON.stringify((this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors) } : {}),
         };
     }
     /* lambda helpers */

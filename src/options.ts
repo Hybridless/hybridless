@@ -11,7 +11,7 @@ export interface OFunction {
     vpc?: OVPCOptions;
     timeout?: number; //Only works with lambda based
     memory?: number; //defaults to 1024
-    events?: (OFunctionHTTPDTaskEvent | OFunctionProcessTaskEvent | OFunctionLambdaEvent | OFunctionLambdaContainerEvent)[];
+    events?: (OFunctionHTTPDTaskEvent | OFunctionProcessTaskEvent | OFunctionScheduledTaskEvent | OFunctionLambdaEvent | OFunctionLambdaContainerEvent)[];
     //ECS cluster
     ecsClusterArn?: any;
     ecsIngressSecGroupId?: string;
@@ -68,6 +68,7 @@ export enum OFunctionLambdaContainerRuntime {
     nodejs10 = 'nodejs10',
     nodejs12 = 'nodejs12',
     nodejs14 = 'nodejs14',
+    container = 'container'
 };
 export enum OFunctionLambdaProtocol {
     http = 'http',
