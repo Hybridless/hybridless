@@ -36,7 +36,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 
     /* lambda helpers */
     private _generateLambdaFunction(): any {
-        const acceptsRouting = (this.event.runtime == OFunctionLambdaProtocol.http || this.event.runtime == OFunctionLambdaProtocol.httpAlb);
+        const acceptsRouting = (this.event.protocol == OFunctionLambdaProtocol.http || this.event.protocol == OFunctionLambdaProtocol.httpAlb);
         const sanitizedRoutes = (acceptsRouting ? (this.event as OFunctionLambdaHTTPEvent || this.event as OFunctionLambdaHTTPLoadBalancerEvent).routes : [null]); //important, leave one null object if not http
         return {
             [this._getFunctionName()]: {
@@ -54,7 +54,6 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                 ...(this.event.layers ? { layers: this.event.layers } : {}),
                 ...(this.event.reservedConcurrency ? { reservedConcurrency: this.event.reservedConcurrency } : {}),
                 tracing: (this.event.disableTracing ? false : true), //enable x-ray tracing by default,
-                versionFunctions: false, //disable function versions be default
                 //Lambda events (routes for us)
                 ...this._getLambdaEvents(sanitizedRoutes)
             }
@@ -62,7 +61,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
     }
     /* Events */
     private _getLambdaEvents(sanitizedRoutes): object {
-        return (this.event.protocol != OFunctionLambdaProtocol.none ? {
+        return (sanitizedRoutes && sanitizedRoutes.length > 0 ? {
             events: sanitizedRoutes.map((route) => {
                 return {
                     [this._getProtocolName(this.event.protocol)]: {

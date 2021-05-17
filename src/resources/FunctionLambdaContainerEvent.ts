@@ -63,7 +63,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
     /* lambda helpers */
     private async _generateLambdaFunction(): BPromise<any> {
         const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
-        const acceptsRouting = (this.event.runtime == OFunctionLambdaProtocol.http || this.event.runtime == OFunctionLambdaProtocol.httpAlb);
+        const acceptsRouting = (event.protocol == OFunctionLambdaProtocol.http || event.protocol == OFunctionLambdaProtocol.httpAlb);
         const sanitizedRoutes = (acceptsRouting ? (this.event as OFunctionLambdaHTTPEvent || this.event as OFunctionLambdaHTTPLoadBalancerEvent).routes : [null]); //important, leave one null object if not http
         const repoName = await this._getFullECRRepoImageURL();
         return {
@@ -81,7 +81,6 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
                 ...(this.func.funcOptions.memory || event.memory ? { memorySize: this.func.funcOptions.memory || event.memory } : {}),
                 ...(event.reservedConcurrency ? { reservedConcurrency: event.reservedConcurrency } : {}),
                 tracing: (event.disableTracing ? false : true), //enable x-ray tracing by default,
-                versionFunctions: false, //disable function versions be default
                 //Lambda events means routes on this scope
                 ...this._getLambdaEvents(sanitizedRoutes, event)
             }

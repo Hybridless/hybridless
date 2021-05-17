@@ -310,7 +310,6 @@ class hybridless {
         this.serverless.service.ecs.push(cluster);
     }
     private async _modifyExecutionRole(): BPromise {
-        console.log(this.serverless.service.provider.compiledCloudFormationTemplate)
         //Modify lambda execution role
         const policy = this.serverless.service.provider.compiledCloudFormationTemplate.Resources['IamRoleLambdaExecution'];
         if (policy && this.depManager.isECSRequired()) {
@@ -318,14 +317,14 @@ class hybridless {
                 policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.push('ecs-tasks.amazonaws.com');
 
             } 
-        } else if (this.depManager.isECSRequired()) this.logger.error('Could not find IamRoleLambdaExecution policy for appending trust relation with ECS.');
+        } else if (this.depManager.isECSRequired()) this.logger.warn('Could not find IamRoleLambdaExecution policy for appending trust relation with ECS. You probably dont have any lambda function and the role is not being created.');
         if (policy && this.serverless.service.provider?.iam?.servicesPrincipal) {
             for (let principal of this.serverless.service.provider?.iam?.servicesPrincipal) {
                 if (policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.indexOf(principal) == -1) {
                     policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.push(principal);
                 }
             }
-        } else if (this.serverless.service.provider?.iam?.servicesPrincipal) this.logger.error('Could not find IamRoleLambdaExecution policy for appending trust relation with additional specified services.');
+        } else if (this.serverless.service.provider?.iam?.servicesPrincipal) this.logger.warn('Could not find IamRoleLambdaExecution policy for appending trust relation with additional specified services. You probably dont have any lambda function and the role is not being created.');
         return BPromise.resolve();
     }
 
