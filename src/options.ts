@@ -33,6 +33,7 @@ export interface OVPCOptions_Shared {
     vpcId: string;
     securityGroupIds: string[];
     subnetIds: string[];
+    albSubnetIds?: string[];
 };
 
 //Types
