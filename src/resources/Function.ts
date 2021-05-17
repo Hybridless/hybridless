@@ -101,9 +101,9 @@ export class BaseFunction {
             resolve();
         });
     }
-    //rollback events (images tagging)
+    //cleanup events
     public async cleanup(): BPromise {
-        //For type of event, compile the function
+        //For type of event, cleanup the function
         return new BPromise(async (resolve) => {
             for (let event of this.events) {
                 if (event && event.isEnabled()) {

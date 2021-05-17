@@ -101,7 +101,7 @@ class hybridless {
                 return BPromise.bind(this)
                     .then(() => this.serverless.pluginManager.spawn('hybridless:predeploy')) //7, 8
             },
-            'rollback:initialize': () => {
+            'aws:deploy:finalize:cleanup': () => {
                 return BPromise.bind(this)
                     .then(() => this.serverless.pluginManager.spawn('hybridless:cleanup')) //Optional 9
             }
