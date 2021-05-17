@@ -146,7 +146,7 @@ export class BaseFunction {
         }
     }
     public getName(): string {
-        return this.plugin.provider.naming.getNormalizedFunctionName(this.functionName);
+        return this.plugin.provider.naming.getNormalizedFunctionName(this.functionName.replace(/-/g, ''));
     }
 
     //private sub logic
