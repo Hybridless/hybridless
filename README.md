@@ -25,7 +25,7 @@ Concept of runtimes/buildpacks to allow developers to quickly jump into code wit
 
 ### Documentation
 
-Human readable documentation is available at [hybridless.com](https://hybridless.com)
+Human readable documentation will be available at [hybridless.com](https://hybridless.com) SOON!
 
 ------- 
 
