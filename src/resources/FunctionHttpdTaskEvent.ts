@@ -33,7 +33,9 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                     { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
                     { name: Globals.HTTPD_ImageByRuntime(environment), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
                 { name: 'task-httpd/Index-Httpd-NodejsX', dir: safeDir + '/resources/assets', dest: 'proxy.js' },
-                { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
+                (this.plugin.options.disableWebpack ? 
+                    { name: '.', dir: serverlessDir, dest: '/usr/src/app' } : 
+                    { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' } )
                 ...additionalDockerFiles
             ];
         } else if (environment == OFunctionHttpdTaskRuntime.php5 || environment == OFunctionHttpdTaskRuntime.php7) { 

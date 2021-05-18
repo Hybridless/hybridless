@@ -46,7 +46,9 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
             (customDockerFile ?
                 { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
                 { name: Globals.LambdaContainer_ImageByRuntime(environment), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
-            { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' },
+            (this.plugin.options.disableWebpack ?
+                { name: '.', dir: serverlessDir, dest: '/usr/src/app' } :
+                { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' }),
             ...additionalDockerFiles
         ];
     }
