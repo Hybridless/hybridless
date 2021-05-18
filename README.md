@@ -202,7 +202,6 @@ Human readable documentation is available at (hybridless.com)[https://hybridless
               headers: string[];
               allowCredentials: boolean;
           }
-          protocol: OFunctionLambdaProtocol.http;
           cognitoAuthorizerArn?: any; //assumption
             //Protocol: httpLoadBalancer
           routes: {
@@ -216,7 +215,6 @@ Human readable documentation is available at (hybridless.com)[https://hybridless
               allowCredentials: boolean;
           }
           //ALB
-          protocol: OFunctionLambdaProtocol.httpAlb;
           hostname?: string | string[];
           limitSourceIPs?: string | string[];
           limitHeader?: { name: string, value: string | string[] }; //optional limit headers on ALB
