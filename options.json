@@ -1028,6 +1028,367 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "additionalDockerFiles": {
+                          "items": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "maxItems": 1,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "capacityProviderStrategy": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "base": {
+                                "type": "number"
+                              },
+                              "capacityProvider": {
+                                "type": "string"
+                              },
+                              "weight": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "base",
+                              "capacityProvider",
+                              "weight"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "concurrency": {
+                          "type": "number"
+                        },
+                        "cpu": {
+                          "type": "number"
+                        },
+                        "daemonType": {
+                          "type": "boolean"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "ec2LaunchType": {
+                          "enum": [
+                            true
+                          ],
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "entrypoint": {
+                          "type": "string"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process",
+                            "schedulerTask"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "logsMultilinePattern": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "newRelicKey": {
+                          "type": "string"
+                        },
+                        "placementConstraints": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "expression": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "distinctInstance",
+                                  "memberOf"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "expression",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "placementStrategies": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "field": {
+                                "enum": [
+                                  "string"
+                                ],
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "binpack",
+                                  "random",
+                                  "spread"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "field",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "propagateTags": {
+                          "enum": [
+                            "OFF",
+                            "SERVICE",
+                            "TASK"
+                          ],
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        },
+                        "schedulerInput": {
+                          "anyOf": [
+                            {
+                              "additionalProperties": true,
+                              "properties": {},
+                              "type": "object"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "schedulerRate": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "runtime",
+                        "schedulerRate"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "additionalDockerFiles": {
+                          "items": [
+                            {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            }
+                          ],
+                          "maxItems": 1,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "capacityProviderStrategy": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "base": {
+                                "type": "number"
+                              },
+                              "capacityProvider": {
+                                "type": "string"
+                              },
+                              "weight": {
+                                "type": "number"
+                              }
+                            },
+                            "required": [
+                              "base",
+                              "capacityProvider",
+                              "weight"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "concurrency": {
+                          "type": "number"
+                        },
+                        "cpu": {
+                          "type": "number"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "ec2LaunchType": {
+                          "enum": [
+                            false
+                          ],
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "entrypoint": {
+                          "type": "string"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "lambda",
+                            "lambdaContainer",
+                            "process",
+                            "schedulerTask"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "logsMultilinePattern": {
+                          "type": "string"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "newRelicKey": {
+                          "type": "string"
+                        },
+                        "placementConstraints": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "expression": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "distinctInstance",
+                                  "memberOf"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "expression",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "placementStrategies": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "field": {
+                                "enum": [
+                                  "string"
+                                ],
+                                "type": "string"
+                              },
+                              "type": {
+                                "enum": [
+                                  "binpack",
+                                  "random",
+                                  "spread"
+                                ],
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "field",
+                              "type"
+                            ],
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
+                        "propagateTags": {
+                          "enum": [
+                            "OFF",
+                            "SERVICE",
+                            "TASK"
+                          ],
+                          "type": "string"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        },
+                        "schedulerInput": {
+                          "anyOf": [
+                            {
+                              "additionalProperties": true,
+                              "properties": {},
+                              "type": "object"
+                            },
+                            {
+                              "type": "string"
+                            }
+                          ]
+                        },
+                        "schedulerRate": {
+                          "type": "string"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "runtime",
+                        "schedulerRate"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
                         "cognitoAuthorizerArn": {},
                         "cors": {
                           "additionalProperties": false,
@@ -4055,6 +4416,367 @@
                         "required": [
                           "eventType",
                           "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "from": {
+                                    "type": "string"
+                                  },
+                                  "to": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "from",
+                                  "to"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "maxItems": 1,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "capacityProviderStrategy": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "base": {
+                                  "type": "number"
+                                },
+                                "capacityProvider": {
+                                  "type": "string"
+                                },
+                                "weight": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "base",
+                                "capacityProvider",
+                                "weight"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "concurrency": {
+                            "type": "number"
+                          },
+                          "cpu": {
+                            "type": "number"
+                          },
+                          "daemonType": {
+                            "type": "boolean"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "ec2LaunchType": {
+                            "enum": [
+                              true
+                            ],
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "entrypoint": {
+                            "type": "string"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process",
+                              "schedulerTask"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "logsMultilinePattern": {
+                            "type": "string"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "newRelicKey": {
+                            "type": "string"
+                          },
+                          "placementConstraints": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "distinctInstance",
+                                    "memberOf"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "expression",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "placementStrategies": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "field": {
+                                  "enum": [
+                                    "string"
+                                  ],
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "binpack",
+                                    "random",
+                                    "spread"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "field",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "propagateTags": {
+                            "enum": [
+                              "OFF",
+                              "SERVICE",
+                              "TASK"
+                            ],
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          },
+                          "schedulerInput": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": true,
+                                "properties": {},
+                                "type": "object"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "schedulerRate": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "runtime",
+                          "schedulerRate"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": [
+                              {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "from": {
+                                    "type": "string"
+                                  },
+                                  "to": {
+                                    "type": "string"
+                                  }
+                                },
+                                "required": [
+                                  "from",
+                                  "to"
+                                ],
+                                "type": "object"
+                              }
+                            ],
+                            "maxItems": 1,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "capacityProviderStrategy": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "base": {
+                                  "type": "number"
+                                },
+                                "capacityProvider": {
+                                  "type": "string"
+                                },
+                                "weight": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "base",
+                                "capacityProvider",
+                                "weight"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "concurrency": {
+                            "type": "number"
+                          },
+                          "cpu": {
+                            "type": "number"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "ec2LaunchType": {
+                            "enum": [
+                              false
+                            ],
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "entrypoint": {
+                            "type": "string"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "lambda",
+                              "lambdaContainer",
+                              "process",
+                              "schedulerTask"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "logsMultilinePattern": {
+                            "type": "string"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "newRelicKey": {
+                            "type": "string"
+                          },
+                          "placementConstraints": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "expression": {
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "distinctInstance",
+                                    "memberOf"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "expression",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "placementStrategies": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "field": {
+                                  "enum": [
+                                    "string"
+                                  ],
+                                  "type": "string"
+                                },
+                                "type": {
+                                  "enum": [
+                                    "binpack",
+                                    "random",
+                                    "spread"
+                                  ],
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "field",
+                                "type"
+                              ],
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
+                          "propagateTags": {
+                            "enum": [
+                              "OFF",
+                              "SERVICE",
+                              "TASK"
+                            ],
+                            "type": "string"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          },
+                          "schedulerInput": {
+                            "anyOf": [
+                              {
+                                "additionalProperties": true,
+                                "properties": {},
+                                "type": "object"
+                              },
+                              {
+                                "type": "string"
+                              }
+                            ]
+                          },
+                          "schedulerRate": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "runtime",
+                          "schedulerRate"
                         ],
                         "type": "object"
                       },

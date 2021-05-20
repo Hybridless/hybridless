@@ -35,7 +35,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                 { name: 'task-httpd/Index-Httpd-NodejsX', dir: safeDir + '/resources/assets', dest: 'proxy.js' },
                 (this.plugin.options.disableWebpack ? 
                     { name: '.', dir: serverlessDir, dest: '/usr/src/app' } : 
-                    { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' } )
+                    { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' } ),
                 ...additionalDockerFiles
             ];
         } else if (environment == OFunctionHttpdTaskRuntime.php5 || environment == OFunctionHttpdTaskRuntime.php7) { 

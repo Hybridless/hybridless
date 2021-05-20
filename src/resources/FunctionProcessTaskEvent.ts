@@ -60,6 +60,10 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
             } : {
                 'NEW_RELIC_ENABLED': false
             }),
+            // General
+            'STAGE': this.plugin.stage,
+            'AWS_REGION': { "Ref": "AWS::Region" },
+            'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
         };
     } 
     public async getClusterTask(): BPromise {
