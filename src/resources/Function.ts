@@ -16,6 +16,7 @@ import { FunctionScheduledTaskEvent } from "./FunctionScheduledTaskEvent";
 export class BaseFunction {
     public readonly funcOptions: OFunction;
     private readonly plugin: Hybridless;
+    private ecsIsEnabled: boolean;
     private readonly functionName: string;
     private readonly events: FunctionBaseEvent<OFunctionEvent>[];
     //
@@ -23,6 +24,8 @@ export class BaseFunction {
         this.plugin = plugin;
         this.funcOptions = functionOptions;
         this.functionName = functionName;
+        this.ecsIsEnabled = false;
+
         if (functionOptions.events) {
             this.events = functionOptions.events.map((rawEvent, index) => {
                 return (this.parseFunction(this.plugin, this, rawEvent, index));
@@ -50,7 +53,10 @@ export class BaseFunction {
                 }
             };
             //Check for cluster creation
-            if (clusterTasks.length > 0) await this._spreadCluster(clusterTasks);
+            if (clusterTasks.length > 0) {
+                this.ecsIsEnabled = true;
+                await this._spreadCluster(clusterTasks);
+            }
             //
             resolve();
         });
@@ -166,7 +172,7 @@ export class BaseFunction {
                 ...(this.funcOptions.ecsClusterArn && this.funcOptions.ecsClusterArn != 'null' && this.funcOptions.ecsIngressSecGroupId && this.funcOptions.ecsIngressSecGroupId != 'null' ?
                     { clusterArns: { ecsClusterArn: this.funcOptions.ecsClusterArn, ecsIngressSecGroupId: this.funcOptions.ecsIngressSecGroupId } } : { }),
                 //VPC
-                ...this.getVPC(true),
+                ...this.getVPC(true, false),
                 albPrivate: !!this.funcOptions.albIsPrivate,
                 albDisabled: !needsALB,
                 ...(this.funcOptions.albListenerArn && this.funcOptions.albListenerArn != 'null' ? { albListenerArn: this.funcOptions.albListenerArn } : {}),
@@ -194,10 +200,14 @@ export class BaseFunction {
             return new FunctionScheduledTaskEvent(plugin, func, <OFunctionScheduledTaskEvent>event, index);
         } return null;
     }
-    public getVPC(wrapped: boolean): any {
+    public getVPC(wrapped: boolean, reuseIfCreating: boolean): any {
         if (this.funcOptions.vpc) {
             if (((this.funcOptions.vpc as OVPCOptions_Shared).vpcId && (this.funcOptions.vpc as OVPCOptions_Shared).vpcId != 'null') ||
-                 ((this.funcOptions.vpc as OVPCOptions_Dedicated).cidr && (this.funcOptions.vpc as OVPCOptions_Dedicated).cidr != 'null')) {
+                ((this.funcOptions.vpc as OVPCOptions_Dedicated).cidr && (this.funcOptions.vpc as OVPCOptions_Dedicated).cidr != 'null')) {
+                    if (reuseIfCreating && (this.funcOptions.vpc as OVPCOptions_Dedicated).cidr) return { vpc: {
+                        securityGroupIds: [{ Ref: `${this.plugin.getName()}${this.getName()}ContainerSecGroup${this.plugin.stage}` } ],
+                        subnetIds: (this.funcOptions.vpc as OVPCOptions_Dedicated).subnets.map((v, i) => ({ Ref: `SubnetName${this.plugin.stage}${i}` }))
+                    } };
                     return (wrapped ? {vpc: this.funcOptions.vpc} : {});
                 }
         } return (wrapped ? {} : null);

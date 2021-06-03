@@ -82,7 +82,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
                     ...this.getContainerEnvironments(),
                 },
                 //default stuff
-                ...this.func.getVPC(true),
+                ...this.func.getVPC(true, true),
                 ...(this.func.funcOptions.timeout ? { timeout: this.func.funcOptions.timeout } : { timeout: Globals.HTTPD_DefaultTimeout }),
                 ...(this.func.funcOptions.memory || event.memory ? { memorySize: this.func.funcOptions.memory || event.memory } : {}),
                 ...(event.reservedConcurrency ? { reservedConcurrency: event.reservedConcurrency } : {}),
