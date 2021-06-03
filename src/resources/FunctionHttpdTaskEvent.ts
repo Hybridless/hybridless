@@ -73,9 +73,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
                 'ENTRYPOINT': `./${this.func.getEntrypoint(this.event)}`,
                 'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
                 // Proxy
-                'PORT': this.getPort(),
                 ...(event.cors ? { 'CORS': JSON.stringify(event.cors) } : {}),
-                'TIMEOUT': (this.func.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) * 1000,
             }),
             ...(isPHP && {
                 'WEB_DOCUMENT_INDEX': this.func.getEntrypointFunction(this.event)
@@ -92,6 +90,9 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
             } : {
                 'NEW_RELIC_ENABLED': false
             }),
+            //
+            'TIMEOUT': (this.func.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) * 1000,
+            'PORT': this.getPort(),
             // General
             'STAGE': this.plugin.stage,
             'AWS_REGION': { "Ref": "AWS::Region" },

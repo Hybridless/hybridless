@@ -6799,7 +6799,8 @@
     },
     "tags": {
       "items": {
-        "type": "string"
+        "additionalProperties": {},
+        "type": "object"
       },
       "type": "array"
     }
