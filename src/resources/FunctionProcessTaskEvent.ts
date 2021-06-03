@@ -75,7 +75,7 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
                 name: TaskName,
                 cpu: (event.cpu || Globals.Process_DefaultCPU),
                 memory: (event.memory || this.func.funcOptions.memory || Globals.Process_DefaultMemory),
-                enablePublicIPAssign: false,
+                disablePublicIPAssign: true,
                 ec2LaunchType: !!event.ec2LaunchType,
                 ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: true } : {}),
                 taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
