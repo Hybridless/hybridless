@@ -235,3 +235,15 @@ Human readable documentation will is available at [hybridless.com](https://docs.
 
 }
 ```
+
+## Roadmap
+Roadmap is visible on our public [project page](https://github.com/orgs/Hybridless/projects/1) 
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+Happy coding :)
+
+## License
+[GNU GPLv3](https://github.com/Hybridless/hybridless/blob/master/LICENSE)
+
+  
