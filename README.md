@@ -63,9 +63,9 @@ Human readable documentation will is available at [hybridless.com](https://docs.
           subnets: string[];
         } | { //Optional ivars to dictate if will use existing VPC and subnets specified
           vpcId: string;
-          securityGroupIds: string[];
-          subnetIds: string[];
-          albSubnetIds?: string[];
+          securityGroupIds: string[] | any;  //object allows intrinsict functions
+          subnetIds: string[] | any;  //object allows intrinsict functions
+          albSubnetIds?: string[] | object; //object allows intrinsict functions
         };
         //high order props (can be overwritten at event level)
         timeout?: number;

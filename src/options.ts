@@ -31,9 +31,9 @@ export interface OVPCOptions_Dedicated {
 export interface OVPCOptions_Shared {
     //Optional ivars to dictate if will use existing VPC and subnets specified
     vpcId: string;
-    securityGroupIds: string[];
-    subnetIds: string[];
-    albSubnetIds?: string[];
+    securityGroupIds: string[] | any;  //object allows intrinsict functions
+    subnetIds: string[] | any;  //object allows intrinsict functions
+    albSubnetIds?: string[] | object; //object allows intrinsict functions
 };
 
 //Types
