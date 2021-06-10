@@ -41,7 +41,7 @@ export enum OFunctionEventType {
     //Task
     httpd = 'httpd',
     process = 'process',
-    scheduledTask = 'schedulerTask',
+    scheduledTask = 'scheduledTask',
     // agent = 'agent'
     //Serverless
     lambda = 'lambda',
@@ -235,12 +235,12 @@ export interface OFunctionLambdaHTTPLoadBalancerEvent extends OFunctionEvent {
 }
 export interface OFunctionLambdaSQSEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.sqs;
-    prototocolArn?: any; 
+    protocolArn?: any; 
     queueBatchSize?: number; 
 }
 export interface OFunctionLambdaSNSEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.sns;
-    prototocolArn?: any; 
+    protocolArn?: any; 
     filterPolicy?: object;
 }
 export interface OFunctionLambdaSchedulerEvent extends OFunctionEvent {
@@ -250,7 +250,7 @@ export interface OFunctionLambdaSchedulerEvent extends OFunctionEvent {
 }
 export interface OFunctionLambdaDynamoStreamsEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.dynamostreams;
-    prototocolArn?: any; 
+    protocolArn?: any; 
 }
 export interface OFunctionLambdaS3Event extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.s3;

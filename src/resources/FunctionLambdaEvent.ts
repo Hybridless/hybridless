@@ -66,7 +66,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                 return {
                     [this._getProtocolName(this.event.protocol)]: {
                         //multiple
-                        ...((this.event as OFunctionLambdaSNSEvent).prototocolArn ? { arn: (this.event as OFunctionLambdaSNSEvent).prototocolArn } : {}),
+                        ...((this.event as OFunctionLambdaSNSEvent).protocolArn ? { arn: (this.event as OFunctionLambdaSNSEvent).protocolArn } : {}),
                         //sqs
                         ...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
                         //ddbstreams
