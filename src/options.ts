@@ -2,7 +2,7 @@
 export interface OPlugin {
     functions: { [key: string]: OFunction } | { [key: string]: OFunction }[];
     disableWebpack?: boolean;
-    tags?: { [key: string]: any }[]
+    tags?: { [key: string]: any } | { [key: string]: any }[];
 }
 
 //Function

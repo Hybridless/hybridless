@@ -182,7 +182,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -515,7 +515,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -775,7 +775,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -938,7 +938,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -1104,7 +1104,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -1283,7 +1283,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -1425,7 +1425,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -1539,7 +1539,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -1692,7 +1692,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -1714,7 +1714,7 @@
                           ],
                           "type": "string"
                         },
-                        "prototocolArn": {},
+                        "protocolArn": {},
                         "queueBatchSize": {
                           "type": "number"
                         },
@@ -1750,7 +1750,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -1777,7 +1777,7 @@
                           ],
                           "type": "string"
                         },
-                        "prototocolArn": {},
+                        "protocolArn": {},
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -1810,7 +1810,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -1868,7 +1868,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -1890,7 +1890,7 @@
                           ],
                           "type": "string"
                         },
-                        "prototocolArn": {},
+                        "protocolArn": {},
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -1923,7 +1923,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2012,7 +2012,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2074,7 +2074,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2133,7 +2133,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2189,7 +2189,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2296,7 +2296,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2433,7 +2433,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2609,7 +2609,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2625,7 +2625,7 @@
                           ],
                           "type": "string"
                         },
-                        "prototocolArn": {},
+                        "protocolArn": {},
                         "queueBatchSize": {
                           "type": "number"
                         },
@@ -2690,7 +2690,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2711,7 +2711,7 @@
                           ],
                           "type": "string"
                         },
-                        "prototocolArn": {},
+                        "protocolArn": {},
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -2773,7 +2773,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2854,7 +2854,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -2870,7 +2870,7 @@
                           ],
                           "type": "string"
                         },
-                        "prototocolArn": {},
+                        "protocolArn": {},
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -2932,7 +2932,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -3044,7 +3044,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -3129,7 +3129,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -3211,7 +3211,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -3290,7 +3290,7 @@
                             "lambda",
                             "lambdaContainer",
                             "process",
-                            "schedulerTask"
+                            "scheduledTask"
                           ],
                           "type": "string"
                         },
@@ -3575,7 +3575,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -3908,7 +3908,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -4168,7 +4168,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -4331,7 +4331,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -4497,7 +4497,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -4676,7 +4676,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -4818,7 +4818,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -4932,7 +4932,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5085,7 +5085,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5107,7 +5107,7 @@
                             ],
                             "type": "string"
                           },
-                          "prototocolArn": {},
+                          "protocolArn": {},
                           "queueBatchSize": {
                             "type": "number"
                           },
@@ -5143,7 +5143,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5170,7 +5170,7 @@
                             ],
                             "type": "string"
                           },
-                          "prototocolArn": {},
+                          "protocolArn": {},
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -5203,7 +5203,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5261,7 +5261,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5283,7 +5283,7 @@
                             ],
                             "type": "string"
                           },
-                          "prototocolArn": {},
+                          "protocolArn": {},
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -5316,7 +5316,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5405,7 +5405,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5467,7 +5467,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5526,7 +5526,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5582,7 +5582,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5689,7 +5689,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -5826,7 +5826,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -6002,7 +6002,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -6018,7 +6018,7 @@
                             ],
                             "type": "string"
                           },
-                          "prototocolArn": {},
+                          "protocolArn": {},
                           "queueBatchSize": {
                             "type": "number"
                           },
@@ -6083,7 +6083,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -6104,7 +6104,7 @@
                             ],
                             "type": "string"
                           },
-                          "prototocolArn": {},
+                          "protocolArn": {},
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -6166,7 +6166,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -6247,7 +6247,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -6263,7 +6263,7 @@
                             ],
                             "type": "string"
                           },
-                          "prototocolArn": {},
+                          "protocolArn": {},
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -6325,7 +6325,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -6437,7 +6437,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -6522,7 +6522,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -6604,7 +6604,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -6683,7 +6683,7 @@
                               "lambda",
                               "lambdaContainer",
                               "process",
-                              "schedulerTask"
+                              "scheduledTask"
                             ],
                             "type": "string"
                           },
@@ -6796,11 +6796,19 @@
       ]
     },
     "tags": {
-      "items": {
-        "additionalProperties": {},
-        "type": "object"
-      },
-      "type": "array"
+      "anyOf": [
+        {
+          "additionalProperties": {},
+          "type": "object"
+        },
+        {
+          "items": {
+            "additionalProperties": {},
+            "type": "object"
+          },
+          "type": "array"
+        }
+      ]
     }
   },
   "required": [
