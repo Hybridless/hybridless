@@ -250,7 +250,8 @@ export interface OFunctionLambdaSchedulerEvent extends OFunctionEvent {
 }
 export interface OFunctionLambdaDynamoStreamsEvent extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.dynamostreams;
-    protocolArn?: any; 
+    protocolArn?: any;
+    queueBatchSize?: number;
 }
 export interface OFunctionLambdaS3Event extends OFunctionEvent {
     protocol: OFunctionLambdaProtocol.s3;

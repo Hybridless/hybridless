@@ -1891,6 +1891,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "queueBatchSize": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -2871,6 +2874,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "queueBatchSize": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -5284,6 +5290,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "queueBatchSize": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -6264,6 +6273,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "queueBatchSize": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },

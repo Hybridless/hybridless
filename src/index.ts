@@ -264,7 +264,7 @@ class hybridless {
     
 
     /* Public Getters */
-    public getDefaultTags(raw?: boolean): Array<object> | string[] {
+    public getDefaultTags(raw?: boolean): Array<object> | string[] | object {
         if (raw) return this.options.tags;
         if (this.options.tags && Object.keys(this.options.tags).length > 0) {
             return Object.keys(this.options.tags).map((tagKey: string) => ({
