@@ -194,7 +194,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
         return proto;
     }
     private _getFunctionName(suffix?: string): string {
-        return `${this.plugin.getName()}${this.func.getName()}${this.plugin.stage}` + (suffix || '');
+        return `${this.plugin.getName()}${this.func.getName()}${this.plugin.stage}${this.index > 0 ? this.index : ''}` + (suffix || '');
     }
     private _getAuthorizerName(): string {
         return this._getFunctionName('Authorizer');
