@@ -72,6 +72,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         const acceptsRouting = (event.protocol == OFunctionLambdaProtocol.http || event.protocol == OFunctionLambdaProtocol.httpAlb);
         const sanitizedRoutes = (acceptsRouting ? (this.event as OFunctionLambdaHTTPEvent || this.event as OFunctionLambdaHTTPLoadBalancerEvent).routes : [null]); //important, leave one null object if not http
         const repoName = await this._getFullECRRepoImageURL();
+        if (!event.protocol) this.plugin.logger.error(`Missing protocol for lambda container event ${this._getFunctionName()}. Can't continue!`);
         return {
             [this._getFunctionName()]: {
                 name: `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}`,
