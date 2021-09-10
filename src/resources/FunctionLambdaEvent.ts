@@ -41,7 +41,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
         if (!this.event.protocol) this.plugin.logger.error(`Missing protocol for lambda event ${this._getFunctionName()}. Can't continue!`);
         return {
             [this._getFunctionName()]: {
-                name: `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}`,
+                name: `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}${this.index > 0 ? this.index : ''}`,
                 environment: {
                     ...this.plugin.getEnvironmentIvars(),
                     ...this._getLambdaEnvironments(),
