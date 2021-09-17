@@ -73,7 +73,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                         //ddbstreams
                         ...(this.event.protocol == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
                         //scheduler
-                        ...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: (this.event as OFunctionLambdaSchedulerEvent).schedulerRate } : {}),
+                        ...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: [ (this.event as OFunctionLambdaSchedulerEvent).schedulerRate ] } : {}),
                         ...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? {
                             input:
                                 typeof (this.event as OFunctionLambdaSchedulerEvent).schedulerInput == 'string' ?
