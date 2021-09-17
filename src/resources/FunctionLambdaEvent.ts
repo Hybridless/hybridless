@@ -47,7 +47,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
                     ...this._getLambdaEnvironments(),
                 },
                 //default stuff
-                handler: this.func.funcOptions.handler,
+                handler: this.event.handler || this.func.funcOptions.handler,
                 ...this.func.getVPC(true, true),
                 ...(this.func.funcOptions.timeout ? { timeout: this.func.funcOptions.timeout } : { timeout: Globals.HTTPD_DefaultTimeout }),
                 ...(this.func.funcOptions.memory || this.event.memory ? { memorySize: this.func.funcOptions.memory || this.event.memory } : {}),

@@ -40,7 +40,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
             ];
         } else if (environment == OFunctionHttpdTaskRuntime.php5 || environment == OFunctionHttpdTaskRuntime.php7) { 
             //get handler path and remove index.php 
-            const handler = this.func.funcOptions.handler;
+            const handler = this.event.handler || this.func.funcOptions.handler;
             const handleRootFolder = (handler.indexOf('.php') != -1 ? handler.split('/').splice(0, handler.split('/').length - 1).join('/') : handler);
             return [
                 (customDockerFile ?
