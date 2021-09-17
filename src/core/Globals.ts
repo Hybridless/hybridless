@@ -9,7 +9,7 @@ export default class Globals {
     public static DockerLatestTag: string = 'latest';
     public static DockerPreDeploymentTag: string = 'previous';
     //Dependecies
-    public static Deps_Webpack = 'serverless-webpack';
+    public static Deps_Webpack = '@hybridless/serverless-webpack';
     public static Deps_ECS = '@hybridless/serverless-ecs-plugin';
     //Defaults
     public static DefaultLogsMultilinePattern = '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))';

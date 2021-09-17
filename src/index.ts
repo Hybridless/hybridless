@@ -369,14 +369,14 @@ class hybridless {
         return {
             ...entries, 
             //include default webpack 
-            ...(_globalHybridless.depManager.isWebpackRequired() ? require("serverless-webpack").lib.entries : {})
+            ...(_globalHybridless.depManager.isWebpackRequired() ? require(Globals.Deps_Webpack).lib.entries : {})
         };
     }
     public static getWebpackExternals(): object {
         return (_globalHybridless.depManager.isWebpackRequired() ? require("webpack-node-externals")() : {});
     }
     public static isWebpackLocal(): boolean {
-        return (_globalHybridless.depManager.isWebpackRequired() ? require("serverless-webpack").lib.webpack.isLocal : false);
+        return (_globalHybridless.depManager.isWebpackRequired() ? require(Globals.Deps_Webpack).lib.webpack.isLocal : false);
     }
 }
 
