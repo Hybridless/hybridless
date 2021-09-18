@@ -62,7 +62,6 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
             ...(event.protocol == OFunctionLambdaProtocol.httpAlb && (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors ? { 'CORS': JSON.stringify((this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors) } : {}),
             // General
             'STAGE': this.plugin.stage,
-            'AWS_REGION': { "Ref": "AWS::Region" },
             'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
         };
     }
