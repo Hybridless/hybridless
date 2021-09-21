@@ -68,8 +68,6 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
   /* lambda helpers */
   private async _generateLambdaFunction(): BPromise<any> {
     const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
-    const acceptsRouting = (event.protocol == OFunctionLambdaProtocol.http || event.protocol == OFunctionLambdaProtocol.httpAlb);
-    const sanitizedRoutes = (acceptsRouting ? (this.event as OFunctionLambdaHTTPEvent || this.event as OFunctionLambdaHTTPLoadBalancerEvent).routes : [null]); //important, leave one null object if not http
     const repoName = await this._getFullECRRepoImageURL();
     if (!event.protocol) this.plugin.logger.error(`Missing protocol for lambda container event ${this._getFunctionName()}. Can't continue!`);
     return {
@@ -88,13 +86,18 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         ...(event.reservedConcurrency ? { reservedConcurrency: event.reservedConcurrency } : {}),
         tracing: (event.disableTracing ? false : true), //enable x-ray tracing by default,
         //Lambda events means routes on this scope
-        ...this._getLambdaEvents(sanitizedRoutes, event)
+        ...this._getLambdaEvents(event)
       }
     };
   }
 
   /* Events */
-  private _getLambdaEvents(sanitizedRoutes, event): object {
+  private _getLambdaEvents(event): object {
+    //No events are required for protocol none
+    if (event.protocol == OFunctionLambdaProtocol.none) return {};
+    //Check if should loop into routes (as events) or falsify the event to spread the required resource
+    const acceptsRouting = (event.protocol == OFunctionLambdaProtocol.http || event.protocol == OFunctionLambdaProtocol.httpAlb);
+    const sanitizedRoutes = (acceptsRouting ? (this.event as OFunctionLambdaHTTPEvent || this.event as OFunctionLambdaHTTPLoadBalancerEvent).routes : [null]); //important, leave one null object if not http
     return (sanitizedRoutes && sanitizedRoutes.length > 0 ? {
       events: sanitizedRoutes.map((route) => {
         return {

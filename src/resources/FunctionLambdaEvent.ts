@@ -36,8 +36,6 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 
 	/* lambda helpers */
 	private _generateLambdaFunction(): any {
-		const acceptsRouting = (this.event.protocol == OFunctionLambdaProtocol.http || this.event.protocol == OFunctionLambdaProtocol.httpAlb);
-		const sanitizedRoutes = (acceptsRouting ? (this.event as OFunctionLambdaHTTPEvent || this.event as OFunctionLambdaHTTPLoadBalancerEvent).routes : [null]); //important, leave one null object if not http
 		if (!this.event.protocol) this.plugin.logger.error(`Missing protocol for lambda event ${this._getFunctionName()}. Can't continue!`);
 		return {
 			[this._getFunctionName()]: {
@@ -56,12 +54,17 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				...(this.event.reservedConcurrency ? { reservedConcurrency: this.event.reservedConcurrency } : {}),
 				tracing: (this.event.disableTracing ? false : true), //enable x-ray tracing by default,
 				//Lambda events (routes for us)
-				...this._getLambdaEvents(sanitizedRoutes)
+				...this._getLambdaEvents()
 			}
 		};
 	}
 	/* Events */
-	private _getLambdaEvents(sanitizedRoutes): object {
+	private _getLambdaEvents(): object {
+		//No events are required for protocol none
+		if (this.event.protocol == OFunctionLambdaProtocol.none) return {};
+		//Check if should loop into routes (as events) or falsify the event to spread the required resource
+		const acceptsRouting = (this.event.protocol == OFunctionLambdaProtocol.http || this.event.protocol == OFunctionLambdaProtocol.httpAlb);
+		const sanitizedRoutes = (acceptsRouting ? (this.event as OFunctionLambdaHTTPEvent || this.event as OFunctionLambdaHTTPLoadBalancerEvent).routes : [null]); //important, leave one null object if not http
 		return (sanitizedRoutes && sanitizedRoutes.length > 0 ? {
 			events: sanitizedRoutes.map((route) => {
 				return {
