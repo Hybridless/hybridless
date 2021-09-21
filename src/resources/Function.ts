@@ -212,7 +212,7 @@ export class BaseFunction {
           }
         }
         else if (isLambda) {
-          return (wrapped ? { vpc: { ...this.funcOptions.vpc, vpcId: null /* sls dont like vpcId*/ } } : {});
+          return (wrapped ? { vpc: { ...this.funcOptions.vpc, vpcId: undefined /* sls dont like vpcId*/ } } : {});
         } else {
           return (wrapped ? { vpc: this.funcOptions.vpc } : {});
         }
