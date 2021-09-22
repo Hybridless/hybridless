@@ -39,7 +39,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 		if (!this.event.protocol) this.plugin.logger.error(`Missing protocol for lambda event ${this._getFunctionName()}. Can't continue!`);
 		return {
 			[this._getFunctionName()]: {
-				name: `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}${this.index > 0 ? this.index : ''}`,
+				name: `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}`,
 				environment: {
 					...this.plugin.getEnvironmentIvars(),
 					...this._getLambdaEnvironments(),
@@ -197,7 +197,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 		return proto;
 	}
 	private _getFunctionName(suffix?: string): string {
-		return `${this.plugin.getName()}${this.func.getName()}${this.plugin.stage}${this.index > 0 ? this.index : ''}` + (suffix || '');
+		return `${this.plugin.getName()}${this.func.getName()}${this.plugin.stage}` + (suffix || '');
 	}
 	private _getAuthorizerName(): string {
 		return this._getFunctionName('Authorizer');
