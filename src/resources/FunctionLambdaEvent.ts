@@ -61,7 +61,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 	/* Events */
 	private _getLambdaEvents(): object {
 		//No events are required for protocol none
-		if (this.event.protocol == OFunctionLambdaProtocol.none) return {};
+		if (this.event.protocol == OFunctionLambdaProtocol.none) return { events: [] };
 		//Check if should loop into routes (as events) or falsify the event to spread the required resource
 		const acceptsRouting = (this.event.protocol == OFunctionLambdaProtocol.http || this.event.protocol == OFunctionLambdaProtocol.httpAlb);
 		const sanitizedRoutes = (acceptsRouting ? (this.event as OFunctionLambdaHTTPEvent || this.event as OFunctionLambdaHTTPLoadBalancerEvent).routes : [null]); //important, leave one null object if not http

@@ -301,15 +301,13 @@ class hybridless {
     if (!this.serverless.service.functions) this.serverless.service.functions = {};
     //Some magic happens here - concatenate existing function events to avoid function overlap but still deal with events
     Object.keys(func).forEach((key) => {
-      func = {
-        [key]: {
-          ...func[key],
-          ...((this.serverless.service?.functions?.[key]?.events || func[key]?.events) ? {
-            events: (func[key]?.events || []).concat(this.serverless.service?.functions?.[key]?.events || [])
-          } : {})
-        }
+      func = { ...func, [key]: {
+        ...func[key],
+        ...((this.serverless.service?.functions?.[key]?.events || func[key]?.events) ? {
+          events: (func[key]?.events || []).concat(this.serverless.service?.functions?.[key]?.events || [])
+        } : {})
       }
-    });
+    }});
     //
     this.serverless.service.functions = { ...this.serverless.service.functions, ...func };
   }
