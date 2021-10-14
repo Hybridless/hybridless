@@ -113,7 +113,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 						} : {}),
 						//http (API gateway)
 						...((this.event as OFunctionLambdaHTTPEvent).protocol == OFunctionLambdaProtocol.http ? {
-							path: (route.path == '*' ? '{proxy+}' : route.path),
+							path: (route.path || '').replace(/\*/g, '{proxy+}'),
 							method: route.method || 'ANY',
 							...((this.event as OFunctionLambdaHTTPEvent).cors ? { cors: (this.event as OFunctionLambdaHTTPEvent).cors } : {}),
 							...((this.event as OFunctionLambdaHTTPEvent).cognitoAuthorizerArn ? {
@@ -128,7 +128,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 							listenerArn: this.func.funcOptions.albListenerArn,
 							priority: route.priority || 1,
 							conditions: {
-								path: (route.path == '*' ? '{proxy+}' : route.path),
+								path: (route.path || '').replace(/\*/g, '{proxy+}'),
 								...(route && route.method ? { method: route.method } : {}),
 								...(route && route.hostname ? { host: route.hostname } : {}),
 								...((this.event as OFunctionLambdaHTTPLoadBalancerEvent).limitHeader ? {
