@@ -2,7 +2,7 @@ import { FunctionBaseEvent } from "./FunctionBaseEvent"; //base class
 //
 import Hybridless = require("../..");
 import { BaseFunction } from "../Function";
-import { OFunctionEvent } from "../../options";
+import { OFunctionEvent, OFunctionEventType } from "../../options";
 //
 import BPromise = require('bluebird');
 import util = require('util');
@@ -23,7 +23,9 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
   public async checkDependencies(): BPromise {
     return new BPromise(async (resolve, reject) => {
       if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('node') != -1 && !this.plugin.options.disableWebpack) this.plugin.depManager.enableWebpack();
-      this.plugin.depManager.enableECSPlugin();
+      if (this.event.eventType != OFunctionEventType.lambda && this.event.eventType != OFunctionEventType.lambdaContainer) {
+        this.plugin.depManager.enableECSPlugin();
+      }
       resolve();
     });
   }
