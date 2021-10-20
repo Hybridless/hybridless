@@ -59,7 +59,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				tracing: (this.event.disableTracing ? false : true), //enable x-ray tracing by default,
 				//Java support
 				...(isJava ? {
-					package: { artifact: `target/${this.plugin.getName()}-${this.plugin.stage}.jar` }
+					package: { artifact: `target/${this.plugin.getName()}-${this.plugin.stage}.jar`, individually: true }
 				} : {}),
 				//Lambda events (routes for us)
 				...this._getLambdaEvents()
