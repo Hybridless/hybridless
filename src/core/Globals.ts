@@ -11,6 +11,8 @@ export default class Globals {
   //Dependecies
   public static Deps_Webpack = 'serverless-webpack';
   public static Deps_ECS = '@hybridless/serverless-ecs-plugin';
+  //Java support
+  public static Mvn_Build_Command = 'mvn clean install';
   //Defaults
   public static DefaultLogsMultilinePattern = '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))';
   public static DefaultHealthCheckInterval = 15;
@@ -74,6 +76,12 @@ export default class Globals {
       return 'lambda-container/Dockerfile-LambdaContainer-Nodejs10'
     } else if (environment == OFunctionLambdaContainerRuntime.nodejs12) {
       return 'lambda-container/Dockerfile-LambdaContainer-Nodejs12';
+    } else if (environment == OFunctionLambdaContainerRuntime.java11) {
+      return 'lambda-container/Dockerfile-LambdaContainer-Java11';
+    } else if (environment == OFunctionLambdaContainerRuntime.java8) {
+      return 'lambda-container/Dockerfile-LambdaContainer-Java8';
+    } else if (environment == OFunctionLambdaContainerRuntime.java8al12) {
+      return 'lambda-container/Dockerfile-LambdaContainer-Java8al12';
     } throw new Error(`Unknown event *process* environment type! ${environment} is not a valid environment, can't continue!`);
   }
 }

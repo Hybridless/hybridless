@@ -31,31 +31,56 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
   }
   /* Container Base Event Overwrites */
   protected getContainerFiles(): DockerFiles {
-    const environment = (<OFunctionLambdaContainerEvent>this.event).runtime;
-    const customDockerFile = (<OFunctionLambdaContainerEvent>this.event).dockerFile;
+    const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
+    const customDockerFile = event.dockerFile;
     const serverlessDir = this.plugin.serverless.config.servicePath;
     const additionalDockerFiles = ((<OFunctionLambdaContainerEvent>this.event).additionalDockerFiles || []).map((file) => {
       return { name: file.from, dir: serverlessDir, dest: file.to }
     });
+    //Envs
+    const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
+    const isPHP = (event && event.runtime && event.runtime.toLowerCase().indexOf('php') != -1);
+    const isPureContainer = (event.runtime == OFunctionLambdaContainerRuntime.container);
     //Get build directory
     let safeDir: any = __dirname.split('/');
     safeDir.splice(safeDir.length - 1, 1);
     safeDir = safeDir.join('/');
     //
-    return [
-      (customDockerFile ?
-        { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
-        { name: Globals.LambdaContainer_ImageByRuntime(environment), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }),
-      (this.plugin.options.disableWebpack ?
-        { name: '.', dir: serverlessDir, dest: '/usr/src/app' } :
-        { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' }),
-      ...additionalDockerFiles
-    ];
+    //Nodejs Specific
+    if (isNodeJS) {
+      return [
+        (customDockerFile ?
+          { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+          { name: Globals.LambdaContainer_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+        ),
+        (this.plugin.options.disableWebpack ?
+          { name: '.', dir: serverlessDir, dest: '/usr/src/app' } :
+          { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' }),
+        ...additionalDockerFiles
+      ];
+    } else if (isPHP) {
+      return [
+        (customDockerFile ?
+          { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+          { name: Globals.LambdaContainer_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+        ),
+        { name: 'target', dir: safeDir, dest: 'target' },
+        ...additionalDockerFiles
+      ];
+    } else if (isPureContainer) {
+      return [
+        { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' },
+        ...additionalDockerFiles
+      ];
+    } else {
+      throw new Error(`Unrecognized Process event type ${event.runtime}!`);
+    }
   }
   protected getContainerEnvironments(): any {
     const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
+    const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
     return {
-      'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1,
+      ...(isNodeJS ? {'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1} : {}),
       'ENTRYPOINT': `${this.func.getEntrypoint(this.event)}`,
       'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
       //When using ALB with lambda, CORS should be implemented at code level (this might be a wrong assumption, more reasearch is needed)

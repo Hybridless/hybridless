@@ -14,7 +14,7 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
   }
   /* Container Base Event Overwrites */
   protected getContainerFiles(): DockerFiles {
-    const environment = (<OFunctionScheduledTaskEvent>this.event).runtime;
+    const event: OFunctionScheduledTaskEvent = (<OFunctionScheduledTaskEvent>this.event);
     const customDockerFile = (<OFunctionScheduledTaskEvent>this.event).dockerFile;
     const serverlessDir = this.plugin.serverless.config.servicePath;
     const additionalDockerFiles = ((<OFunctionScheduledTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
@@ -24,33 +24,47 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
     let safeDir: any = __dirname.split('/');
     safeDir.splice(safeDir.length - 1, 1);
     safeDir = safeDir.join('/');
+    //Envs
+    const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
+    const isPHP = (event && event.runtime && event.runtime.toLowerCase().indexOf('php') != -1);
+    const isPureContainer = (event.runtime == OFunctionScheduledTaskRuntime.container);
     //Nodejs Specific
-    if (environment == OFunctionScheduledTaskRuntime.nodejs10 || environment == OFunctionScheduledTaskRuntime.nodejs13) {
+    if (isNodeJS) {
       return [
         (customDockerFile ?
           { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
-          { name: Globals.Scheduled_ImageByRuntime(environment), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+          { name: Globals.Scheduled_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
         ),
         (this.plugin.options.disableWebpack ?
           { name: '.', dir: serverlessDir, dest: '/usr/src/app' } :
           { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' }),
         ...additionalDockerFiles
       ];
-    } else if (environment == OFunctionScheduledTaskRuntime.container) {
+    } if (isPHP) {
+      return [
+        (customDockerFile ?
+          { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+          { name: Globals.Scheduled_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+        ),
+        { name: 'target', dir: safeDir, dest: 'target' },
+        ...additionalDockerFiles
+      ];
+    } else if (isPureContainer) {
       return [
         { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' },
         ...additionalDockerFiles
       ];
     } else {
-      throw new Error(`Unrecognized Scheduled event type ${environment}!`);
+      throw new Error(`Unrecognized Scheduled event type ${event.runtime}!`);
     }
   }
   protected getContainerEnvironments(): any {
     const event: OFunctionScheduledTaskEvent = (<OFunctionScheduledTaskEvent>this.event);
+    const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
     return {
       'ENTRYPOINT': this.func.getEntrypoint(this.event),
       'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
-      'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1,
+      ...(isNodeJS ? { 'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1 } : {}),
       // Analytics
       ...(event.newRelicKey ? {
         'NEW_RELIC_APP_NAME': `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}`,

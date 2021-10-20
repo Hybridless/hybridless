@@ -26,6 +26,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 	public async checkDependencies(): BPromise {
 		return new BPromise(async (resolve, reject) => {
 			if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('node') != -1 && !this.plugin.options.disableWebpack) this.plugin.depManager.enableWebpack();
+			if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('java') != -1 && !this.plugin.options.disableWebpack) this.plugin.depManager.enableMvn();
 			resolve();
 		});
 	}
@@ -167,7 +168,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 	private _getLambdaEnvironments(): object {
 		return {
 			//When using ALB with lambda, CORS should be implemented at code level (this might be a wrong assumption, more reasearch is needed)
-			...(this.event.runtime == OFunctionLambdaProtocol.httpAlb && (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors ? { 'CORS': JSON.stringify((this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors) } : {}),
+			...(this.event.protocol == OFunctionLambdaProtocol.httpAlb && (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors ? { 'CORS': JSON.stringify((this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors) } : {}),
 		};
 	}
 	/* Cognito authorizer */

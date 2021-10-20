@@ -68,7 +68,10 @@ export enum OFunctionLambdaContainerRuntime {
   nodejs10 = 'nodejs10',
   nodejs12 = 'nodejs12',
   nodejs14 = 'nodejs14',
-  container = 'container'
+  container = 'container',
+  java11 = 'java11',
+  java8al12 = 'java8.al12',
+  java8 = 'java8'
 };
 export enum OFunctionLambdaProtocol {
   http = 'http',

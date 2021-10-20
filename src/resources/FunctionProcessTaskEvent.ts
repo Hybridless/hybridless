@@ -14,43 +14,57 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
   }
   /* Container Base Event Overwrites */
   protected getContainerFiles(): DockerFiles {
-    const environment = (<OFunctionProcessTaskEvent>this.event).runtime;
-    const customDockerFile = (<OFunctionProcessTaskEvent>this.event).dockerFile;
+    const event: OFunctionProcessTaskEvent = (<OFunctionProcessTaskEvent>this.event);
+    const customDockerFile = event.dockerFile;
     const serverlessDir = this.plugin.serverless.config.servicePath;
-    const additionalDockerFiles = ((<OFunctionProcessTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
+    const additionalDockerFiles = (event.additionalDockerFiles || []).map((file) => {
       return { name: file.from, dir: serverlessDir, dest: file.to }
     });
     //Get build directory (todo: figureout oneliner)
     let safeDir: any = __dirname.split('/');
     safeDir.splice(safeDir.length - 1, 1);
     safeDir = safeDir.join('/');
+    //Envs
+    const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
+    const isPHP = (event && event.runtime && event.runtime.toLowerCase().indexOf('php') != -1);
+    const isPureContainer = (event.runtime == OFunctionProcessTaskRuntime.container);
     //Nodejs Specific
-    if (environment == OFunctionProcessTaskRuntime.nodejs10 || environment == OFunctionProcessTaskRuntime.nodejs13) {
+    if (isNodeJS) {
       return [
         (customDockerFile ?
           { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
-          { name: Globals.Process_ImageByRuntime(environment), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+          { name: Globals.Process_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
         ),
         (this.plugin.options.disableWebpack ?
           { name: '.', dir: serverlessDir, dest: '/usr/src/app' } :
           { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' }),
         ...additionalDockerFiles
       ];
-    } else if (environment == OFunctionProcessTaskRuntime.container) {
+    } else if (isPHP) {
+      return [
+        (customDockerFile ?
+          { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+          { name: Globals.Process_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+        ),
+        { name: 'target', dir: safeDir, dest: 'target' },
+        ...additionalDockerFiles
+      ];
+    } else if (isPureContainer) {
       return [
         { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' },
         ...additionalDockerFiles
       ];
     } else {
-      throw new Error(`Unrecognized Process event type ${environment}!`);
+      throw new Error(`Unrecognized Process event type ${event.runtime}!`);
     }
   }
   protected getContainerEnvironments(): any {
     const event: OFunctionProcessTaskEvent = (<OFunctionProcessTaskEvent>this.event);
+    const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
     return {
       'ENTRYPOINT': this.func.getEntrypoint(this.event),
       'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
-      'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1,
+      ...(isNodeJS ? { 'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1 } : {}),
       // Analytics
       ...(event.newRelicKey ? {
         'NEW_RELIC_APP_NAME': `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}`,
