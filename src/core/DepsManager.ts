@@ -58,10 +58,7 @@ export default class DepsManager {
       this.plugin.logger.info('MVN is required to compile Java code, compiling...');
       const exec = await this._runCommand(Globals.Mvn_Build_Command);
       if (exec && exec.stderr && exec.stderr.toLowerCase().indexOf('error')) reject(exec.stderr);
-      else if (!exec || exec.stdout.toLowerCase().indexOf('error') == -1) {
-        if (exec && exec.stdout) this.plugin.logger.debug(exec.stdout);
-        resolve();
-      } else reject(exec.stdout);
+      else resolve();
     });
   }
   private async _runCommand(command, params = []): BPromise {
