@@ -37,6 +37,9 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 
 	/* lambda helpers */
 	private _generateLambdaFunction(): any {
+		const event: OFunctionLambdaEvent = (<OFunctionLambdaEvent>this.event);
+		const isJava = (event && event.runtime && event.runtime.toLowerCase().indexOf('java') != -1);
+		//
 		if (!this.event.protocol) this.plugin.logger.error(`Missing protocol for lambda event ${this._getFunctionName()}. Can't continue!`);
 		return {
 			[this._getFunctionName()]: {
@@ -54,6 +57,10 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				...(this.event.layers ? { layers: this.event.layers } : {}),
 				...(this.event.reservedConcurrency ? { reservedConcurrency: this.event.reservedConcurrency } : {}),
 				tracing: (this.event.disableTracing ? false : true), //enable x-ray tracing by default,
+				//Java support
+				...(isJava ? {
+					package: { artifact: `target/${this.plugin.getName()}-${this.plugin.stage}.jar` }
+				} : {}),
 				//Lambda events (routes for us)
 				...this._getLambdaEvents()
 			}

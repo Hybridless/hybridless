@@ -39,7 +39,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
     });
     //Envs
     const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
-    const isPHP = (event && event.runtime && event.runtime.toLowerCase().indexOf('php') != -1);
+    const isJava = (event && event.runtime && event.runtime.toLowerCase().indexOf('java') != -1);
     const isPureContainer = (event.runtime == OFunctionLambdaContainerRuntime.container);
     //Get build directory
     let safeDir: any = __dirname.split('/');
@@ -58,13 +58,13 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
           { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' }),
         ...additionalDockerFiles
       ];
-    } else if (isPHP) {
+    } else if (isJava) {
       return [
         (customDockerFile ?
           { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
           { name: Globals.LambdaContainer_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
         ),
-        { name: 'target', dir: safeDir, dest: 'target' },
+        { name: 'target', dir: serverlessDir, dest: 'target' },
         ...additionalDockerFiles
       ];
     } else if (isPureContainer) {
@@ -73,7 +73,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         ...additionalDockerFiles
       ];
     } else {
-      throw new Error(`Unrecognized Process event type ${event.runtime}!`);
+      throw new Error(`Unrecognized LambdaContainer event type ${event.runtime}!`);
     }
   }
   protected getContainerEnvironments(): any {

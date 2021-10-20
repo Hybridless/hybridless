@@ -26,7 +26,7 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
     safeDir = safeDir.join('/');
     //Envs
     const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
-    const isPHP = (event && event.runtime && event.runtime.toLowerCase().indexOf('php') != -1);
+    const isJava = (event && event.runtime && event.runtime.toLowerCase().indexOf('java') != -1);
     const isPureContainer = (event.runtime == OFunctionScheduledTaskRuntime.container);
     //Nodejs Specific
     if (isNodeJS) {
@@ -40,13 +40,13 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
           { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' }),
         ...additionalDockerFiles
       ];
-    } if (isPHP) {
+    } if (isJava) {
       return [
         (customDockerFile ?
           { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
           { name: Globals.Scheduled_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
         ),
-        { name: 'target', dir: safeDir, dest: 'target' },
+        { name: 'target', dir: serverlessDir, dest: 'target' },
         ...additionalDockerFiles
       ];
     } else if (isPureContainer) {

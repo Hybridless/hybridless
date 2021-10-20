@@ -66,10 +66,11 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
       //Push to ECR
       this.plugin.logger.info(`Pushing docker image on repo ${this._getECRRepoName()}..`);
       const pushResp = await this._runCommand(`docker push ${ECRRepoURL}`, '');
-      if (pushResp.stderr && pushResp.stderr.includes('ERROR')) reject(pushResp.stderr);
-      else this.plugin.logger.info(`Image tag: ${this.currentTag}`);
-      //
-      resolve();
+      if (pushResp && pushResp.stderr && pushResp.stderr.toLowerCase().indexOf('error')) reject(pushResp.stderr);
+      else if (!pushResp || pushResp.stdout.toLowerCase().indexOf('error') == -1) {
+        if (pushResp && pushResp.stdout) this.plugin.logger.debug(pushResp.stdout);
+        resolve();
+      } else reject(pushResp.stdout);
     });
   }
   public async cleanup(): BPromise {
@@ -153,7 +154,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
         const resp = await executor(command + ' ' + formattedParams);
         resolve(resp);
       } catch (err) {
-        this.plugin.logger.error('Error while running command', err);
+        this.plugin.logger.error('Error while running command', err.stdout.toString());
         reject(err);
       }
     });

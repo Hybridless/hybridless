@@ -2,7 +2,9 @@ import Hybridless = require("..");
 import Globals from "./Globals";
 //
 import BPromise = require('bluebird');
-import { execSync } from 'child_process';
+import util = require('util');
+import child = require('child_process');
+const executor = util.promisify(child.exec);
 //
 export default class DepsManager {
   private requiresWebpack: boolean;
@@ -55,15 +57,25 @@ export default class DepsManager {
     return new BPromise(async (resolve, reject) => {
       this.plugin.logger.info('MVN is required to compile Java code, compiling...');
       const exec = await this._runCommand(Globals.Mvn_Build_Command);
-      if (!exec || exec.toLowerCase().indexOf('error') == -1) {
-        this.plugin.logger.debug(exec);
+      if (exec && exec.stderr && exec.stderr.toLowerCase().indexOf('error')) reject(exec.stderr);
+      else if (!exec || exec.stdout.toLowerCase().indexOf('error') == -1) {
+        if (exec && exec.stdout) this.plugin.logger.debug(exec.stdout);
         resolve();
-      } else reject(exec);
+      } else reject(exec.stdout);
     });
   }
-  private async _runCommand(cmd) {
-    return new BPromise((resolve, reject) => {
-      resolve(execSync(cmd));
+  private async _runCommand(command, params = []): BPromise {
+    return new BPromise(async (resolve, reject) => {
+      if (!params) params = [];
+      let formattedParams = params.join(' ');
+      try {
+        //@ts-ignore
+        const resp = await executor(command + ' ' + formattedParams);
+        resolve(resp);
+      } catch (err) {
+        this.plugin.logger.error('Error while running command', err.stdout.toString());
+        reject(err);
+      }
     });
   }
 }
