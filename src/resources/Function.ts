@@ -139,7 +139,7 @@ export class BaseFunction {
     } else if (event && event.runtime && event.runtime.toLowerCase().indexOf('java') != -1) { //Java event
       //get handler without last component (function)
       let noFuncHandler: any = (event.handler || this.funcOptions.handler).split('::');
-      noFuncHandler.splice(noFuncHandler.length - 1, 1);
+      if (noFuncHandler.length > 1)noFuncHandler.splice(noFuncHandler.length - 1, 1);
       noFuncHandler = noFuncHandler.join('::');
       return noFuncHandler;
     } else {
@@ -152,9 +152,9 @@ export class BaseFunction {
     if (event && event.runtime && event.runtime.toLowerCase().indexOf('php') != -1) {
       return (event.handler || this.funcOptions.handler).replace(noFuncHandler, '');
     } else if (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1) { //NodeJS event
-      return (event.handler || this.funcOptions.handler).replace(noFuncHandler + '.', '');
+      return (event.handler || this.funcOptions.handler).replace(noFuncHandler, '').replace('.', '');
     } else if (event && event.runtime && event.runtime.toLowerCase().indexOf('java') != -1) { //Java event
-      return (event.handler || this.funcOptions.handler).replace(noFuncHandler + '::', '');
+      return (event.handler || this.funcOptions.handler).replace(noFuncHandler, '').replace('::', '');
     } else {
       this.plugin.logger.error('Could not generate entrypoint for event! No runtime is specified..', event);
     }

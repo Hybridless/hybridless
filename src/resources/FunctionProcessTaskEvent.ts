@@ -46,7 +46,8 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
           { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
           { name: Globals.Process_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
         ),
-        { name: 'target', dir: serverlessDir, dest: 'target' },
+        { name: 'target/classes', dir: serverlessDir, dest: 'target/classes' },
+        { name: 'target/dependency', dir: serverlessDir, dest: 'target/dependency' },
         ...additionalDockerFiles
       ];
     } else if (isPureContainer) {
