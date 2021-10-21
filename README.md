@@ -164,7 +164,7 @@ Human readable documentation will is available at [hybridless.com](https://docs.
           layers?: string[];
 
           /* Lambda container specific */
-          runtime?: 'nodejs10' | 'nodejs12' | 'nodejs14' | 'container';
+          runtime?: 'nodejs10' | 'nodejs12' | 'nodejs14' | 'container' | 'java8' | 'java8al12' | 'java11';
 
           /* Lambda protocols specific */
             //Protocol: cognito

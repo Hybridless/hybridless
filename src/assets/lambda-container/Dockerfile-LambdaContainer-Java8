@@ -6,4 +6,4 @@ COPY target/classes ${LAMBDA_TASK_ROOT}
 COPY target/dependency/* ${LAMBDA_TASK_ROOT}/lib/
 
 # 
-ENTRYPOINT /lambda-entrypoint.sh "$ENTRYPOINT::${ENTRYPOINT_FUNC:-Handler}"
+ENTRYPOINT /lambda-entrypoint.sh "$ENTRYPOINT::${ENTRYPOINT_FUNC:-handleRequest}"

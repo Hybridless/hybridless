@@ -1,6 +1,6 @@
 {
   "name": "@hybridless/hybridless",
-  "version": "0.0.70-alpha21",
+  "version": "0.0.70",
   "description": "",
   "main": "index.js",
   "scripts": {
