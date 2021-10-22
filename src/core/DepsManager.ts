@@ -59,7 +59,7 @@ export default class DepsManager {
       const exec = await this._runCommand(Globals.Mvn_Build_Command);
       if (exec && exec.stderr && exec.stderr.toLowerCase().indexOf('error')) reject(exec.stderr);
       else {
-        if (exec && exec.stdout) this.plugin.logger.debug(exec.stdout);
+        // if (exec && exec.stdout) this.plugin.logger.debug(exec.stdout); -- If enabling this again, we need to handle ERR_CHILD_PROCESS_STDIO_MAXBUFFER
         resolve();
       }
     });
