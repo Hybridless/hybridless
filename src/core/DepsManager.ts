@@ -59,7 +59,7 @@ export default class DepsManager {
       const exec = await this._runCommand(Globals.Mvn_Build_Command);
       if (exec && exec.stderr && exec.stderr.toLowerCase().indexOf('error')) reject(exec.stderr);
       else {
-        if (exec && exec.stdout) this.plugin.logger.debug(exec.stdout);
+        // if (exec && exec.stdout) this.plugin.logger.debug(exec.stdout); -- Maven output seems huge enough to desconsider it and just output on errors
         resolve();
       }
     });
@@ -70,7 +70,7 @@ export default class DepsManager {
       let formattedParams = params.join(' ');
       try {
         //@ts-ignore
-        const resp = await executor(command + ' ' + formattedParams, { maxBuffer: 1024 * 500 });
+        const resp = await executor(command + ' ' + formattedParams, { maxBuffer: 1024 * 10000 });
         resolve(resp);
       } catch (err) {
         this.plugin.logger.error('Error while running command', err.stdout.toString());
