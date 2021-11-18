@@ -1,5 +1,4 @@
 FROM ghcr.io/hybridless/webdevops/php-nginx:alpine-php5
-MAINTAINER gabriel@ikonintegration.com
 
 # customize fastcgi
 RUN echo proxy_buffer_size          128k; >> /opt/docker/etc/nginx/vhost.common.d/10-php.conf 

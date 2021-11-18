@@ -1,5 +1,4 @@
 FROM public.ecr.aws/lambda/java:8
-MAINTAINER gabriel@ikonintegration.com
 
 # Copy function code and runtime dependencies from Maven layout
 COPY target/classes ${LAMBDA_TASK_ROOT}

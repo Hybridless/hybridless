@@ -1,5 +1,4 @@
 FROM ghcr.io/hybridless/node:10-alpine
-MAINTAINER gabriel@ikonintegration.com
 
 # Copy files
 COPY /usr/src/app/ /usr/src/app/
