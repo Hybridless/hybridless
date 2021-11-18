@@ -142,6 +142,38 @@ Human readable documentation will is available at [hybridless.com](https://docs.
               cooldownIn?: number; //defaults to cooldown but has priority over it
               cooldownOut?: number; //defaults to cooldown but has priority over it
               targetValue: number;
+              scaleIn?: {
+                adjustmentType?: 'ChangeInCapacity' | 'ExactCapacity' | 'PercentChangeInCapacity'; //defaults to ChangeInCapacity
+                cooldown?: number; //default to 300
+                aggregation: 'Average' | 'Maximum' | 'Minimum';
+                minAdjustmentMagnitude?: number; //Should only be used with PercentChangeInCapacity
+                scaleBy?: number; //defaults to 1
+                //
+                metricNamespace: string;
+                metricName: string;
+                metricDimension: string;
+                metricPeriod?: number; //defaults to 120
+                metricEvaluationPeriod?: number; //defaults to 1
+                operator: 'GreaterThanOrEqualToThreshold' | 'GreaterThanThreshold' | 'LessThanThreshold' | 'LessThanOrEqualToThreshold' | 'LessThanLowerOrGreaterThanUpperThreshold' | 'LessThanLowerThreshold' | 'GreaterThanUpperThreshold';
+                targetValue: number;
+                targetArn: string;
+              };
+              scaleOut?: {
+                adjustmentType?: 'ChangeInCapacity' | 'ExactCapacity' | 'PercentChangeInCapacity'; //defaults to ChangeInCapacity
+                cooldown?: number; //default to 300
+                aggregation: 'Average' | 'Maximum' | 'Minimum';
+                minAdjustmentMagnitude?: number; //Should only be used with PercentChangeInCapacity
+                scaleBy?: number; //defaults to -1
+                //
+                metricNamespace: string;
+                metricName: string;
+                metricDimension: string;
+                metricPeriod?: number; //defaults to 120
+                metricEvaluationPeriod?: number; //defaults to 1
+                operator: 'GreaterThanOrEqualToThreshold' | 'GreaterThanThreshold' | 'LessThanThreshold' | 'LessThanOrEqualToThreshold' | 'LessThanLowerOrGreaterThanUpperThreshold' | 'LessThanLowerThreshold' | 'GreaterThanUpperThreshold';
+                targetValue: number;
+                targetArn: string;
+              };
           }
 
           /* process specific */

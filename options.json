@@ -74,6 +74,152 @@
                             "min": {
                               "type": "number"
                             },
+                            "scaleIn": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "adjustmentType": {
+                                  "enum": [
+                                    "ChangeInCapacity",
+                                    "ExactCapacity",
+                                    "PercentChangeInCapacity"
+                                  ],
+                                  "type": "string"
+                                },
+                                "aggregation": {
+                                  "enum": [
+                                    "Average",
+                                    "Maximum",
+                                    "Minimum"
+                                  ],
+                                  "type": "string"
+                                },
+                                "cooldown": {
+                                  "type": "number"
+                                },
+                                "metricDimension": {
+                                  "type": "string"
+                                },
+                                "metricEvaluationPeriod": {
+                                  "type": "number"
+                                },
+                                "metricName": {
+                                  "type": "string"
+                                },
+                                "metricNamespace": {
+                                  "type": "string"
+                                },
+                                "metricPeriod": {
+                                  "type": "number"
+                                },
+                                "minAdjustmentMagnitude": {
+                                  "type": "number"
+                                },
+                                "operator": {
+                                  "enum": [
+                                    "GreaterThanOrEqualToThreshold",
+                                    "GreaterThanThreshold",
+                                    "GreaterThanUpperThreshold",
+                                    "LessThanLowerOrGreaterThanUpperThreshold",
+                                    "LessThanLowerThreshold",
+                                    "LessThanOrEqualToThreshold",
+                                    "LessThanThreshold"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scaleBy": {
+                                  "type": "number"
+                                },
+                                "targetArn": {
+                                  "type": "string"
+                                },
+                                "targetValue": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "aggregation",
+                                "metricDimension",
+                                "metricName",
+                                "metricNamespace",
+                                "operator",
+                                "targetArn",
+                                "targetValue"
+                              ],
+                              "type": "object"
+                            },
+                            "scaleOut": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "adjustmentType": {
+                                  "enum": [
+                                    "ChangeInCapacity",
+                                    "ExactCapacity",
+                                    "PercentChangeInCapacity"
+                                  ],
+                                  "type": "string"
+                                },
+                                "aggregation": {
+                                  "enum": [
+                                    "Average",
+                                    "Maximum",
+                                    "Minimum"
+                                  ],
+                                  "type": "string"
+                                },
+                                "cooldown": {
+                                  "type": "number"
+                                },
+                                "metricDimension": {
+                                  "type": "string"
+                                },
+                                "metricEvaluationPeriod": {
+                                  "type": "number"
+                                },
+                                "metricName": {
+                                  "type": "string"
+                                },
+                                "metricNamespace": {
+                                  "type": "string"
+                                },
+                                "metricPeriod": {
+                                  "type": "number"
+                                },
+                                "minAdjustmentMagnitude": {
+                                  "type": "number"
+                                },
+                                "operator": {
+                                  "enum": [
+                                    "GreaterThanOrEqualToThreshold",
+                                    "GreaterThanThreshold",
+                                    "GreaterThanUpperThreshold",
+                                    "LessThanLowerOrGreaterThanUpperThreshold",
+                                    "LessThanLowerThreshold",
+                                    "LessThanOrEqualToThreshold",
+                                    "LessThanThreshold"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scaleBy": {
+                                  "type": "number"
+                                },
+                                "targetArn": {
+                                  "type": "string"
+                                },
+                                "targetValue": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "aggregation",
+                                "metricDimension",
+                                "metricName",
+                                "metricNamespace",
+                                "operator",
+                                "targetArn",
+                                "targetValue"
+                              ],
+                              "type": "object"
+                            },
                             "targetValue": {
                               "type": "number"
                             }
@@ -409,6 +555,152 @@
                             },
                             "min": {
                               "type": "number"
+                            },
+                            "scaleIn": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "adjustmentType": {
+                                  "enum": [
+                                    "ChangeInCapacity",
+                                    "ExactCapacity",
+                                    "PercentChangeInCapacity"
+                                  ],
+                                  "type": "string"
+                                },
+                                "aggregation": {
+                                  "enum": [
+                                    "Average",
+                                    "Maximum",
+                                    "Minimum"
+                                  ],
+                                  "type": "string"
+                                },
+                                "cooldown": {
+                                  "type": "number"
+                                },
+                                "metricDimension": {
+                                  "type": "string"
+                                },
+                                "metricEvaluationPeriod": {
+                                  "type": "number"
+                                },
+                                "metricName": {
+                                  "type": "string"
+                                },
+                                "metricNamespace": {
+                                  "type": "string"
+                                },
+                                "metricPeriod": {
+                                  "type": "number"
+                                },
+                                "minAdjustmentMagnitude": {
+                                  "type": "number"
+                                },
+                                "operator": {
+                                  "enum": [
+                                    "GreaterThanOrEqualToThreshold",
+                                    "GreaterThanThreshold",
+                                    "GreaterThanUpperThreshold",
+                                    "LessThanLowerOrGreaterThanUpperThreshold",
+                                    "LessThanLowerThreshold",
+                                    "LessThanOrEqualToThreshold",
+                                    "LessThanThreshold"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scaleBy": {
+                                  "type": "number"
+                                },
+                                "targetArn": {
+                                  "type": "string"
+                                },
+                                "targetValue": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "aggregation",
+                                "metricDimension",
+                                "metricName",
+                                "metricNamespace",
+                                "operator",
+                                "targetArn",
+                                "targetValue"
+                              ],
+                              "type": "object"
+                            },
+                            "scaleOut": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "adjustmentType": {
+                                  "enum": [
+                                    "ChangeInCapacity",
+                                    "ExactCapacity",
+                                    "PercentChangeInCapacity"
+                                  ],
+                                  "type": "string"
+                                },
+                                "aggregation": {
+                                  "enum": [
+                                    "Average",
+                                    "Maximum",
+                                    "Minimum"
+                                  ],
+                                  "type": "string"
+                                },
+                                "cooldown": {
+                                  "type": "number"
+                                },
+                                "metricDimension": {
+                                  "type": "string"
+                                },
+                                "metricEvaluationPeriod": {
+                                  "type": "number"
+                                },
+                                "metricName": {
+                                  "type": "string"
+                                },
+                                "metricNamespace": {
+                                  "type": "string"
+                                },
+                                "metricPeriod": {
+                                  "type": "number"
+                                },
+                                "minAdjustmentMagnitude": {
+                                  "type": "number"
+                                },
+                                "operator": {
+                                  "enum": [
+                                    "GreaterThanOrEqualToThreshold",
+                                    "GreaterThanThreshold",
+                                    "GreaterThanUpperThreshold",
+                                    "LessThanLowerOrGreaterThanUpperThreshold",
+                                    "LessThanLowerThreshold",
+                                    "LessThanOrEqualToThreshold",
+                                    "LessThanThreshold"
+                                  ],
+                                  "type": "string"
+                                },
+                                "scaleBy": {
+                                  "type": "number"
+                                },
+                                "targetArn": {
+                                  "type": "string"
+                                },
+                                "targetValue": {
+                                  "type": "number"
+                                }
+                              },
+                              "required": [
+                                "aggregation",
+                                "metricDimension",
+                                "metricName",
+                                "metricNamespace",
+                                "operator",
+                                "targetArn",
+                                "targetValue"
+                              ],
+                              "type": "object"
                             },
                             "targetValue": {
                               "type": "number"
@@ -3473,6 +3765,152 @@
                               "min": {
                                 "type": "number"
                               },
+                              "scaleIn": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "adjustmentType": {
+                                    "enum": [
+                                      "ChangeInCapacity",
+                                      "ExactCapacity",
+                                      "PercentChangeInCapacity"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "aggregation": {
+                                    "enum": [
+                                      "Average",
+                                      "Maximum",
+                                      "Minimum"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "cooldown": {
+                                    "type": "number"
+                                  },
+                                  "metricDimension": {
+                                    "type": "string"
+                                  },
+                                  "metricEvaluationPeriod": {
+                                    "type": "number"
+                                  },
+                                  "metricName": {
+                                    "type": "string"
+                                  },
+                                  "metricNamespace": {
+                                    "type": "string"
+                                  },
+                                  "metricPeriod": {
+                                    "type": "number"
+                                  },
+                                  "minAdjustmentMagnitude": {
+                                    "type": "number"
+                                  },
+                                  "operator": {
+                                    "enum": [
+                                      "GreaterThanOrEqualToThreshold",
+                                      "GreaterThanThreshold",
+                                      "GreaterThanUpperThreshold",
+                                      "LessThanLowerOrGreaterThanUpperThreshold",
+                                      "LessThanLowerThreshold",
+                                      "LessThanOrEqualToThreshold",
+                                      "LessThanThreshold"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "scaleBy": {
+                                    "type": "number"
+                                  },
+                                  "targetArn": {
+                                    "type": "string"
+                                  },
+                                  "targetValue": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "aggregation",
+                                  "metricDimension",
+                                  "metricName",
+                                  "metricNamespace",
+                                  "operator",
+                                  "targetArn",
+                                  "targetValue"
+                                ],
+                                "type": "object"
+                              },
+                              "scaleOut": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "adjustmentType": {
+                                    "enum": [
+                                      "ChangeInCapacity",
+                                      "ExactCapacity",
+                                      "PercentChangeInCapacity"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "aggregation": {
+                                    "enum": [
+                                      "Average",
+                                      "Maximum",
+                                      "Minimum"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "cooldown": {
+                                    "type": "number"
+                                  },
+                                  "metricDimension": {
+                                    "type": "string"
+                                  },
+                                  "metricEvaluationPeriod": {
+                                    "type": "number"
+                                  },
+                                  "metricName": {
+                                    "type": "string"
+                                  },
+                                  "metricNamespace": {
+                                    "type": "string"
+                                  },
+                                  "metricPeriod": {
+                                    "type": "number"
+                                  },
+                                  "minAdjustmentMagnitude": {
+                                    "type": "number"
+                                  },
+                                  "operator": {
+                                    "enum": [
+                                      "GreaterThanOrEqualToThreshold",
+                                      "GreaterThanThreshold",
+                                      "GreaterThanUpperThreshold",
+                                      "LessThanLowerOrGreaterThanUpperThreshold",
+                                      "LessThanLowerThreshold",
+                                      "LessThanOrEqualToThreshold",
+                                      "LessThanThreshold"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "scaleBy": {
+                                    "type": "number"
+                                  },
+                                  "targetArn": {
+                                    "type": "string"
+                                  },
+                                  "targetValue": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "aggregation",
+                                  "metricDimension",
+                                  "metricName",
+                                  "metricNamespace",
+                                  "operator",
+                                  "targetArn",
+                                  "targetValue"
+                                ],
+                                "type": "object"
+                              },
                               "targetValue": {
                                 "type": "number"
                               }
@@ -3808,6 +4246,152 @@
                               },
                               "min": {
                                 "type": "number"
+                              },
+                              "scaleIn": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "adjustmentType": {
+                                    "enum": [
+                                      "ChangeInCapacity",
+                                      "ExactCapacity",
+                                      "PercentChangeInCapacity"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "aggregation": {
+                                    "enum": [
+                                      "Average",
+                                      "Maximum",
+                                      "Minimum"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "cooldown": {
+                                    "type": "number"
+                                  },
+                                  "metricDimension": {
+                                    "type": "string"
+                                  },
+                                  "metricEvaluationPeriod": {
+                                    "type": "number"
+                                  },
+                                  "metricName": {
+                                    "type": "string"
+                                  },
+                                  "metricNamespace": {
+                                    "type": "string"
+                                  },
+                                  "metricPeriod": {
+                                    "type": "number"
+                                  },
+                                  "minAdjustmentMagnitude": {
+                                    "type": "number"
+                                  },
+                                  "operator": {
+                                    "enum": [
+                                      "GreaterThanOrEqualToThreshold",
+                                      "GreaterThanThreshold",
+                                      "GreaterThanUpperThreshold",
+                                      "LessThanLowerOrGreaterThanUpperThreshold",
+                                      "LessThanLowerThreshold",
+                                      "LessThanOrEqualToThreshold",
+                                      "LessThanThreshold"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "scaleBy": {
+                                    "type": "number"
+                                  },
+                                  "targetArn": {
+                                    "type": "string"
+                                  },
+                                  "targetValue": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "aggregation",
+                                  "metricDimension",
+                                  "metricName",
+                                  "metricNamespace",
+                                  "operator",
+                                  "targetArn",
+                                  "targetValue"
+                                ],
+                                "type": "object"
+                              },
+                              "scaleOut": {
+                                "additionalProperties": false,
+                                "properties": {
+                                  "adjustmentType": {
+                                    "enum": [
+                                      "ChangeInCapacity",
+                                      "ExactCapacity",
+                                      "PercentChangeInCapacity"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "aggregation": {
+                                    "enum": [
+                                      "Average",
+                                      "Maximum",
+                                      "Minimum"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "cooldown": {
+                                    "type": "number"
+                                  },
+                                  "metricDimension": {
+                                    "type": "string"
+                                  },
+                                  "metricEvaluationPeriod": {
+                                    "type": "number"
+                                  },
+                                  "metricName": {
+                                    "type": "string"
+                                  },
+                                  "metricNamespace": {
+                                    "type": "string"
+                                  },
+                                  "metricPeriod": {
+                                    "type": "number"
+                                  },
+                                  "minAdjustmentMagnitude": {
+                                    "type": "number"
+                                  },
+                                  "operator": {
+                                    "enum": [
+                                      "GreaterThanOrEqualToThreshold",
+                                      "GreaterThanThreshold",
+                                      "GreaterThanUpperThreshold",
+                                      "LessThanLowerOrGreaterThanUpperThreshold",
+                                      "LessThanLowerThreshold",
+                                      "LessThanOrEqualToThreshold",
+                                      "LessThanThreshold"
+                                    ],
+                                    "type": "string"
+                                  },
+                                  "scaleBy": {
+                                    "type": "number"
+                                  },
+                                  "targetArn": {
+                                    "type": "string"
+                                  },
+                                  "targetValue": {
+                                    "type": "number"
+                                  }
+                                },
+                                "required": [
+                                  "aggregation",
+                                  "metricDimension",
+                                  "metricName",
+                                  "metricNamespace",
+                                  "operator",
+                                  "targetArn",
+                                  "targetValue"
+                                ],
+                                "type": "object"
                               },
                               "targetValue": {
                                 "type": "number"
