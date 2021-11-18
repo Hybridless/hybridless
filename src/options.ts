@@ -183,6 +183,8 @@ export type OFunctionHTTPDTaskEvent = {
       operator: 'GreaterThanOrEqualToThreshold' | 'GreaterThanThreshold' | 'LessThanThreshold' | 'LessThanOrEqualToThreshold' | 'LessThanLowerOrGreaterThanUpperThreshold' | 'LessThanLowerThreshold' | 'GreaterThanUpperThreshold';
       targetValue: number;
       targetArn: string;
+      //
+      metricDependsOn?: string | string[];
     };
     scaleOut?: {
       adjustmentType?: 'ChangeInCapacity' | 'ExactCapacity' | 'PercentChangeInCapacity'; //defaults to ChangeInCapacity
@@ -199,6 +201,8 @@ export type OFunctionHTTPDTaskEvent = {
       operator: 'GreaterThanOrEqualToThreshold' | 'GreaterThanThreshold' | 'LessThanThreshold' | 'LessThanOrEqualToThreshold' | 'LessThanLowerOrGreaterThanUpperThreshold' | 'LessThanLowerThreshold' | 'GreaterThanUpperThreshold';
       targetValue: number;
       targetArn: string;
+      //
+      metricDependsOn?: string | string[];
     };
   }
 } & OFunctionTaskBaseEvent //Task base
