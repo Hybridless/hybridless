@@ -166,7 +166,7 @@ Human readable documentation will is available at [hybridless.com](https://docs.
                   cooldown?: number; //default to 300
                   aggregation: 'Average' | 'Maximum' | 'Minimum';
                   minAdjustmentMagnitude?: number; //Should only be used with PercentChangeInCapacity
-                  scaleBy?: number; //defaults to -1
+                  scaleBy?: number; //defaults to 1
                   //
                   metricNamespace: string;
                   metricName: string;

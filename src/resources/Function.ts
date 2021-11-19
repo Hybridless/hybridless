@@ -215,7 +215,7 @@ export class BaseFunction {
         //If auto creating VPC (when cidr is specified), and is a lambda, return the wrapped ecs plugin created VPC
         if (isLambda && (this.funcOptions.vpc as OVPCOptions_Dedicated).cidr) return {
           vpc: {
-            securityGroupIds: [{ Ref: `${this.plugin.getName()}${this.getName()}ContainerSecGroup${this.plugin.stage}` }],
+            securityGroupIds: [{ Ref: `${this.plugin.getName()}${this.getName()}ECSServiceSecGroup${this.plugin.stage}` }],
             subnetIds: (this.funcOptions.vpc as OVPCOptions_Dedicated).subnets.map((v, i) => ({ Ref: `SubnetName${this.plugin.stage}${i}` }))
           }
         }
