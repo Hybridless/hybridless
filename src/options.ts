@@ -218,6 +218,7 @@ export type OFunctionLambdaBaseEvent = {
   reservedConcurrency?: number;
   disableTracing?: boolean; //XRay tracing is enabled by default
   protocol: OFunctionLambdaProtocol;
+  package?: any;
 }
 
 export interface OFunctionLambdaHTTPEvent extends OFunctionEvent {

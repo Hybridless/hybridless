@@ -1921,6 +1921,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "http"
@@ -2102,6 +2103,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "httpLoadBalancer"
@@ -2188,6 +2190,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "sqs"
@@ -2251,6 +2254,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "sns"
@@ -2306,6 +2310,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "scheduler"
@@ -2364,6 +2369,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "dynamostreams"
@@ -2422,6 +2428,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "s3"
@@ -2511,6 +2518,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "cloudWatch"
@@ -2573,6 +2581,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "cloudWatchLogstream"
@@ -2632,6 +2641,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "cognito"
@@ -2688,6 +2698,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "none"
@@ -2789,6 +2800,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "http"
@@ -2993,6 +3005,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "httpLoadBalancer"
@@ -3102,6 +3115,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "sqs"
@@ -3188,6 +3202,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "sns"
@@ -3266,6 +3281,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "scheduler"
@@ -3347,6 +3363,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "dynamostreams"
@@ -3428,6 +3445,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "s3"
@@ -3540,6 +3558,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "cloudWatch"
@@ -3625,6 +3644,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "cloudWatchLogstream"
@@ -3707,6 +3727,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "cognito"
@@ -3786,6 +3807,7 @@
                         "memory": {
                           "type": "number"
                         },
+                        "package": {},
                         "protocol": {
                           "enum": [
                             "none"
@@ -5800,6 +5822,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "http"
@@ -5981,6 +6004,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "httpLoadBalancer"
@@ -6067,6 +6091,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "sqs"
@@ -6130,6 +6155,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "sns"
@@ -6185,6 +6211,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "scheduler"
@@ -6243,6 +6270,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "dynamostreams"
@@ -6301,6 +6329,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "s3"
@@ -6390,6 +6419,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "cloudWatch"
@@ -6452,6 +6482,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "cloudWatchLogstream"
@@ -6511,6 +6542,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "cognito"
@@ -6567,6 +6599,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "none"
@@ -6668,6 +6701,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "http"
@@ -6872,6 +6906,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "httpLoadBalancer"
@@ -6981,6 +7016,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "sqs"
@@ -7067,6 +7103,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "sns"
@@ -7145,6 +7182,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "scheduler"
@@ -7226,6 +7264,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "dynamostreams"
@@ -7307,6 +7346,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "s3"
@@ -7419,6 +7459,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "cloudWatch"
@@ -7504,6 +7545,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "cloudWatchLogstream"
@@ -7586,6 +7628,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "cognito"
@@ -7665,6 +7708,7 @@
                           "memory": {
                             "type": "number"
                           },
+                          "package": {},
                           "protocol": {
                             "enum": [
                               "none"

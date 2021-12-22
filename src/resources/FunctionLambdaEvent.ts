@@ -55,6 +55,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				...(this.func.funcOptions.memory || this.event.memory ? { memorySize: this.func.funcOptions.memory || this.event.memory } : {}),
 				...(this.event.runtime ? { runtime: this.event.runtime } : {}),
 				...(this.event.layers ? { layers: this.event.layers } : {}),
+				...(this.event.package ? { package: this.event.package } : {}),
 				...(this.event.reservedConcurrency ? { reservedConcurrency: this.event.reservedConcurrency } : {}),
 				tracing: (this.event.disableTracing ? false : true), //enable x-ray tracing by default,
 				//Java support
