@@ -27,6 +27,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 		return new BPromise(async (resolve, reject) => {
 			if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('node') != -1 && !this.plugin.options.disableWebpack) this.plugin.depManager.enableWebpack();
 			if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('java') != -1 && !this.plugin.options.disableWebpack) this.plugin.depManager.enableMvn();
+			if (this.event.logsRetentionInDays) this.plugin.depManager.enableLogsRetention();
 			resolve();
 		});
 	}
@@ -58,6 +59,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				...(this.event.package ? { package: this.event.package } : {}),
 				...(this.event.reservedConcurrency ? { reservedConcurrency: this.event.reservedConcurrency } : {}),
 				tracing: (this.event.disableTracing ? false : true), //enable x-ray tracing by default,
+				...(event.logsRetentionInDays && <unknown>event.logsRetentionInDays != 'null' ? { logRetentionInDays: event.logsRetentionInDays } : {}),
 				//Java support
 				...(isJava ? {
 					package: { artifact: `target/${this.plugin.getName()}-${this.plugin.stage}.jar`, individually: true }

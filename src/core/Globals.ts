@@ -11,6 +11,7 @@ export default class Globals {
   //Dependecies
   public static Deps_Webpack = 'serverless-webpack';
   public static Deps_ECS = '@hybridless/serverless-ecs-plugin';
+  public static Deps_LambdaLogsRetention  = 'serverless-plugin-log-retention';
   //Java support
   public static Mvn_Build_Command = 'mvn clean install';
   //Defaults

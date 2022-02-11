@@ -79,6 +79,7 @@ Human readable documentation will is available at [hybridless.com](https://docs.
           enabled?: boolean; //defaults to true
           memory?: number; //defaults to 1024 - takes precedence over OFunction.memory
           role?: string; //event execution role
+          logsRetentionInDays?: number; //defaults to 365 days
           
           /* Container type specific */
           //Only allowed for httpd, process, scheduledTask and lambdaContainer - Please, if using custom docket file, read the how to customize section
@@ -99,7 +100,6 @@ Human readable documentation will is available at [hybridless.com](https://docs.
           concurrency?: number; //defaults to 1
           cpu?: number; //defaults to 512
           logsMultilinePattern?: string; //defaults to '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))'
-          logsRetetionInDays?: number; //defaults to 365 days
             //EC2 specific (when ec2LaunchType is true)
           daemonType?: boolean; //indicates if we shall we can one task on each instance of the cluster
 

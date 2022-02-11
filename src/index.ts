@@ -335,9 +335,6 @@ class hybridless {
   }
 
   /* Plugin Helper */
-  public async loadPlugin(plugin: any): BPromise<any> {
-    return await this.serverless.pluginManager.loadPlugin(plugin);
-  }
   private validateExistingServerlessConfiguration(): void {
     //TODO: find better way of reissuing validation from in-memory service 
     let configClone = _.cloneDeep(this.serverless.service);

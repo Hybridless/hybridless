@@ -102,7 +102,7 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
           ...this.getContainerEnvironments(),
         },
         logsMultilinePattern: (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),
-        ...(event.logsRetetionInDays && <unknown>event.logsRetetionInDays != 'null' ? { logsRetetionInDays: event.logsRetetionInDays } : {}),
+        ...(event.logsRetentionInDays && <unknown>event.logsRetentionInDays != 'null' ? { logsRetentionInDays: event.logsRetentionInDays } : {}),
       });
     });
   }

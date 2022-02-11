@@ -10,6 +10,7 @@ export default class DepsManager {
   private requiresWebpack: boolean;
   private requiresECS: boolean;
   private requiresMvn: boolean;
+  private requiresLogsRetention: boolean;
   //
   private readonly plugin: Hybridless;
   //
@@ -17,10 +18,12 @@ export default class DepsManager {
     this.plugin = plugin;
   }
   //
+  public enableLogsRetention(): void { this.requiresLogsRetention = true; }
   public enableWebpack(): void { this.requiresWebpack = true; }
   public enableECSPlugin(): void { this.requiresECS = true; }
   public enableMvn(): void { this.requiresMvn = true; }
   //
+  public isLogsRetentionRequired(): boolean { return this.requiresWebpack; }
   public isWebpackRequired(): boolean { return this.requiresWebpack; }
   public isECSRequired(): boolean { return this.requiresECS; }
   public isMvnRequired(): boolean { return this.requiresMvn; }
@@ -35,6 +38,10 @@ export default class DepsManager {
     if (this.requiresECS && !this._isPluginInstalledServerless(pluginsList, Globals.Deps_ECS)) {
       this.plugin.logger.info('ECS plugin is required, enabling it!');
       await this.plugin.serverless.pluginManager.addPlugin(require(Globals.Deps_ECS));
+    }
+    if (this.requiresLogsRetention && !this._isPluginInstalledServerless(pluginsList, Globals.Deps_LambdaLogsRetention)) {
+      this.plugin.logger.info('Lambda logs retention plugin is required, enabling it!');
+      await this.plugin.serverless.pluginManager.addPlugin(require(Globals.Deps_LambdaLogsRetention));
     }
     return BPromise.resolve();
   }

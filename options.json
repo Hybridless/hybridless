@@ -502,6 +502,9 @@
                         "logsMultilinePattern": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -1075,6 +1078,9 @@
                         "logsMultilinePattern": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -1265,6 +1271,9 @@
                         "logsMultilinePattern": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -1427,6 +1436,9 @@
                         },
                         "logsMultilinePattern": {
                           "type": "string"
+                        },
+                        "logsRetentionInDays": {
+                          "type": "number"
                         },
                         "memory": {
                           "type": "number"
@@ -1594,6 +1606,9 @@
                         "logsMultilinePattern": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -1773,6 +1788,9 @@
                         "logsMultilinePattern": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -1918,6 +1936,9 @@
                           },
                           "type": "array"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -2100,6 +2121,9 @@
                             }
                           ]
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -2187,6 +2211,9 @@
                           },
                           "type": "array"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -2251,6 +2278,9 @@
                           },
                           "type": "array"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -2306,6 +2336,9 @@
                             "type": "string"
                           },
                           "type": "array"
+                        },
+                        "logsRetentionInDays": {
+                          "type": "number"
                         },
                         "memory": {
                           "type": "number"
@@ -2366,6 +2399,9 @@
                           },
                           "type": "array"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -2424,6 +2460,9 @@
                             "type": "string"
                           },
                           "type": "array"
+                        },
+                        "logsRetentionInDays": {
+                          "type": "number"
                         },
                         "memory": {
                           "type": "number"
@@ -2515,6 +2554,9 @@
                           },
                           "type": "array"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -2578,6 +2620,9 @@
                           },
                           "type": "array"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -2638,6 +2683,9 @@
                           },
                           "type": "array"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -2694,6 +2742,9 @@
                             "type": "string"
                           },
                           "type": "array"
+                        },
+                        "logsRetentionInDays": {
+                          "type": "number"
                         },
                         "memory": {
                           "type": "number"
@@ -2797,6 +2848,9 @@
                         "handler": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -3002,6 +3056,9 @@
                             }
                           ]
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -3112,6 +3169,9 @@
                         "handler": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -3199,6 +3259,9 @@
                         "handler": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -3277,6 +3340,9 @@
                         },
                         "handler": {
                           "type": "string"
+                        },
+                        "logsRetentionInDays": {
+                          "type": "number"
                         },
                         "memory": {
                           "type": "number"
@@ -3360,6 +3426,9 @@
                         "handler": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -3441,6 +3510,9 @@
                         },
                         "handler": {
                           "type": "string"
+                        },
+                        "logsRetentionInDays": {
+                          "type": "number"
                         },
                         "memory": {
                           "type": "number"
@@ -3555,6 +3627,9 @@
                         "handler": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -3641,6 +3716,9 @@
                         "handler": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -3724,6 +3802,9 @@
                         "handler": {
                           "type": "string"
                         },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
@@ -3803,6 +3884,9 @@
                         },
                         "handler": {
                           "type": "string"
+                        },
+                        "logsRetentionInDays": {
+                          "type": "number"
                         },
                         "memory": {
                           "type": "number"
@@ -4403,6 +4487,9 @@
                           "logsMultilinePattern": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -4976,6 +5063,9 @@
                           "logsMultilinePattern": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -5166,6 +5256,9 @@
                           "logsMultilinePattern": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -5328,6 +5421,9 @@
                           },
                           "logsMultilinePattern": {
                             "type": "string"
+                          },
+                          "logsRetentionInDays": {
+                            "type": "number"
                           },
                           "memory": {
                             "type": "number"
@@ -5495,6 +5591,9 @@
                           "logsMultilinePattern": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -5674,6 +5773,9 @@
                           "logsMultilinePattern": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -5819,6 +5921,9 @@
                             },
                             "type": "array"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -6001,6 +6106,9 @@
                               }
                             ]
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -6088,6 +6196,9 @@
                             },
                             "type": "array"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -6152,6 +6263,9 @@
                             },
                             "type": "array"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -6207,6 +6321,9 @@
                               "type": "string"
                             },
                             "type": "array"
+                          },
+                          "logsRetentionInDays": {
+                            "type": "number"
                           },
                           "memory": {
                             "type": "number"
@@ -6267,6 +6384,9 @@
                             },
                             "type": "array"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -6325,6 +6445,9 @@
                               "type": "string"
                             },
                             "type": "array"
+                          },
+                          "logsRetentionInDays": {
+                            "type": "number"
                           },
                           "memory": {
                             "type": "number"
@@ -6416,6 +6539,9 @@
                             },
                             "type": "array"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -6479,6 +6605,9 @@
                             },
                             "type": "array"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -6539,6 +6668,9 @@
                             },
                             "type": "array"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -6595,6 +6727,9 @@
                               "type": "string"
                             },
                             "type": "array"
+                          },
+                          "logsRetentionInDays": {
+                            "type": "number"
                           },
                           "memory": {
                             "type": "number"
@@ -6698,6 +6833,9 @@
                           "handler": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -6903,6 +7041,9 @@
                               }
                             ]
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -7013,6 +7154,9 @@
                           "handler": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -7100,6 +7244,9 @@
                           "handler": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -7178,6 +7325,9 @@
                           },
                           "handler": {
                             "type": "string"
+                          },
+                          "logsRetentionInDays": {
+                            "type": "number"
                           },
                           "memory": {
                             "type": "number"
@@ -7261,6 +7411,9 @@
                           "handler": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -7342,6 +7495,9 @@
                           },
                           "handler": {
                             "type": "string"
+                          },
+                          "logsRetentionInDays": {
+                            "type": "number"
                           },
                           "memory": {
                             "type": "number"
@@ -7456,6 +7612,9 @@
                           "handler": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -7542,6 +7701,9 @@
                           "handler": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -7625,6 +7787,9 @@
                           "handler": {
                             "type": "string"
                           },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
@@ -7704,6 +7869,9 @@
                           },
                           "handler": {
                             "type": "string"
+                          },
+                          "logsRetentionInDays": {
+                            "type": "number"
                           },
                           "memory": {
                             "type": "number"
