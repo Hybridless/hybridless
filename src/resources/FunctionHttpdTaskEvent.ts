@@ -128,6 +128,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
         },
         ...(event.autoScale && <unknown>event.autoScale != 'null' ? { autoScale: event.autoScale } : {}),
         logsMultilinePattern: (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),
+        ...(event.logsRetetionInDays && <unknown>event.logsRetetionInDays != 'null' ? { logsRetetionInDays: event.logsRetetionInDays } : {}),
         ...(event.placementStrategies && <unknown>event.placementStrategies != 'null' ? { placementStrategies: event.placementStrategies } : {}),
         ...(event.placementConstraints && <unknown>event.placementConstraints != 'null' ? { placementConstraints: event.placementConstraints } : {}),
         ...(event.capacityProviderStrategy && <unknown>event.capacityProviderStrategy != 'null' ? { capacityProviderStrategy: event.capacityProviderStrategy } : {}),

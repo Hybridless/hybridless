@@ -102,6 +102,7 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
           ...this.getContainerEnvironments(),
         },
         logsMultilinePattern: (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),
+        ...(event.logsRetetionInDays && <unknown>event.logsRetetionInDays != 'null' ? { logsRetetionInDays: event.logsRetetionInDays } : {}),
         //scheduler
         schedulerRate: event.schedulerRate, //creates event rule to invoke task the concurrency below or if not specified it will use 1
         schedulerConcurrency: (event.concurrency || Globals.Scheduled_DefaultConcurrency),

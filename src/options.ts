@@ -145,6 +145,7 @@ export interface OFunctionTaskBaseEvent extends OFunctionEvent, OFunctionContain
   concurrency?: number; //defaults to 1
   cpu?: number; //defaults to 512
   logsMultilinePattern?: string; //defaults to '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))'
+  logsRetetionInDays?: number; //defaults to 365 days
 }
 export interface OFunctionEC2TaskBaseEvent extends OFunctionEvent, OFunctionContainerBaseEvent {
   ec2LaunchType?: true;
