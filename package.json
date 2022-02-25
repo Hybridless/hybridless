@@ -1,6 +1,6 @@
 {
   "name": "@hybridless/hybridless",
-  "version": "0.0.76",
+  "version": "0.0.77-alpha2",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,13 +18,14 @@
   },
   "dependencies": {
     "@babel/core": "^7.17.2",
-    "@hybridless/serverless-ecs-plugin": "0.0.21",
+    "@hybridless/serverless-ecs-plugin": "0.0.23",
     "babel-loader": "^8.2.3",
     "bluebird": "^3.7.2",
     "dockerode": "^3.3.1",
     "json-schema-ref-parser": "^9.0.9",
     "json-stringify-safe": "^5.0.1",
     "loadash": "^1.0.0",
+    "serverless-plugin-log-retention": "^2.0.0",
     "serverless-webpack": "^5.6.1",
     "stack-trace": "0.0.10",
     "tar-fs": "^2.1.1",

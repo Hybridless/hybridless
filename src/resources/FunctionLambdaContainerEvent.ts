@@ -29,6 +29,13 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
       resolve();
     });
   }
+  public async checkDependencies(): BPromise {
+		return new BPromise(async (resolve, reject) => {
+			await super.checkDependencies();
+			if (this.event.logsRetentionInDays) this.plugin.depManager.enableLogsRetention();
+			resolve();
+		});
+	}
   /* Container Base Event Overwrites */
   protected getContainerFiles(): DockerFiles {
     const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
@@ -111,6 +118,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         ...(this.func.funcOptions.memory || event.memory ? { memorySize: this.func.funcOptions.memory || event.memory } : {}),
         ...(event.reservedConcurrency ? { reservedConcurrency: event.reservedConcurrency } : {}),
         tracing: (event.disableTracing ? false : true), //enable x-ray tracing by default,
+        ...(event.logsRetentionInDays && <unknown>event.logsRetentionInDays != 'null' ? { logRetentionInDays: event.logsRetentionInDays } : {}),
         //Lambda events means routes on this scope
         ...this._getLambdaEvents(event)
       }
