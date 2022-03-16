@@ -10,6 +10,7 @@ import _ = require('lodash');
 import BPromise = require('bluebird');
 import DepsManager from "./core/DepsManager";
 import Globals from "./core/Globals";
+import { DefaultDeserializer } from "v8";
 
 
 //
@@ -108,7 +109,13 @@ class hybridless {
           .then(() => this.serverless.pluginManager.spawn('hybridless:build')) //5
           .then(() => this.serverless.pluginManager.spawn('hybridless:push')) //6
       },
+      // sls v2
       'deploy:compileFunctions': () => {
+        return BPromise.bind(this)
+          .then(() => this.serverless.pluginManager.spawn('hybridless:predeploy')) //7, 8
+      },
+      // sls v3
+      'package:compileFunctions': () => {
         return BPromise.bind(this)
           .then(() => this.serverless.pluginManager.spawn('hybridless:predeploy')) //7, 8
       },
@@ -330,6 +337,8 @@ class hybridless {
   private async _modifyExecutionRole(): BPromise {
     //Modify lambda execution role
     const policy = this.serverless.service.provider.compiledCloudFormationTemplate.Resources['IamRoleLambdaExecution'];
+    console.log(policy);
+    this['dede']();
     if (policy && this.depManager.isECSRequired()) {
       if (policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.indexOf('ecs-tasks.amazonaws.com') == -1) {
         policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.push('ecs-tasks.amazonaws.com');
