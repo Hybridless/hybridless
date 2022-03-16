@@ -337,8 +337,6 @@ class hybridless {
   private async _modifyExecutionRole(): BPromise {
     //Modify lambda execution role
     const policy = this.serverless.service.provider.compiledCloudFormationTemplate.Resources['IamRoleLambdaExecution'];
-    console.log(policy);
-    this['dede']();
     if (policy && this.depManager.isECSRequired()) {
       if (policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.indexOf('ecs-tasks.amazonaws.com') == -1) {
         policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.push('ecs-tasks.amazonaws.com');
