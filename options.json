@@ -31,25 +31,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -115,12 +113,7 @@
                                 "cooldown": {
                                   "type": "number"
                                 },
-                                "fillupMissingData": {
-                                  "type": [
-                                    "number",
-                                    "boolean"
-                                  ]
-                                },
+                                "fillupMissingData": {},
                                 "metricDependsOn": {
                                   "anyOf": [
                                     {
@@ -235,12 +228,7 @@
                                 "cooldown": {
                                   "type": "number"
                                 },
-                                "fillupMissingData": {
-                                  "type": [
-                                    "number",
-                                    "boolean"
-                                  ]
-                                },
+                                "fillupMissingData": {},
                                 "metricDependsOn": {
                                   "anyOf": [
                                     {
@@ -610,25 +598,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -694,12 +680,7 @@
                                 "cooldown": {
                                   "type": "number"
                                 },
-                                "fillupMissingData": {
-                                  "type": [
-                                    "number",
-                                    "boolean"
-                                  ]
-                                },
+                                "fillupMissingData": {},
                                 "metricDependsOn": {
                                   "anyOf": [
                                     {
@@ -814,12 +795,7 @@
                                 "cooldown": {
                                   "type": "number"
                                 },
-                                "fillupMissingData": {
-                                  "type": [
-                                    "number",
-                                    "boolean"
-                                  ]
-                                },
+                                "fillupMissingData": {},
                                 "metricDependsOn": {
                                   "anyOf": [
                                     {
@@ -1186,25 +1162,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -1355,25 +1329,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -1521,25 +1493,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -1706,25 +1676,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -2777,25 +2745,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -2901,25 +2867,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -3122,25 +3086,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -3207,25 +3169,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -3294,25 +3254,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -3379,25 +3337,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -3464,25 +3420,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -3570,25 +3524,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -3663,25 +3615,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -3751,25 +3701,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -3838,25 +3786,23 @@
                       "additionalProperties": false,
                       "properties": {
                         "additionalDockerFiles": {
-                          "items": [
-                            {
-                              "additionalProperties": false,
-                              "properties": {
-                                "from": {
-                                  "type": "string"
-                                },
-                                "to": {
-                                  "type": "string"
-                                }
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
                               },
-                              "required": [
-                                "from",
-                                "to"
-                              ],
-                              "type": "object"
-                            }
-                          ],
-                          "maxItems": 1,
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
                           "minItems": 0,
                           "type": "array"
                         },
@@ -4016,25 +3962,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -4100,12 +4044,7 @@
                                   "cooldown": {
                                     "type": "number"
                                   },
-                                  "fillupMissingData": {
-                                    "type": [
-                                      "number",
-                                      "boolean"
-                                    ]
-                                  },
+                                  "fillupMissingData": {},
                                   "metricDependsOn": {
                                     "anyOf": [
                                       {
@@ -4220,12 +4159,7 @@
                                   "cooldown": {
                                     "type": "number"
                                   },
-                                  "fillupMissingData": {
-                                    "type": [
-                                      "number",
-                                      "boolean"
-                                    ]
-                                  },
+                                  "fillupMissingData": {},
                                   "metricDependsOn": {
                                     "anyOf": [
                                       {
@@ -4595,25 +4529,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -4679,12 +4611,7 @@
                                   "cooldown": {
                                     "type": "number"
                                   },
-                                  "fillupMissingData": {
-                                    "type": [
-                                      "number",
-                                      "boolean"
-                                    ]
-                                  },
+                                  "fillupMissingData": {},
                                   "metricDependsOn": {
                                     "anyOf": [
                                       {
@@ -4799,12 +4726,7 @@
                                   "cooldown": {
                                     "type": "number"
                                   },
-                                  "fillupMissingData": {
-                                    "type": [
-                                      "number",
-                                      "boolean"
-                                    ]
-                                  },
+                                  "fillupMissingData": {},
                                   "metricDependsOn": {
                                     "anyOf": [
                                       {
@@ -5171,25 +5093,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -5340,25 +5260,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -5506,25 +5424,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -5691,25 +5607,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -6762,25 +6676,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -6886,25 +6798,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -7107,25 +7017,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -7192,25 +7100,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -7279,25 +7185,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -7364,25 +7268,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -7449,25 +7351,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -7555,25 +7455,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -7648,25 +7546,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -7736,25 +7632,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },
@@ -7823,25 +7717,23 @@
                         "additionalProperties": false,
                         "properties": {
                           "additionalDockerFiles": {
-                            "items": [
-                              {
-                                "additionalProperties": false,
-                                "properties": {
-                                  "from": {
-                                    "type": "string"
-                                  },
-                                  "to": {
-                                    "type": "string"
-                                  }
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
                                 },
-                                "required": [
-                                  "from",
-                                  "to"
-                                ],
-                                "type": "object"
-                              }
-                            ],
-                            "maxItems": 1,
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
                             "minItems": 0,
                             "type": "array"
                           },

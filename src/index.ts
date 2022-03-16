@@ -1,4 +1,6 @@
 import { BaseFunction } from "./resources/Function";
+import { FunctionBaseEvent } from "./resources/BaseEvents/FunctionBaseEvent";
+import { FunctionContainerBaseEvent } from "./resources/BaseEvents/FunctionContainerBaseEvent";
 import { OPlugin } from "./options";
 //
 import Logger from "./core/Logger";
@@ -8,6 +10,8 @@ import _ = require('lodash');
 import BPromise = require('bluebird');
 import DepsManager from "./core/DepsManager";
 import Globals from "./core/Globals";
+
+
 //
 const PluginOptionsSchema = require('./options.json');
 //Global reference for static usage on webpack entrypoint or other references
@@ -23,6 +27,7 @@ class hybridless {
   public readonly logger: Logger;
   public readonly docker: Docker;
   public readonly depManager: DepsManager;
+  public readonly configurationVariablesSources: any;
   //Resources
   public functions: BaseFunction[];
   //Aux
@@ -42,6 +47,8 @@ class hybridless {
     this.functions = [];
     //Schema
     this.serverless.configSchemaHandler.defineTopLevelProperty('hybridless', PluginOptionsSchema);
+    //Env resolution
+    this.configurationVariablesSources = this.getPluginVariablesResolution();
     //Commands
     this.commands = {
       hybridless: {
@@ -117,10 +124,16 @@ class hybridless {
   //setup plugin
   private async setup(): BPromise {
     return new BPromise(async (resolve) => {
-      this.logger.log('Setting up plugin...');
+      //Address `configurationVariablesSources` use case where setup is called manually before actual serverless
+      //initialization for resolving some configs. We allowe refresh since initial manual call does not resolve
+      //function configs that use ssm, or any other async resolver.
+      if (!this.options) this.logger.log('Setting up plugin...');
+      else this.logger.log('Refreshing plugin options...');
       //Main ivars
       const rawOptions = (this.serverless.pluginManager.serverlessConfigFile ? this.serverless.pluginManager.serverlessConfigFile.hybridless : this.serverless.configurationInput.hybridless);
-      let tmpOptions: OPlugin = await this.serverless.variables.populateObject(rawOptions);
+      // ### Since sls@v3, we don't need to ask for variable resolve
+      let tmpOptions: OPlugin = (this.serverless.variables.populateObject ? await this.serverless.variables.populateObject(rawOptions) : rawOptions);
+      tmpOptions = Object.assign({}, tmpOptions); //copy
       //Normalize events -- in case of importing files, functions come in array
       if (Array.isArray(tmpOptions.functions)) {
         const tmp = tmpOptions.functions;
@@ -134,6 +147,19 @@ class hybridless {
       this.stage = (this.service.custom ? this.service.custom.stage : null);
       if (!this.stage) this.stage = (this.service.provider ? this.service.provider.stage : this.service.stage);
       this.region = this.service.provider.region;
+
+      //Initialize functions
+      for (let funcName of Object.keys(this.options.functions)) {
+        const found = this.functions.find((func: BaseFunction) => func.getName(true) == funcName);
+        if (this.options.functions[funcName]) {
+          if (found) found.funcOptions = this.options.functions[funcName];
+          else {
+            const func: BaseFunction = new BaseFunction(this, this.options.functions[funcName], `${funcName}`);
+            if (func) this.functions.push(func);
+            else this.logger.warn(`Skipping function ${funcName}, resource is invalid!`);
+          }
+        } else this.logger.warn(`Skipping function ${funcName}, resource is invalid!`);
+      }
       //
       resolve();
     });
@@ -142,29 +168,15 @@ class hybridless {
   private async spread(): BPromise {
     return new BPromise(async (resolve) => {
       this.logger.log('Spreading components...');
-
       //No components specified, don't process
       if (!this.options || !Object.keys(this.options).length) {
         this.logger.error('No components to be processed.');
         resolve();
         return;
       }
-
       //For each function
-      for (let funcName of Object.keys(this.options.functions)) {
-        if (this.options.functions[funcName]) {
-          this.logger.log(`Spreading function ${funcName}...`);
-          const func: BaseFunction = new BaseFunction(this, this.options.functions[funcName], `${funcName}`);
-          if (func) {
-            await func.spread();
-            this.functions.push(func);
-          } else {
-            this.logger.warn(`Skipping function ${funcName}, resource is invalid!`);
-          }
-        } else {
-          this.logger.warn(`Skipping function ${funcName}, resource is invalid!`);
-        }
-      }
+      for (let func of this.functions) await func.spread();
+      //
       resolve();
     });
   }
@@ -340,6 +352,47 @@ class hybridless {
     let configClone = _.cloneDeep(this.serverless.service);
     ['serverless', 'serviceObject', 'pluginsData', 'serviceFilename', 'initialServerlessConfig', 'isDashboardMonitoringPreconfigured'].forEach((k) => delete configClone[k]);
     this.serverless.configSchemaHandler.validateConfig(configClone);
+  }
+
+  /* Plugin environment ivars resolutions */
+  private getPluginVariablesResolution(): any {
+    const pluginRef: hybridless = this;
+    return {
+      hybridless: {
+        async resolve({ /* resolveVariable, options, */ address }) {
+          //Issue plugin initialization call to guarantee we have enough to generate
+          //resolution of: resolveContainerAddress. Maybe future implementation might 
+          //require another approach.
+          await pluginRef.setup();
+          //Check for resolveContainerAddress only (for now)
+          if (address.indexOf('resolveContainerAddress') != 0) return "Hybridless function is not supported.";
+          const params = address.split(':');
+          params.shift();
+          if (!params[0]) return "Function name not specified on hybridless:resolveContainerAddress environment resolution.";
+          //Check for existing function
+          const func: BaseFunction = pluginRef.functions.find((func: BaseFunction) => func.getName(true) == params[0]);
+          if (!func) return "Specified function name not specified on hybridless:resolveContainerAddress environment resolution.";
+          //Check for event at index or any first occurence of container based event
+          if (params[1] != undefined) {
+            const funcEvent: FunctionBaseEvent<any> = func.getEventAtIndex(params[1]);
+            if (funcEvent && funcEvent['getContainerImageURL']) {
+              const imageURL = await (<(FunctionContainerBaseEvent)>funcEvent).getContainerImageURL();
+              return { value: imageURL };
+            }
+          } else {
+            for (let i = 0; i < func.getEventsCount(); i++) {
+              const funcEvent: FunctionBaseEvent<any> = func.getEventAtIndex(i);
+              if (funcEvent && funcEvent['getContainerImageURL']) {
+                const imageURL = await (<(FunctionContainerBaseEvent)>funcEvent).getContainerImageURL();
+                return { value: imageURL };
+              }
+            }
+          }
+          //unresolved
+          return "hybridless:resolveContainerAddress environment resolution unresolved. " + address;
+        },
+      },
+    };
   }
 
 

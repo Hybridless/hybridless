@@ -108,7 +108,7 @@ export interface OFunctionBasicStepScalingPolicy {
   metricDependsOn?: string | string[];
   additionalDimension?: { dimension: string, target: string }[];
   treatMissingData?: ' breaching' | 'notBreaching' | 'ignore' | 'missing'; //defaults to notBreaching
-  fillupMissingData?: boolean | number; //fillup value is used on absence of data. default to false, true uses '0', number can be specified instead if any other fillup values is needed.
+  fillupMissingData?: any; //fillup value is used on absence of data. default to false, true uses '0', number can be specified instead if any other fillup values is needed.
 };
 
 
@@ -127,7 +127,11 @@ export interface OFunctionEvent {
 export interface OFunctionContainerBaseEvent extends OFunctionEvent {
   dockerFile?: string;
   entrypoint?: string; //incase of using container runtimes, you can always make custom entrypoints
-  additionalDockerFiles?: [{ from: string, to: string }?];
+  /**
+   * @minItems 0
+   * @maxItems 99999
+   */
+  additionalDockerFiles?: { from: string, to: string }[];
 }
 
 

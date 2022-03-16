@@ -14,17 +14,15 @@ import Globals from "../core/Globals";
 import { FunctionScheduledTaskEvent } from "./FunctionScheduledTaskEvent";
 
 export class BaseFunction {
-  public readonly funcOptions: OFunction;
+  private _funcOptions: OFunction;
   private readonly plugin: Hybridless;
-  private ecsIsEnabled: boolean;
   private readonly functionName: string;
   private readonly events: FunctionBaseEvent<OFunctionEvent>[];
   //
   public constructor(plugin: Hybridless, functionOptions: OFunction, functionName: string) {
     this.plugin = plugin;
-    this.funcOptions = functionOptions;
+    this._funcOptions = functionOptions;
     this.functionName = functionName;
-    this.ecsIsEnabled = false;
 
     if (functionOptions.events) {
       this.events = functionOptions.events.map((rawEvent, index) => {
@@ -32,6 +30,16 @@ export class BaseFunction {
       });
     }
   }
+
+  //setter
+  public set funcOptions(options: OFunction) {
+    this._funcOptions = options;
+    this.events.forEach((event: (FunctionBaseEvent<OFunctionEvent>), i: number) => {
+      event.event = options.events[i]
+    });
+  }
+  public get funcOptions() { return this._funcOptions; }
+
 
   //Plugin life cycle
   //spread functions, cluster tasks and clusters
@@ -53,10 +61,7 @@ export class BaseFunction {
         }
       };
       //Check for cluster creation
-      if (clusterTasks.length > 0) {
-        this.ecsIsEnabled = true;
-        await this._spreadCluster(clusterTasks);
-      }
+      if (clusterTasks.length > 0) await this._spreadCluster(clusterTasks);
       //
       resolve();
     });
@@ -159,9 +164,12 @@ export class BaseFunction {
       this.plugin.logger.error('Could not generate entrypoint for event! No runtime is specified..', event);
     }
   }
-  public getName(): string {
+  public getName(rawName?: boolean): string {
+    if (rawName) return this.functionName;
     return this.plugin.provider.naming.getNormalizedFunctionName(this.functionName.replace(/-/g, ''));
   }
+  public getEventAtIndex(index: number): FunctionBaseEvent<OFunctionEvent> { return this.events[index]; }
+  public getEventsCount(): number { return this.events.length; }
 
   //private sub logic
   private _spreadCluster(tasks): BPromise {

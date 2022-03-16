@@ -7,17 +7,21 @@ import BPromise = require('bluebird');
 export abstract class FunctionBaseEvent<T> {
   protected readonly plugin: Hybridless;
   protected readonly func: BaseFunction;
-  public readonly event: T;
+  private _event: T;
   protected readonly index: number;
   public readonly eventType: OFunctionEventType;
   //
   public constructor(plugin: Hybridless, func: BaseFunction, event: T, index: number) {
     this.plugin = plugin;
     this.func = func;
-    this.event = event;
+    this._event = event;
     this.index = index;
     this.eventType = event['eventType'];
   }
+
+  public set event(event: T) { this._event = event; }
+  public get event(): T { return this._event; }
+
   //Plugin life cycle - ordered by calling order
   public abstract spread(): BPromise; //1
   public abstract checkDependencies(): BPromise; //2

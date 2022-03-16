@@ -7,7 +7,7 @@ import { OFunctionEvent, OFunctionEventType } from "../../options";
 import BPromise = require('bluebird');
 import util = require('util');
 import child = require('child_process');
-import Globals, { DockerFiles } from "../../core/Globals";
+import { DockerFiles } from "../../core/Globals";
 //
 const executor = util.promisify(child.exec);
 //
@@ -77,6 +77,10 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     const ECRRepoName = this._getECRRepoName();
     return await this._cleanupOldImages(ECRRepoName);
   }
+
+  //public
+  public async getContainerImageURL() { return this._getFullECRRepoImageURL(); }
+
   //subclasses support
   protected getContainerFiles(): DockerFiles { return null; }
   protected getContainerEnvironments(): any { return {}; }
@@ -86,7 +90,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
   private _getECRRepoName(): string {
     return `${this.plugin.getName()}/${this.func.getName()}.${this.index}-${this.plugin.stage}.v2`.toLowerCase();
   }
-  protected async _getFullECRRepoImageURL() {
+  private async _getFullECRRepoImageURL() {
     const accID = await this.plugin.getAccountID();
     return `${accID}.dkr.ecr.${this.plugin.region}.amazonaws.com` + `/${this._getECRRepoName()}:${this.currentTag}`;
   }

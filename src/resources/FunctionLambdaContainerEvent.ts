@@ -101,7 +101,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
   /* lambda helpers */
   private async _generateLambdaFunction(): BPromise<any> {
     const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
-    const repoName = await this._getFullECRRepoImageURL();
+    const repoName = await this.getContainerImageURL();
     if (!event.protocol) this.plugin.logger.error(`Missing protocol for lambda container event ${this._getFunctionName()}. Can't continue!`);
     return {
       [this._getFunctionName()]: {

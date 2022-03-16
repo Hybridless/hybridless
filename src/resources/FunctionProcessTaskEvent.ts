@@ -83,7 +83,7 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
   }
   public async getClusterTask(): BPromise {
     const TaskName = this._getTaskName();
-    const ECRRepoFullURL = await this._getFullECRRepoImageURL();
+    const ECRRepoFullURL = await this.getContainerImageURL();
     const event: OFunctionProcessTaskEvent = (<OFunctionProcessTaskEvent>this.event);
     return new BPromise(async (resolve) => {
       resolve({

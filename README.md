@@ -12,7 +12,7 @@
 - ![npm](https://img.shields.io/npm/dy/@hybridless/hybridless?style=for-the-badge) ![GitHub commit activity](http://img.shields.io/github/commit-activity/m/hybridless/hybridless?style=for-the-badge) ![GitHub last commit](http://img.shields.io/github/last-commit/hybridless/hybridless?style=for-the-badge)
 - ![GitHub License](https://img.shields.io/github/license/hybridless/hybridless?style=for-the-badge)
 - [![GitHub stars](https://img.shields.io/github/stars/hybridless/hybridless?style=social&label=Star&maxAge=2592000)](https://github.com/hybridless/hybridless/stargazers/) [![GitHub watchers](https://img.shields.io/github/watchers/hybridless/hybridless?style=social&label=Watch&maxAge=2592000)](https://github.com/hybridless/hybridless/watchers/) [Repository Link](https://github.com/hybridless/hybridless)
-
+- Support to Serverless framework v2 and v3.
 
 ### Hybrid function driven development framework
 
@@ -281,6 +281,18 @@ Human readable documentation will is available at [hybridless.com](https://docs.
 
 }
 ```
+
+#### Environment ivar resolutions
+
+By default, hybridless will always attempt to resolve all enviroment ivars that starts with `hybridless` prefix.
+Support operations are listed below:
+
+- `resolveContainerAddress`
+  - Usage: `${hybridless:resolveContainerAddress:FunctionName)}` OR `${hybridless:resolveContainerAddress:FunctionName:optionalIndexOfEvent)}` 
+  - Will attempt to resolve the specified function dynamic generated container image URL (with tag).
+  - If no `optionalIndexOfEvent` is specified, plugin will loop into available events and return the first available container image.
+  - Returns empty string if unable to resolve.
+
 
 ## Roadmap
 Roadmap is visible on our public [project page](https://github.com/orgs/Hybridless/projects/1) 
