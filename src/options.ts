@@ -45,7 +45,9 @@ export enum OFunctionEventType {
   // agent = 'agent'
   //Serverless
   lambda = 'lambda',
-  lambdaContainer = 'lambdaContainer'
+  lambdaContainer = 'lambdaContainer',
+  //Runnable
+  job = 'job',
 };
 export enum OFunctionHttpdTaskRuntime {
   nodejs10 = 'nodejs10',
@@ -73,6 +75,12 @@ export enum OFunctionLambdaContainerRuntime {
   java8al12 = 'java8.al12',
   java8 = 'java8'
 };
+export enum OFunctionBatchJobRuntime {
+  nodejs10 = 'nodejs10',
+  nodejs12 = 'nodejs12',
+  nodejs14 = 'nodejs14',
+  container = 'container'
+};
 export enum OFunctionLambdaProtocol {
   http = 'http',
   httpAlb = 'httpLoadBalancer',
@@ -85,6 +93,10 @@ export enum OFunctionLambdaProtocol {
   cognito = 'cognito',
   s3 = 's3',
   none = 'none'
+};
+export enum OFunctionBatchJobTypes {
+  container = 'container',
+  multinode = 'multinode',
 };
 
 /* Auto scaling */
@@ -138,11 +150,11 @@ export interface OFunctionContainerBaseEvent extends OFunctionEvent {
 /**
  ** TASK BASED **
 **/
-export interface OFunctionTaskBaseEvent extends OFunctionEvent, OFunctionContainerBaseEvent {
+export interface OFunctionTaskBaseEvent extends OFunctionContainerBaseEvent {
   //Service
   ec2LaunchType?: boolean; //defaults to false, if true will laucnh task into EC2
   newRelicKey?: string;//
-  propagateTags?: OPropagateTagsType; //defaults to off
+  propagateTags?: OPropagateTagsType; //defaults to false
   placementConstraints?: { expression: string, type: 'distinctInstance' | 'memberOf' }[];
   placementStrategies?: { field: 'string', type: 'binpack' | 'random' | 'spread' }[];
   capacityProviderStrategy?: { base: number, capacityProvider: string, weight: number }[];
@@ -151,11 +163,11 @@ export interface OFunctionTaskBaseEvent extends OFunctionEvent, OFunctionContain
   cpu?: number; //defaults to 512
   logsMultilinePattern?: string; //defaults to '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))'
 }
-export interface OFunctionEC2TaskBaseEvent extends OFunctionEvent, OFunctionContainerBaseEvent {
+export interface OFunctionEC2TaskBaseEvent extends OFunctionContainerBaseEvent {
   ec2LaunchType?: true;
   daemonType?: boolean;
 }
-export interface OFunctionFargateTaskBaseEvent extends OFunctionEvent, OFunctionContainerBaseEvent {
+export interface OFunctionFargateTaskBaseEvent extends OFunctionContainerBaseEvent {
   ec2LaunchType?: false | undefined;
 }
 export type OFunctionHTTPDTaskEvent = {
@@ -215,6 +227,18 @@ export type OFunctionScheduledTaskEvent = {
 } & OFunctionTaskBaseEvent //Task base
   & (OFunctionEC2TaskBaseEvent | OFunctionFargateTaskBaseEvent);
 
+/**
+ ** BATCH JOB BASED **
+**/
+export type OFunctionBatchJobEvent = {
+  runtime: OFunctionBatchJobRuntime;
+  retryCount?: number; //defaults to 1
+  propagateTags?: boolean; //defaults to off
+  tags?: {[key: string]: string};
+  type?: OFunctionBatchJobTypes; //defaults to OFunctionBatchJobTypes.container
+  cpu?: number;
+  timeout?: number; //takes precendece over func.
+} & OFunctionContainerBaseEvent;
 
 /**
  ** LAMBDA BASED **

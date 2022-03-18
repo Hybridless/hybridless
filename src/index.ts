@@ -418,8 +418,10 @@ class hybridless {
         noFuncHandler = noFuncHandler.join('.');
         //assing
         entries[noFuncHandler] = `./${noFuncHandler}.js`;
-      } else if (isNodeJS) { //handler is define at event level
-        for (let event of func.events) {
+      } 
+      if (isNodeJS) { //handlers is defined at event level
+        for (let event of (func.events || [])) {
+          if (!event.handler) continue;
           //get handler without last component (function)
           let noFuncHandler: any = event.handler.split('.');
           noFuncHandler.splice(noFuncHandler.length - 1, 1);

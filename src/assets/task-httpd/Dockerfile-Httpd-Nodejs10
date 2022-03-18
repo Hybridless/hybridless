@@ -12,4 +12,4 @@ RUN cd /usr/src/httpd/ && npm i -S @hybridless/runtime-nodejs-httpd@latest
 EXPOSE $PORT
 
 # Run the specified command within the container.
-ENTRYPOINT node ../httpd/proxy.js
+ENTRYPOINT ["node", "../httpd/proxy.js"] 

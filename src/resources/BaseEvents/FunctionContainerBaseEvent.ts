@@ -24,7 +24,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     return new BPromise(async (resolve, reject) => {
       if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('java') != -1) this.plugin.depManager.enableMvn();
       if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('node') != -1 && !this.plugin.options.disableWebpack) this.plugin.depManager.enableWebpack();
-      if (this.event.eventType != OFunctionEventType.lambda && this.event.eventType != OFunctionEventType.lambdaContainer) {
+      if (this.event.eventType != OFunctionEventType.lambda && this.event.eventType != OFunctionEventType.lambdaContainer && this.event.eventType != OFunctionEventType.job) {
         this.plugin.depManager.enableECSPlugin();
       }
       resolve();

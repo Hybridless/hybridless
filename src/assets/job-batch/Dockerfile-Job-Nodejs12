@@ -1,0 +1,13 @@
+FROM ghcr.io/hybridless/node:12-alpine
+
+# Copy files
+COPY /usr/src/app/ /usr/src/app/
+COPY proxy.js /usr/src/hybridless-runtime/proxy.js
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+RUN cd /usr/src/hybridless-runtime/ && npm i -S cuid
+
+# Run the specified command within the container.
+ENTRYPOINT ["node", "../hybridless-runtime/proxy.js"] 

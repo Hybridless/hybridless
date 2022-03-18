@@ -1,4 +1,4 @@
-import { OFunctionProcessTaskRuntime, OFunctionScheduledTaskRuntime, OFunctionHttpdTaskRuntime, OFunctionLambdaContainerRuntime } from "../options";
+import { OFunctionProcessTaskRuntime, OFunctionScheduledTaskRuntime, OFunctionBatchJobRuntime, OFunctionHttpdTaskRuntime, OFunctionLambdaContainerRuntime } from "../options";
 import BPromise = require('bluebird');
 import { v4 as uuidv4 } from 'uuid';
 //
@@ -83,6 +83,17 @@ export default class Globals {
       return 'lambda-container/Dockerfile-LambdaContainer-Java8';
     } else if (environment == OFunctionLambdaContainerRuntime.java8al12) {
       return 'lambda-container/Dockerfile-LambdaContainer-Java8al12';
+    } throw new Error(`Unknown event *process* environment type! ${environment} is not a valid environment, can't continue!`);
+  }
+  //Batch job stuff
+  public static BatchJob_DefaultAttempts = 1;
+  public static BatchJob_ImageByRuntime(environment: OFunctionBatchJobRuntime): string {
+    if (environment == OFunctionBatchJobRuntime.nodejs10) {
+      return 'job-batch/Dockerfile-Job-Nodejs10'
+    } else if (environment == OFunctionBatchJobRuntime.nodejs12) {
+      return 'job-batch/Dockerfile-Job-Nodejs12';
+    } else if (environment == OFunctionBatchJobRuntime.nodejs14) {
+      return 'job-batch/Dockerfile-Job-Nodejs14';
     } throw new Error(`Unknown event *process* environment type! ${environment} is not a valid environment, can't continue!`);
   }
 }
