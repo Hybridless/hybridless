@@ -9,12 +9,17 @@ import Globals, { DockerFiles } from "../core/Globals";
 import BPromise = require('bluebird');
 //
 export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
+  private logGroupName: String;
   public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionBatchJobEvent, index: number) {
     super(plugin, func, event, index);
+    this.logGroupName = `/aws/batch/job/${this.plugin.getName()}${this.func.getName()}/${this.plugin.stage}/${index}`;
   }
   /* Base Event Overwrites */
   public async spread(): BPromise {
     return new BPromise(async (resolve) => {
+      //generate log group
+      const logGroup = this._generateLogGroup();
+      if (logGroup) this.plugin.appendResource(this._getJobName('LogGroup'), logGroup);
       //generate job definition
       const jobDefinition = await this._generateJobDefinition();
       if (jobDefinition) this.plugin.appendResource(this._getJobName(), jobDefinition);
@@ -38,6 +43,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
     });
     //Envs
     const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
+    const isJava = (event && event.runtime && event.runtime.toLowerCase().indexOf('java') != -1);
     const isPureContainer = (event.runtime == OFunctionBatchJobRuntime.container);
     //Get build directory
     let safeDir: any = __dirname.split('/');
@@ -57,7 +63,18 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
           { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' }),
         ...additionalDockerFiles
       ];
-    } else if (isPureContainer) {
+    }  else if (isJava) {
+      return [
+        (customDockerFile ?
+          { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+          { name: Globals.BatchJob_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+        ),
+        { name: 'job-batch/Index-Job-JavaX', dir: safeDir + '/resources/assets', dest: 'hybridless-entrypoint.sh' },
+        { name: 'target/classes', dir: serverlessDir, dest: 'target/classes' },
+        { name: 'target/dependency', dir: serverlessDir, dest: 'target/dependency' },
+        ...additionalDockerFiles
+      ];
+    }  else if (isPureContainer) {
       return [
         { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' },
         ...additionalDockerFiles
@@ -85,6 +102,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
     const environment = { ...this.plugin.getEnvironmentIvars(), ...this.getContainerEnvironments() };
     return {
       Type: "AWS::Batch::JobDefinition",
+      DependsOn: [ this._getJobName('LogGroup') ],
       Properties: {
         Type: event.type || OFunctionBatchJobTypes.container,
         RetryStrategy: { ...(event.retryCount ? { Attempts: event.retryCount } : { Attempts: Globals.BatchJob_DefaultAttempts }) },
@@ -99,6 +117,16 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
           JobRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
           Image: repoName,
           Privileged: false,
+          LogConfiguration: {
+            LogDriver: "awslogs",
+            Options: {
+                "awslogs-group": this.logGroupName,
+                "awslogs-region": {
+                    "Ref": "AWS::Region"
+                },
+                'awslogs-multiline-pattern': (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),
+            }
+          },
           ReadonlyRootFilesystem: false,
           ...((this.func.funcOptions.memory || event.memory) || event.cpu ? {
             ResourceRequirements: []
@@ -108,6 +136,17 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
         },
       }
     };
+  }
+
+  private _generateLogGroup(): any {
+    return {
+      Type: 'AWS::Logs::LogGroup',
+      DeletionPolicy: "Delete",
+      Properties: {
+        LogGroupName: this.logGroupName,
+        RetentionInDays: this.event.logsRetentionInDays || Globals.DefaultLogRetetionInDays
+      }
+    }
   }
 
   /* Events */

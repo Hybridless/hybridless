@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# Send event to FS
+if [ $1 ]; then
+	echo $1 > /var/task/event.json
+else
+	echo "{}" > /var/task/event.json
+fi
+
+# Invoke
+java -cp /var/task:/var/task/lib/* $ENTRYPOINT

@@ -79,7 +79,10 @@ export enum OFunctionBatchJobRuntime {
   nodejs10 = 'nodejs10',
   nodejs12 = 'nodejs12',
   nodejs14 = 'nodejs14',
-  container = 'container'
+  container = 'container',
+  java11 = 'java11',
+  java8al12 = 'java8.al12',
+  java8 = 'java8'
 };
 export enum OFunctionLambdaProtocol {
   http = 'http',
@@ -236,8 +239,10 @@ export type OFunctionBatchJobEvent = {
   propagateTags?: boolean; //defaults to off
   tags?: {[key: string]: string};
   type?: OFunctionBatchJobTypes; //defaults to OFunctionBatchJobTypes.container
-  cpu?: number;
   timeout?: number; //takes precendece over func.
+  //container
+  cpu?: number;
+  logsMultilinePattern?: string; //defaults to '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))'
 } & OFunctionContainerBaseEvent;
 
 /**

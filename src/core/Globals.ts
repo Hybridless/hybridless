@@ -21,6 +21,7 @@ export default class Globals {
   public static DefaultHealthCheckHealthyCount = 2;
   public static DefaultHealthCheckUnhealthCount = 5;
   public static DefaultLoadBalancerAdditionalTimeout = 1;
+  public static DefaultLogRetetionInDays = 90;
   //HTTPD stuff
   public static HTTPD_DefaultMemory = 1024;
   public static HTTPD_DefaultCPU = 512;
@@ -94,6 +95,12 @@ export default class Globals {
       return 'job-batch/Dockerfile-Job-Nodejs12';
     } else if (environment == OFunctionBatchJobRuntime.nodejs14) {
       return 'job-batch/Dockerfile-Job-Nodejs14';
+    } else if (environment == OFunctionBatchJobRuntime.java11) {
+      return 'job-batch/Dockerfile-Job-Java11';
+    } else if (environment == OFunctionBatchJobRuntime.java8) {
+      return 'job-batch/Dockerfile-Job-Java8';
+    } else if (environment == OFunctionBatchJobRuntime.java8al12) {
+      return 'job-batch/Dockerfile-Job-Java8al12';
     } throw new Error(`Unknown event *process* environment type! ${environment} is not a valid environment, can't continue!`);
   }
 }
