@@ -114,7 +114,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         },
         //default stuff
         ...this.func.getVPC(true, true),
-        ...(this.func.funcOptions.timeout ? { timeout: this.func.funcOptions.timeout } : { timeout: Globals.HTTPD_DefaultTimeout }),
+        ...((event.timeout || this.func.funcOptions.timeout) ? { timeout: event.timeout || this.func.funcOptions.timeout } : { timeout: Globals.HTTPD_DefaultTimeout }),
         ...(this.func.funcOptions.memory || event.memory ? { memorySize: this.func.funcOptions.memory || event.memory } : {}),
         ...(event.reservedConcurrency ? { reservedConcurrency: event.reservedConcurrency } : {}),
         tracing: (event.disableTracing ? false : true), //enable x-ray tracing by default,

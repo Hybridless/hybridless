@@ -253,6 +253,7 @@ export type OFunctionLambdaBaseEvent = {
   disableTracing?: boolean; //XRay tracing is enabled by default
   protocol: OFunctionLambdaProtocol;
   package?: any;
+  timeout?: number; //takes precendece over func.
 }
 
 export interface OFunctionLambdaHTTPEvent extends OFunctionEvent {

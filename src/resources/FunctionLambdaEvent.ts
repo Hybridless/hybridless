@@ -52,7 +52,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				//default stuff
 				handler: this.event.handler || this.func.funcOptions.handler,
 				...this.func.getVPC(true, true),
-				...(this.func.funcOptions.timeout ? { timeout: this.func.funcOptions.timeout } : { timeout: Globals.HTTPD_DefaultTimeout }),
+				...((this.event.timeout || this.func.funcOptions.timeout) ? { timeout: this.event.timeout || this.func.funcOptions.timeout } : { timeout: Globals.HTTPD_DefaultTimeout }),
 				...(this.func.funcOptions.memory || this.event.memory ? { memorySize: this.event.memory || this.func.funcOptions.memory } : {}),
 				...(this.event.runtime ? { runtime: this.event.runtime } : {}),
 				...(this.event.layers ? { layers: this.event.layers } : {}),
