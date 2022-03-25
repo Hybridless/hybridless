@@ -337,12 +337,12 @@ class hybridless {
   private async _modifyExecutionRole(): BPromise {
     //Modify lambda execution role
     const policy = this.serverless.service.provider.compiledCloudFormationTemplate.Resources['IamRoleLambdaExecution'];
-    if (policy && this.depManager.isECSRequired()) {
+    if (policy && (this.depManager.isECSRequired() || this.depManager.enableECSRolePermission())) {
       if (policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.indexOf('ecs-tasks.amazonaws.com') == -1) {
         policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.push('ecs-tasks.amazonaws.com');
 
       }
-    } else if (this.depManager.isECSRequired()) this.logger.warn('Could not find IamRoleLambdaExecution policy for appending trust relation with ECS. You probably dont have any lambda function and the role is not being created.');
+    } else if (this.depManager.isECSRequired() || this.depManager.enableECSRolePermission()) this.logger.warn('Could not find IamRoleLambdaExecution policy for appending trust relation with ECS. You probably dont have any lambda function and the role is not being created.');
     if (policy && this.serverless.service.provider?.iam?.servicesPrincipal) {
       for (let principal of this.serverless.service.provider?.iam?.servicesPrincipal) {
         if (policy.Properties.AssumeRolePolicyDocument.Statement[0].Principal.Service.indexOf(principal) == -1) {

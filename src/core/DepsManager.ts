@@ -8,6 +8,7 @@ const executor = util.promisify(child.exec);
 //
 export default class DepsManager {
   private requiresWebpack: boolean;
+  private requiresECSRolePermission: boolean;
   private requiresECS: boolean;
   private requiresMvn: boolean;
   private requiresLogsRetention: boolean;
@@ -21,10 +22,12 @@ export default class DepsManager {
   public enableLogsRetention(): void { this.requiresLogsRetention = true; }
   public enableWebpack(): void { this.requiresWebpack = true; }
   public enableECSPlugin(): void { this.requiresECS = true; }
+  public enableECSRolePermission(): void { this.requiresECSRolePermission = true; }
   public enableMvn(): void { this.requiresMvn = true; }
   //
   public isLogsRetentionRequired(): boolean { return this.requiresWebpack; }
   public isWebpackRequired(): boolean { return this.requiresWebpack; }
+  public isECSRolePermissionRequired(): boolean { return this.requiresECSRolePermission; }
   public isECSRequired(): boolean { return this.requiresECS; }
   public isMvnRequired(): boolean { return this.requiresMvn; }
   //
