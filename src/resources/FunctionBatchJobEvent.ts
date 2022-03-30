@@ -23,6 +23,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
       //generate job definition
       const jobDefinition = await this._generateJobDefinition();
       if (jobDefinition) this.plugin.appendResource(this._getJobName(), jobDefinition);
+      //
       resolve();
     });
   }
@@ -95,7 +96,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
       'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
     };
   }
-  /* lambda helpers */
+  /* cloudformation resources */
   private async _generateJobDefinition(): BPromise<any> {
     const event: OFunctionBatchJobEvent = (<OFunctionBatchJobEvent>this.event);
     const repoName = await this.getContainerImageURL();
@@ -137,7 +138,6 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
       }
     };
   }
-
   private _generateLogGroup(): any {
     return {
       Type: 'AWS::Logs::LogGroup',

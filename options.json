@@ -2385,6 +2385,13 @@
                           ],
                           "type": "string"
                         },
+                        "filterPatterns": {
+                          "items": {
+                            "properties": {},
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
                         "handler": {
                           "type": "string"
                         },
@@ -2395,6 +2402,9 @@
                           "type": "array"
                         },
                         "logsRetentionInDays": {
+                          "type": "number"
+                        },
+                        "maximumRetryAttempts": {
                           "type": "number"
                         },
                         "memory": {
@@ -3450,10 +3460,20 @@
                           ],
                           "type": "string"
                         },
+                        "filterPatterns": {
+                          "items": {
+                            "properties": {},
+                            "type": "object"
+                          },
+                          "type": "array"
+                        },
                         "handler": {
                           "type": "string"
                         },
                         "logsRetentionInDays": {
+                          "type": "number"
+                        },
+                        "maximumRetryAttempts": {
                           "type": "number"
                         },
                         "memory": {
@@ -6410,6 +6430,13 @@
                             ],
                             "type": "string"
                           },
+                          "filterPatterns": {
+                            "items": {
+                              "properties": {},
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
                           "handler": {
                             "type": "string"
                           },
@@ -6420,6 +6447,9 @@
                             "type": "array"
                           },
                           "logsRetentionInDays": {
+                            "type": "number"
+                          },
+                          "maximumRetryAttempts": {
                             "type": "number"
                           },
                           "memory": {
@@ -7475,10 +7505,20 @@
                             ],
                             "type": "string"
                           },
+                          "filterPatterns": {
+                            "items": {
+                              "properties": {},
+                              "type": "object"
+                            },
+                            "type": "array"
+                          },
                           "handler": {
                             "type": "string"
                           },
                           "logsRetentionInDays": {
+                            "type": "number"
+                          },
+                          "maximumRetryAttempts": {
                             "type": "number"
                           },
                           "memory": {

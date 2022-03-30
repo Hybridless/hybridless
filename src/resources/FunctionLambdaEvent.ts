@@ -2,7 +2,7 @@ import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent"; //base class
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaHTTPLoadBalancerEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaDynamoStreamsEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaHTTPLoadBalancerEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
 //
 import BPromise = require('bluebird');
 import Globals from "../core/Globals";
@@ -82,10 +82,13 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 					[this._getProtocolName(this.event.protocol)]: {
 						//multiple
 						...((this.event as OFunctionLambdaSNSEvent).protocolArn ? { arn: (this.event as OFunctionLambdaSNSEvent).protocolArn } : {}),
-						//sqs
 						...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
 						//ddbstreams
-						...(this.event.protocol == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
+						...(this.event.protocol == OFunctionLambdaProtocol.dynamostreams ? { 
+							type: 'dynamodb',
+							...((this.event as OFunctionLambdaDynamoStreamsEvent).filterPatterns ? { filterPatterns: (this.event as OFunctionLambdaDynamoStreamsEvent).filterPatterns } : {}),
+							...((this.event as OFunctionLambdaDynamoStreamsEvent).maximumRetryAttempts ? { maximumRetryAttempts: (this.event as OFunctionLambdaDynamoStreamsEvent).maximumRetryAttempts } : {}),
+						} : {}),
 						//scheduler
 						...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: [(this.event as OFunctionLambdaSchedulerEvent).schedulerRate] } : {}),
 						...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? {

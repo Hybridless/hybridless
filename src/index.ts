@@ -329,6 +329,9 @@ class hybridless {
     //
     this.serverless.service.functions = { ...this.serverless.service.functions, ...func };
   }
+  // public appendOutput(key: string, output: any): void {
+  //   _.set(this.serverless, `service.resources.Outputs.${key}`, output);
+  // }
   public appendECSCluster(clusterName: string, cluster: any): void {
     if (!this.serverless.service) this.serverless.service = {};
     if (!this.serverless.service.ecs) this.serverless.service.ecs = [];

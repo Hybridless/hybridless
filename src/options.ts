@@ -317,6 +317,8 @@ export interface OFunctionLambdaDynamoStreamsEvent extends OFunctionEvent {
   protocol: OFunctionLambdaProtocol.dynamostreams;
   protocolArn?: any;
   queueBatchSize?: number;
+  maximumRetryAttempts?: number;
+  filterPatterns?: {}[];
 }
 export interface OFunctionLambdaS3Event extends OFunctionEvent {
   protocol: OFunctionLambdaProtocol.s3;

@@ -231,6 +231,9 @@ Human readable documentation will is available at [hybridless.com](https://docs.
           s3rules?: { [key in ('prefix'|'suffix')]?: string }[];
             //Protocol: dynamostreams
           protocolArn?: any; 
+          queueBatchSize?: number;
+          maximumRetryAttempts?: number;
+          filterPatterns?: {}[];
             //Protocol: scheduler
           schedulerRate?: string; 
           schedulerInput?: string | any; 
