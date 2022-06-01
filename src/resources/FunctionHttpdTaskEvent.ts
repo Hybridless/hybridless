@@ -72,7 +72,6 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
     return {
       //Plataform specific
       ...(isNodeJS && {
-        'HYBRIDLESS_RUNTIME': true,
         'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1,
         'ENTRYPOINT': `./${this.func.getEntrypoint(this.event)}`,
         'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
@@ -95,6 +94,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
         'NEW_RELIC_ENABLED': false
       }),
       //
+      'HYBRIDLESS_RUNTIME': true,
       'TIMEOUT': (this.func.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) * 1000,
       'PORT': this.getPort(),
       // General

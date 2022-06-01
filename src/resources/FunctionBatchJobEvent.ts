@@ -88,6 +88,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
     const event: OFunctionBatchJobEvent = (<OFunctionBatchJobEvent>this.event);
     const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
     return {
+      'HYBRIDLESS_RUNTIME': true,
       ...(isNodeJS ? {'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1} : {}),
       'ENTRYPOINT': `${this.func.getEntrypoint(this.event)}`,
       'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),

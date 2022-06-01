@@ -63,6 +63,7 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
     const event: OFunctionScheduledTaskEvent = (<OFunctionScheduledTaskEvent>this.event);
     const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
     return {
+      'HYBRIDLESS_RUNTIME': true,
       'ENTRYPOINT': this.func.getEntrypoint(this.event),
       'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
       ...(isNodeJS ? { 'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1 } : {}),
