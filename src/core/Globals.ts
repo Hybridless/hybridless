@@ -1,4 +1,4 @@
-import { OFunctionProcessTaskRuntime, OFunctionScheduledTaskRuntime, OFunctionBatchJobRuntime, OFunctionHttpdTaskRuntime, OFunctionLambdaContainerRuntime } from "../options";
+import { OFunctionProcessTaskRuntime, OFunctionLaunchableTaskRuntime, OFunctionScheduledTaskRuntime, OFunctionBatchJobRuntime, OFunctionHttpdTaskRuntime, OFunctionLambdaContainerRuntime } from "../options";
 import BPromise = require('bluebird');
 import { v4 as uuidv4 } from 'uuid';
 //
@@ -68,6 +68,19 @@ export default class Globals {
     } else if (environment == OFunctionScheduledTaskRuntime.container) {
       throw new Error(`Container environments requires dockerFile to be set!`);
     } throw new Error(`Unknown event *scheduled* environment type! ${environment} is not a valid environment, can't continue!`);
+  }
+  //Launchable stuff
+  public static Launchable_DefaultMemory = 1024;
+  public static Launchable_DefaultCPU = 512;
+  public static Launchable_DefaultConcurrency = 1;
+  public static Launchable_ImageByRuntime(environment: OFunctionLaunchableTaskRuntime): string {
+    if (environment == OFunctionLaunchableTaskRuntime.nodejs10) {
+      return 'task-launchable/Dockerfile-Launchable-Nodejs10'
+    } else if (environment == OFunctionLaunchableTaskRuntime.nodejs13) {
+      return 'task-launchable/Dockerfile-Launchable-Nodejs13'
+    } else if (environment == OFunctionLaunchableTaskRuntime.container) {
+      throw new Error(`Container environments requires dockerFile to be set!`);
+    } throw new Error(`Unknown event *launchable* environment type! ${environment} is not a valid environment, can't continue!`);
   }
   //Lambda Container stuff
   public static LambdaContainer_DefaultMemory = 1024;

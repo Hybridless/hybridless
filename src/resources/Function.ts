@@ -1,4 +1,4 @@
-import { OFunction, OFunctionEvent, OFunctionBatchJobEvent, OVPCOptions_Shared, OVPCOptions_Dedicated, OFunctionProcessTaskEvent, OFunctionHTTPDTaskEvent, OFunctionEventType, OFunctionLambdaEvent, OFunctionLambdaContainerEvent, OFunctionScheduledTaskEvent } from "../options";
+import { OFunction, OFunctionEvent, OFunctionBatchJobEvent, OVPCOptions_Shared, OVPCOptions_Dedicated, OFunctionProcessTaskEvent, OFunctionLaunchableTaskEvent, OFunctionHTTPDTaskEvent, OFunctionEventType, OFunctionLambdaEvent, OFunctionLambdaContainerEvent, OFunctionScheduledTaskEvent } from "../options";
 import Hybridless = require("..");
 //Event types
 import { FunctionProcessTaskEvent } from "./FunctionProcessTaskEvent";
@@ -8,11 +8,12 @@ import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent";
 import { FunctionLambdaEvent } from "./FunctionLambdaEvent";
 import { FunctionLambdaContainerEvent } from "./FunctionLambdaContainerEvent";
 import { FunctionBatchJobEvent } from "./FunctionBatchJobEvent";
+import { FunctionScheduledTaskEvent } from "./FunctionScheduledTaskEvent";
+import { FunctionLaunchableTaskEvent } from "./FunctionLaunchableTaskEvent";
 //
 import _ = require('lodash');
 import BPromise = require('bluebird');
 import Globals from "../core/Globals";
-import { FunctionScheduledTaskEvent } from "./FunctionScheduledTaskEvent";
 
 export class BaseFunction {
   private _funcOptions: OFunction;
@@ -215,6 +216,8 @@ export class BaseFunction {
       return new FunctionLambdaContainerEvent(plugin, func, <OFunctionLambdaContainerEvent>event, index);
     } else if (event.eventType == OFunctionEventType.scheduledTask) {
       return new FunctionScheduledTaskEvent(plugin, func, <OFunctionScheduledTaskEvent>event, index);
+    } else if (event.eventType == OFunctionEventType.launchableTask) {
+      return new FunctionLaunchableTaskEvent(plugin, func, <OFunctionLaunchableTaskEvent>event, index);
     } else if (event.eventType == OFunctionEventType.job) {
       return new FunctionBatchJobEvent(plugin, func, <OFunctionBatchJobEvent>event, index);
     } return null;

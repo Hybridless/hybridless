@@ -93,7 +93,7 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
         memory: (event.memory || this.func.funcOptions.memory || Globals.Scheduled_DefaultMemory),
         disablePublicIPAssign: true,
         ec2LaunchType: !!event.ec2LaunchType,
-        ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: true } : {}),
+        ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: false } : {}),
         taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
         image: `${ECRRepoFullURL}`,
         ...(event.entrypoint ? { entrypoint: event.entrypoint } : {}),

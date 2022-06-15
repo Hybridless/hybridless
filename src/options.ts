@@ -42,7 +42,7 @@ export enum OFunctionEventType {
   httpd = 'httpd',
   process = 'process',
   scheduledTask = 'scheduledTask',
-  // agent = 'agent'
+  launchableTask = 'launchableTask',
   //Serverless
   lambda = 'lambda',
   lambdaContainer = 'lambdaContainer',
@@ -62,6 +62,11 @@ export enum OFunctionProcessTaskRuntime {
   container = 'container'
 };
 export enum OFunctionScheduledTaskRuntime {
+  nodejs10 = 'nodejs10',
+  nodejs13 = 'nodejs13',
+  container = 'container'
+};
+export enum OFunctionLaunchableTaskRuntime {
   nodejs10 = 'nodejs10',
   nodejs13 = 'nodejs13',
   container = 'container'
@@ -227,6 +232,11 @@ export type OFunctionScheduledTaskEvent = {
   eventType: OFunctionEventType.scheduledTask;
   schedulerRate: string;
   schedulerInput?: string | object;
+} & OFunctionTaskBaseEvent //Task base
+  & (OFunctionEC2TaskBaseEvent | OFunctionFargateTaskBaseEvent);
+export type OFunctionLaunchableTaskEvent = {
+  runtime: OFunctionLaunchableTaskRuntime;
+  eventType: OFunctionEventType.launchableTask;
 } & OFunctionTaskBaseEvent //Task base
   & (OFunctionEC2TaskBaseEvent | OFunctionFargateTaskBaseEvent);
 

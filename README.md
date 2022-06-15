@@ -74,7 +74,7 @@ Human readable documentation will is available at [hybridless.com](https://docs.
         //
         events?: {
           runtime: string; //Please, check runtime matrix based on the eventTypy you are using. If using custom runtimes use container runtime constant
-          eventType: 'httpd', 'process', 'scheduledTask', 'lambda', 'lambdaContainer';
+          eventType: 'httpd', 'process', 'scheduledTask', 'launchableTask', 'lambda', 'lambdaContainer';
           handler?: string; //this, takes precende over function handler - Usefulll for multi-purpose clusters
           enabled?: boolean; //defaults to true
           memory?: number; //defaults to 1024 - takes precedence over OFunction.memory
