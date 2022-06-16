@@ -102,6 +102,7 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
           ...this.plugin.getEnvironmentIvars(),
           ...this.getContainerEnvironments(),
         },
+        //default stuff
         logsMultilinePattern: (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),
         ...(event.logsRetentionInDays && <unknown>event.logsRetentionInDays != 'null' ? { logsRetentionInDays: event.logsRetentionInDays } : {}),
         ...(event.placementStrategies && <unknown>event.placementStrategies != 'null' ? { placementStrategies: event.placementStrategies } : {}),

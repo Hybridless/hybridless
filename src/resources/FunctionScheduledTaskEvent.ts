@@ -91,9 +91,9 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
         name: TaskName,
         cpu: (event.cpu || Globals.Scheduled_DefaultCPU),
         memory: (event.memory || this.func.funcOptions.memory || Globals.Scheduled_DefaultMemory),
-        disablePublicIPAssign: true,
         ec2LaunchType: !!event.ec2LaunchType,
         ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: false } : {}),
+        ...(!event.ec2LaunchType ? { disablePublicIPAssign: true } : {}),
         taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
         image: `${ECRRepoFullURL}`,
         ...(event.entrypoint ? { entrypoint: event.entrypoint } : {}),
@@ -102,6 +102,7 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
           ...this.plugin.getEnvironmentIvars(),
           ...this.getContainerEnvironments(),
         },
+        //default stuff
         ...(event.placementStrategies && <unknown>event.placementStrategies != 'null' ? { placementStrategies: event.placementStrategies } : {}),
         ...(event.placementConstraints && <unknown>event.placementConstraints != 'null' ? { placementConstraints: event.placementConstraints } : {}),
         ...(event.capacityProviderStrategy && <unknown>event.capacityProviderStrategy != 'null' ? { capacityProviderStrategy: event.capacityProviderStrategy } : {}),

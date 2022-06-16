@@ -210,8 +210,9 @@ class hybridless {
         return;
       }
       //For each function
-      this.logger.log('Creating components required resources...');
-      for (let func of this.functions) await func.createRequiredResources();
+      await new BPromise.all(this.functions.map((func) => {
+        return func.createRequiredResources();
+      }));
       //
       resolve();
     });
@@ -234,9 +235,9 @@ class hybridless {
       }
       //For each function
       this.logger.log('Building components from functions...');
-      let builds = [];
-      for (let func of this.functions) builds.push(func.build());
-      await BPromise.all(builds);
+      await new BPromise.all(this.functions.map((func) => {
+        return func.build();
+      }));
       //
       resolve();
     });
@@ -252,7 +253,9 @@ class hybridless {
       }
       //For each function
       this.logger.log('Pushing components from functions...');
-      for (let func of this.functions) await func.push();
+      await new BPromise.all(this.functions.map((func) => {
+        return func.push();
+      }));
       //
       resolve();
     });

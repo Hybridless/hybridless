@@ -82,9 +82,11 @@ export class BaseFunction {
   public async createRequiredResources(): BPromise {
     //For type of event, check function dependencies
     return new BPromise(async (resolve) => {
-      for (let event of this.events) {
-        if (event && event.isEnabled()) await event.createRequiredResources();
-      };
+      await new BPromise.all(this.events.map((event) => {
+        if (event && event.isEnabled()) {
+          return event.createRequiredResources();
+        } return BPromise.resolve();
+      }));
       resolve();
     });
   }
@@ -92,12 +94,12 @@ export class BaseFunction {
   public async build(): BPromise {
     //For type of event, compile the function
     return new BPromise(async (resolve) => {
-      for (let event of this.events) {
+      await new BPromise.all(this.events.map((event) => {
         if (event && event.isEnabled()) {
           this.plugin.logger.log(`Building event ${this.functionName}:${event.eventType}...`);
-          await event.build();
-        }
-      };
+          return event.build();
+        } return BPromise.resolve();
+      }))
       resolve();
     });
   }
@@ -105,12 +107,12 @@ export class BaseFunction {
   public async push(): BPromise {
     //For type of event, spread the function
     return new BPromise(async (resolve) => {
-      for (let event of this.events) {
+      await new BPromise.all(this.events.map((event) => {
         if (event && event.isEnabled()) {
           this.plugin.logger.log(`Pushing event ${this.functionName}:${event.eventType}...`);
-          await event.push();
-        }
-      };
+          return event.push();
+        } return BPromise.resolve();
+      }));
       resolve();
     });
   }
@@ -118,12 +120,12 @@ export class BaseFunction {
   public async cleanup(): BPromise {
     //For type of event, cleanup the function
     return new BPromise(async (resolve) => {
-      for (let event of this.events) {
+      await new BPromise.all(this.events.map((event) => {
         if (event && event.isEnabled()) {
           this.plugin.logger.log(`Cleaning up ${this.functionName}:${event.eventType}...`);
-          await event.cleanup();
-        }
-      };
+          return event.cleanup();
+        } return BPromise.resolve();
+      }));
       resolve();
     });
   }
@@ -197,6 +199,7 @@ export class BaseFunction {
         //We need to have an additional gap on the ALB timeout
         timeout: (this.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) + (this.funcOptions.albAdditionalTimeout || Globals.DefaultLoadBalancerAdditionalTimeout),
       };
+      console.debug(EBSResource);
       this.plugin.appendECSCluster(ECSName, EBSResource);
       //
       resolve();
