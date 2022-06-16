@@ -2,6 +2,9 @@ name: Hybridless Registry
 
 # Controls when the action will run. 
 on:
+  push:
+    tags:
+      - '[0-9]+.[0-9]+.[0-9]+'
   schedule:
     - cron: "0 0 * * 2"
   # Allows you to run this workflow manually from the Actions tab
@@ -21,11 +24,17 @@ jobs:
           - node:13-alpine
           - node:14-alpine
           - node:15-alpine
+          - node:16-alpine
+          - node:17-alpine
+          - node:18-alpine
           - node:10-slim
           - node:12-slim
           - node:13-slim
           - node:14-slim
           - node:15-slim
+          - node:16-slim
+          - node:17-slim
+          - node:18-slim
           - webdevops/php-nginx:alpine-php5
           - webdevops/php-nginx:alpine-php7
     # Steps represent a sequence of tasks that will be executed as part of the job
