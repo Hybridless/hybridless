@@ -199,7 +199,6 @@ export class BaseFunction {
         //We need to have an additional gap on the ALB timeout
         timeout: (this.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) + (this.funcOptions.albAdditionalTimeout || Globals.DefaultLoadBalancerAdditionalTimeout),
       };
-      console.debug(EBSResource);
       this.plugin.appendECSCluster(ECSName, EBSResource);
       //
       resolve();

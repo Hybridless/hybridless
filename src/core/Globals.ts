@@ -32,6 +32,12 @@ export default class Globals {
       return 'task-httpd/Dockerfile-Httpd-Nodejs10'
     } else if (environment == OFunctionHttpdTaskRuntime.nodejs13) {
       return 'task-httpd/Dockerfile-Httpd-Nodejs13'
+    } else if (environment == OFunctionHttpdTaskRuntime.nodejs14) {
+      return 'task-httpd/Dockerfile-Httpd-Nodejs14'
+    } else if (environment == OFunctionHttpdTaskRuntime.nodejs16) {
+      return 'task-httpd/Dockerfile-Httpd-Nodejs16'
+    } else if (environment == OFunctionHttpdTaskRuntime.nodejs18) {
+      return 'task-httpd/Dockerfile-Httpd-Nodejs18'
     } else if (environment == OFunctionHttpdTaskRuntime.php5) {
       return 'task-httpd/Dockerfile-Httpd-PHP5'
     } else if (environment == OFunctionHttpdTaskRuntime.php7) {
@@ -52,6 +58,12 @@ export default class Globals {
       return 'task-process/Dockerfile-Process-Nodejs10'
     } else if (environment == OFunctionProcessTaskRuntime.nodejs13) {
       return 'task-process/Dockerfile-Process-Nodejs13'
+    } else if (environment == OFunctionProcessTaskRuntime.nodejs14) {
+      return 'task-process/Dockerfile-Process-Nodejs14'
+    } else if (environment == OFunctionProcessTaskRuntime.nodejs16) {
+      return 'task-process/Dockerfile-Process-Nodejs16'
+    } else if (environment == OFunctionProcessTaskRuntime.nodejs18) {
+      return 'task-process/Dockerfile-Process-Nodejs18'
     } else if (environment == OFunctionProcessTaskRuntime.container) {
       throw new Error(`Container environments requires dockerFile to be set!`);
     } throw new Error(`Unknown event *process* environment type! ${environment} is not a valid environment, can't continue!`);
@@ -65,6 +77,12 @@ export default class Globals {
       return 'task-scheduled/Dockerfile-Scheduler-Nodejs10'
     } else if (environment == OFunctionScheduledTaskRuntime.nodejs13) {
       return 'task-scheduled/Dockerfile-Scheduler-Nodejs13'
+    } else if (environment == OFunctionScheduledTaskRuntime.nodejs14) {
+      return 'task-scheduled/Dockerfile-Scheduler-Nodejs14'
+    } else if (environment == OFunctionScheduledTaskRuntime.nodejs16) {
+      return 'task-scheduled/Dockerfile-Scheduler-Nodejs16'
+    } else if (environment == OFunctionScheduledTaskRuntime.nodejs18) {
+      return 'task-scheduled/Dockerfile-Scheduler-Nodejs18'
     } else if (environment == OFunctionScheduledTaskRuntime.container) {
       throw new Error(`Container environments requires dockerFile to be set!`);
     } throw new Error(`Unknown event *scheduled* environment type! ${environment} is not a valid environment, can't continue!`);
@@ -78,6 +96,12 @@ export default class Globals {
       return 'task-launchable/Dockerfile-Launchable-Nodejs10'
     } else if (environment == OFunctionLaunchableTaskRuntime.nodejs13) {
       return 'task-launchable/Dockerfile-Launchable-Nodejs13'
+    } else if (environment == OFunctionLaunchableTaskRuntime.nodejs14) {
+      return 'task-launchable/Dockerfile-Launchable-Nodejs14'
+    } else if (environment == OFunctionLaunchableTaskRuntime.nodejs16) {
+      return 'task-launchable/Dockerfile-Launchable-Nodejs16'
+    } else if (environment == OFunctionLaunchableTaskRuntime.nodejs18) {
+      return 'task-launchable/Dockerfile-Launchable-Nodejs18'
     } else if (environment == OFunctionLaunchableTaskRuntime.container) {
       throw new Error(`Container environments requires dockerFile to be set!`);
     } throw new Error(`Unknown event *launchable* environment type! ${environment} is not a valid environment, can't continue!`);
@@ -91,6 +115,12 @@ export default class Globals {
       return 'lambda-container/Dockerfile-LambdaContainer-Nodejs10'
     } else if (environment == OFunctionLambdaContainerRuntime.nodejs12) {
       return 'lambda-container/Dockerfile-LambdaContainer-Nodejs12';
+    } else if (environment == OFunctionLambdaContainerRuntime.nodejs14) {
+      return 'lambda-container/Dockerfile-LambdaContainer-Nodejs14';
+    } else if (environment == OFunctionLambdaContainerRuntime.nodejs16) {
+      return 'lambda-container/Dockerfile-LambdaContainer-Nodejs16';
+    } else if (environment == OFunctionLambdaContainerRuntime.nodejs18) {
+      return 'lambda-container/Dockerfile-LambdaContainer-Nodejs18';
     } else if (environment == OFunctionLambdaContainerRuntime.java11) {
       return 'lambda-container/Dockerfile-LambdaContainer-Java11';
     } else if (environment == OFunctionLambdaContainerRuntime.java8) {
@@ -108,6 +138,10 @@ export default class Globals {
       return 'job-batch/Dockerfile-Job-Nodejs12';
     } else if (environment == OFunctionBatchJobRuntime.nodejs14) {
       return 'job-batch/Dockerfile-Job-Nodejs14';
+    } else if (environment == OFunctionBatchJobRuntime.nodejs16) {
+      return 'job-batch/Dockerfile-Job-Nodejs16';
+    } else if (environment == OFunctionBatchJobRuntime.nodejs18) {
+      return 'job-batch/Dockerfile-Job-Nodejs18';
     } else if (environment == OFunctionBatchJobRuntime.java11) {
       return 'job-batch/Dockerfile-Job-Java11';
     } else if (environment == OFunctionBatchJobRuntime.java8) {

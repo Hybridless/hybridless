@@ -52,6 +52,9 @@ export enum OFunctionEventType {
 export enum OFunctionHttpdTaskRuntime {
   nodejs10 = 'nodejs10',
   nodejs13 = 'nodejs13',
+  nodejs14 = 'nodejs14',
+  nodejs16 = 'nodejs16',
+  nodejs18 = 'nodejs18',
   php5 = 'php5',
   php7 = 'php7',
   container = 'container'
@@ -59,22 +62,33 @@ export enum OFunctionHttpdTaskRuntime {
 export enum OFunctionProcessTaskRuntime {
   nodejs10 = 'nodejs10',
   nodejs13 = 'nodejs13',
+  nodejs14 = 'nodejs14',
+  nodejs16 = 'nodejs16',
+  nodejs18 = 'nodejs18',
   container = 'container'
 };
 export enum OFunctionScheduledTaskRuntime {
   nodejs10 = 'nodejs10',
   nodejs13 = 'nodejs13',
+  nodejs14 = 'nodejs14',
+  nodejs16 = 'nodejs16',
+  nodejs18 = 'nodejs18',
   container = 'container'
 };
 export enum OFunctionLaunchableTaskRuntime {
   nodejs10 = 'nodejs10',
   nodejs13 = 'nodejs13',
+  nodejs14 = 'nodejs14',
+  nodejs16 = 'nodejs16',
+  nodejs18 = 'nodejs18',
   container = 'container'
 };
 export enum OFunctionLambdaContainerRuntime {
   nodejs10 = 'nodejs10',
   nodejs12 = 'nodejs12',
   nodejs14 = 'nodejs14',
+  nodejs16 = 'nodejs16',
+  nodejs18 = 'nodejs18',
   container = 'container',
   java11 = 'java11',
   java8al12 = 'java8.al12',
@@ -84,6 +98,8 @@ export enum OFunctionBatchJobRuntime {
   nodejs10 = 'nodejs10',
   nodejs12 = 'nodejs12',
   nodejs14 = 'nodejs14',
+  nodejs16 = 'nodejs16',
+  nodejs18 = 'nodejs18',
   container = 'container',
   java11 = 'java11',
   java8al12 = 'java8.al12',
