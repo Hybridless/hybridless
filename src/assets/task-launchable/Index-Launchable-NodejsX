@@ -1,0 +1,50 @@
+//Interruption handler
+process.on('SIGINT', function() {
+  console.log("Caught interrupt signal");
+  process.exit(1);
+});
+//Execution scope
+(async () => {
+  //
+  try {
+    const  cuid = require('cuid');
+    //helper
+    function _buildContext(callback) {
+      return {
+        awsRequestId: `${cuid()}-${cuid()}`,
+        callbackWaitsForEmptyEventLoop: true,
+        getRemainingTimeInMillis: () => { return 0; },
+        done: (err, data) => callback(err, data),
+        fail: (err) => callback(err),
+        succeed: (res) => callback(null, res),
+      };
+    }
+    async function invoke(functionPath, input) {
+      return new Promise(async (resolve, reject) => {
+        //Invoke
+        const context = _buildContext((err, data) => {
+          resolve({ err, data });
+        });
+        try {
+          const resp = await (require(`${functionPath}`)[process.env.ENTRYPOINT_FUNC](input, context));
+          if (resp) resolve({ data: resp }); //indicates sync content
+        } catch (e) { reject(e); }
+      });
+    }
+    //Get inputs
+    let input = {};
+    console.debug(process.argv);
+    try { input = JSON.parse(process.argv[2]); } 
+    catch (e) { console.log('[Hybridless Runtime] - Error while decoding process arguments!', e); }
+    //Invoke
+    const functionPath = `${__dirname}/../app/${process.env.ENTRYPOINT}`;
+    const resp = await invoke(functionPath, input);
+    //Return
+    console.debug(resp);
+    if (!resp.err && resp.data && resp.data.statusCode == 200) process.exit(0);
+    else process.exit(1);
+  } catch (e) {
+    console.error(e);
+    process.exit(1);
+  }
+})();
