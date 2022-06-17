@@ -64,6 +64,7 @@ export class FunctionLaunchableTaskEvent extends FunctionContainerBaseEvent {
     const event: OFunctionLaunchableTaskEvent = (<OFunctionLaunchableTaskEvent>this.event);
     const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
     return {
+      'TIMEOUT': (this.func.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) * 1000,
       'HYBRIDLESS_RUNTIME': true,
       'ENTRYPOINT': this.func.getEntrypoint(this.event),
       'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),

@@ -92,6 +92,8 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
       ...(isNodeJS ? {'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1} : {}),
       'ENTRYPOINT': `${this.func.getEntrypoint(this.event)}`,
       'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
+      // Batch specific
+      ...(this.func.funcOptions.timeout || event.timeout ? {'TIMEOUT': event.timeout || this.func.funcOptions.timeout  } : {}),
       // General
       'STAGE': this.plugin.stage,
       'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
