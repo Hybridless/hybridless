@@ -1,4 +1,4 @@
-FROM ghcr.io/hybridless/node:13-alpine
+FROM ghcr.io/hybridless/node:16-alpine
 
 # Copy files
 COPY /usr/src/app/ /usr/src/app/
