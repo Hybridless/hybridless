@@ -185,7 +185,7 @@ export class BaseFunction {
       const ECSName = this.getName();
       const EBSResource = {
         clusterName: ECSName,
-        tags: this.plugin.getDefaultTags(true),
+        tags: { ...this.plugin.getDefaultTags(true), ...(this.funcOptions.tags || {}) },
         services: tasks,
         ...(this.funcOptions.enableContainerInsights ? { enableContainerInsights: true } : {}),
         //Should specify custom cluster?

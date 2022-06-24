@@ -12,6 +12,7 @@ export interface OFunction {
   timeout?: number; //Only works with lambda based
   memory?: number; //defaults to 1024
   events?: (OFunctionHTTPDTaskEvent | OFunctionProcessTaskEvent | OFunctionScheduledTaskEvent | OFunctionLambdaEvent | OFunctionLambdaContainerEvent)[];
+  tags?: { [key: string]: any } | { [key: string]: any }[];
   //ECS cluster
   ecsClusterArn?: any;
   ecsIngressSecGroupId?: string;

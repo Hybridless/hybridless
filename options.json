@@ -4013,6 +4013,21 @@
               "memory": {
                 "type": "number"
               },
+              "tags": {
+                "anyOf": [
+                  {
+                    "additionalProperties": {},
+                    "type": "object"
+                  },
+                  {
+                    "items": {
+                      "additionalProperties": {},
+                      "type": "object"
+                    },
+                    "type": "array"
+                  }
+                ]
+              },
               "timeout": {
                 "type": "number"
               },
@@ -8085,6 +8100,21 @@
                 },
                 "memory": {
                   "type": "number"
+                },
+                "tags": {
+                  "anyOf": [
+                    {
+                      "additionalProperties": {},
+                      "type": "object"
+                    },
+                    {
+                      "items": {
+                        "additionalProperties": {},
+                        "type": "object"
+                      },
+                      "type": "array"
+                    }
+                  ]
                 },
                 "timeout": {
                   "type": "number"
