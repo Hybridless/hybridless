@@ -261,6 +261,7 @@ export type OFunctionLaunchableTaskEvent = {
  ** BATCH JOB BASED **
 **/
 export type OFunctionBatchJobEvent = {
+  eventType: OFunctionEventType.job;
   runtime: OFunctionBatchJobRuntime;
   retryCount?: number; //defaults to 1
   propagateTags?: boolean; //defaults to off
