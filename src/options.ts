@@ -117,6 +117,7 @@ export enum OFunctionLambdaProtocol {
   cloudWatchLogstream = 'cloudWatchLogstream',
   cognito = 'cognito',
   s3 = 's3',
+  eventBridge = 'eventBridge',
   none = 'none'
 };
 export enum OFunctionBatchJobTypes {
@@ -372,6 +373,12 @@ export interface OFunctionLambdaCognitoTrigger extends OFunctionEvent {
   cognitoUserPoolArn: any;
   cognitoTrigger: string;
 }
+export interface OFunctionLambdaEventBridge extends OFunctionEvent {
+  protocol: OFunctionLambdaProtocol.eventBridge;
+  eventBus?: string;
+  schedulerRate?: string;
+  pattern?: any;
+}
 export interface OFunctionLambdaNoneEvent extends OFunctionEvent {
   protocol: OFunctionLambdaProtocol.none;
 }
@@ -384,7 +391,7 @@ export type OFunctionLambdaEvent = {
   & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent |
     OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent |
     OFunctionLambdaS3Event | OFunctionLambdaCloudWatchEvent | OFunctionLambdaCloudWatchLogStream |
-    OFunctionLambdaCognitoTrigger | OFunctionLambdaHTTPLoadBalancerEvent);
+    OFunctionLambdaCognitoTrigger | OFunctionLambdaHTTPLoadBalancerEvent | OFunctionLambdaEventBridge);
 export type OFunctionLambdaContainerEvent = {
   runtime: OFunctionLambdaContainerRuntime;
   eventType: OFunctionEventType.lambdaContainer;
@@ -394,7 +401,7 @@ export type OFunctionLambdaContainerEvent = {
   & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent |
     OFunctionLambdaSchedulerEvent | OFunctionLambdaDynamoStreamsEvent | OFunctionLambdaNoneEvent |
     OFunctionLambdaS3Event | OFunctionLambdaCloudWatchEvent | OFunctionLambdaCloudWatchLogStream |
-    OFunctionLambdaCognitoTrigger | OFunctionLambdaHTTPLoadBalancerEvent);
+    OFunctionLambdaCognitoTrigger | OFunctionLambdaHTTPLoadBalancerEvent | OFunctionLambdaEventBridge);
 
 
 

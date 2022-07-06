@@ -2,7 +2,9 @@ import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEv
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaContainerEvent, OFunctionLambdaContainerRuntime, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaHTTPLoadBalancerEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaContainerEvent, 
+         OFunctionLambdaContainerRuntime, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaHTTPLoadBalancerEvent, OFunctionLambdaProtocol, 
+         OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent, OFunctionLambdaEventBridge } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -151,6 +153,9 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
             } : {}),
             //sns
             ...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
+						//eventBridge
+						...((this.event as OFunctionLambdaEventBridge).eventBus ? { eventBus: (this.event as OFunctionLambdaEventBridge).eventBus } : {}),
+						...((this.event as OFunctionLambdaEventBridge).pattern ? { pattern: (this.event as OFunctionLambdaEventBridge).pattern } : {}),
             //s3
             ...((this.event as OFunctionLambdaS3Event).s3bucket ? {
               s3: {

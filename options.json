@@ -2764,6 +2764,76 @@
                         "enabled": {
                           "type": "boolean"
                         },
+                        "eventBus": {
+                          "type": "string"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "job",
+                            "lambda",
+                            "lambdaContainer",
+                            "launchableTask",
+                            "process",
+                            "scheduledTask"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "layers": {
+                          "items": {
+                            "type": "string"
+                          },
+                          "type": "array"
+                        },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "package": {},
+                        "pattern": {},
+                        "protocol": {
+                          "enum": [
+                            "eventBridge"
+                          ],
+                          "type": "string"
+                        },
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        },
+                        "schedulerRate": {
+                          "type": "string"
+                        },
+                        "timeout": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
                         "eventType": {
                           "enum": [
                             "httpd",
@@ -3913,6 +3983,97 @@
                       "required": [
                         "cognitoTrigger",
                         "cognitoUserPoolArn",
+                        "eventType",
+                        "protocol",
+                        "runtime"
+                      ],
+                      "type": "object"
+                    },
+                    {
+                      "additionalProperties": false,
+                      "properties": {
+                        "additionalDockerFiles": {
+                          "items": {
+                            "additionalProperties": false,
+                            "properties": {
+                              "from": {
+                                "type": "string"
+                              },
+                              "to": {
+                                "type": "string"
+                              }
+                            },
+                            "required": [
+                              "from",
+                              "to"
+                            ],
+                            "type": "object"
+                          },
+                          "maxItems": 99999,
+                          "minItems": 0,
+                          "type": "array"
+                        },
+                        "disableTracing": {
+                          "type": "boolean"
+                        },
+                        "dockerFile": {
+                          "type": "string"
+                        },
+                        "enabled": {
+                          "type": "boolean"
+                        },
+                        "entrypoint": {
+                          "type": "string"
+                        },
+                        "eventBus": {
+                          "type": "string"
+                        },
+                        "eventType": {
+                          "enum": [
+                            "httpd",
+                            "job",
+                            "lambda",
+                            "lambdaContainer",
+                            "launchableTask",
+                            "process",
+                            "scheduledTask"
+                          ],
+                          "type": "string"
+                        },
+                        "handler": {
+                          "type": "string"
+                        },
+                        "logsRetentionInDays": {
+                          "type": "number"
+                        },
+                        "memory": {
+                          "type": "number"
+                        },
+                        "package": {},
+                        "pattern": {},
+                        "protocol": {
+                          "enum": [
+                            "eventBridge"
+                          ],
+                          "type": "string"
+                        },
+                        "reservedConcurrency": {
+                          "type": "number"
+                        },
+                        "role": {
+                          "type": "string"
+                        },
+                        "runtime": {
+                          "type": "string"
+                        },
+                        "schedulerRate": {
+                          "type": "string"
+                        },
+                        "timeout": {
+                          "type": "number"
+                        }
+                      },
+                      "required": [
                         "eventType",
                         "protocol",
                         "runtime"
@@ -6852,6 +7013,76 @@
                           "enabled": {
                             "type": "boolean"
                           },
+                          "eventBus": {
+                            "type": "string"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "job",
+                              "lambda",
+                              "lambdaContainer",
+                              "launchableTask",
+                              "process",
+                              "scheduledTask"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "layers": {
+                            "items": {
+                              "type": "string"
+                            },
+                            "type": "array"
+                          },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "package": {},
+                          "pattern": {},
+                          "protocol": {
+                            "enum": [
+                              "eventBridge"
+                            ],
+                            "type": "string"
+                          },
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          },
+                          "schedulerRate": {
+                            "type": "string"
+                          },
+                          "timeout": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
                           "eventType": {
                             "enum": [
                               "httpd",
@@ -8001,6 +8232,97 @@
                         "required": [
                           "cognitoTrigger",
                           "cognitoUserPoolArn",
+                          "eventType",
+                          "protocol",
+                          "runtime"
+                        ],
+                        "type": "object"
+                      },
+                      {
+                        "additionalProperties": false,
+                        "properties": {
+                          "additionalDockerFiles": {
+                            "items": {
+                              "additionalProperties": false,
+                              "properties": {
+                                "from": {
+                                  "type": "string"
+                                },
+                                "to": {
+                                  "type": "string"
+                                }
+                              },
+                              "required": [
+                                "from",
+                                "to"
+                              ],
+                              "type": "object"
+                            },
+                            "maxItems": 99999,
+                            "minItems": 0,
+                            "type": "array"
+                          },
+                          "disableTracing": {
+                            "type": "boolean"
+                          },
+                          "dockerFile": {
+                            "type": "string"
+                          },
+                          "enabled": {
+                            "type": "boolean"
+                          },
+                          "entrypoint": {
+                            "type": "string"
+                          },
+                          "eventBus": {
+                            "type": "string"
+                          },
+                          "eventType": {
+                            "enum": [
+                              "httpd",
+                              "job",
+                              "lambda",
+                              "lambdaContainer",
+                              "launchableTask",
+                              "process",
+                              "scheduledTask"
+                            ],
+                            "type": "string"
+                          },
+                          "handler": {
+                            "type": "string"
+                          },
+                          "logsRetentionInDays": {
+                            "type": "number"
+                          },
+                          "memory": {
+                            "type": "number"
+                          },
+                          "package": {},
+                          "pattern": {},
+                          "protocol": {
+                            "enum": [
+                              "eventBridge"
+                            ],
+                            "type": "string"
+                          },
+                          "reservedConcurrency": {
+                            "type": "number"
+                          },
+                          "role": {
+                            "type": "string"
+                          },
+                          "runtime": {
+                            "type": "string"
+                          },
+                          "schedulerRate": {
+                            "type": "string"
+                          },
+                          "timeout": {
+                            "type": "number"
+                          }
+                        },
+                        "required": [
                           "eventType",
                           "protocol",
                           "runtime"

@@ -2,7 +2,9 @@ import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent"; //base class
 //
 import Hybridless = require("..");
 import { BaseFunction } from "./Function";
-import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaDynamoStreamsEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaHTTPLoadBalancerEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent } from "../options";
+import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaDynamoStreamsEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, 
+				 OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaHTTPLoadBalancerEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, 
+				 OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent, OFunctionLambdaEventBridge } from "../options";
 //
 import BPromise = require('bluebird');
 import Globals from "../core/Globals";
@@ -96,6 +98,9 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 								typeof (this.event as OFunctionLambdaSchedulerEvent).schedulerInput == 'string' ?
 									(this.event as OFunctionLambdaSchedulerEvent).schedulerInput : JSON.stringify((this.event as OFunctionLambdaSchedulerEvent).schedulerInput)
 						} : {}),
+						//eventBridge
+						...((this.event as OFunctionLambdaEventBridge).eventBus ? { eventBus: (this.event as OFunctionLambdaEventBridge).eventBus } : {}),
+						...((this.event as OFunctionLambdaEventBridge).pattern ? { pattern: (this.event as OFunctionLambdaEventBridge).pattern } : {}),
 						//sns
 						...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
 						//s3
