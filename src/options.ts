@@ -376,7 +376,7 @@ export interface OFunctionLambdaCognitoTrigger extends OFunctionEvent {
 export interface OFunctionLambdaEventBridge extends OFunctionEvent {
   protocol: OFunctionLambdaProtocol.eventBridge;
   eventBus?: string;
-  schedulerRate?: string;
+  schedule?: string;
   pattern?: any;
 }
 export interface OFunctionLambdaNoneEvent extends OFunctionEvent {

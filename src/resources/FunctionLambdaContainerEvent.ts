@@ -156,6 +156,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
 						//eventBridge
 						...((this.event as OFunctionLambdaEventBridge).eventBus ? { eventBus: (this.event as OFunctionLambdaEventBridge).eventBus } : {}),
 						...((this.event as OFunctionLambdaEventBridge).pattern ? { pattern: (this.event as OFunctionLambdaEventBridge).pattern } : {}),
+            ...((this.event as OFunctionLambdaEventBridge).schedule ? { schedule: (this.event as OFunctionLambdaEventBridge).schedule } : {}),
             //s3
             ...((this.event as OFunctionLambdaS3Event).s3bucket ? {
               s3: {

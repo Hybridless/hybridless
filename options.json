@@ -2811,7 +2811,7 @@
                         "runtime": {
                           "type": "string"
                         },
-                        "schedulerRate": {
+                        "schedule": {
                           "type": "string"
                         },
                         "timeout": {
@@ -4066,7 +4066,7 @@
                         "runtime": {
                           "type": "string"
                         },
-                        "schedulerRate": {
+                        "schedule": {
                           "type": "string"
                         },
                         "timeout": {
@@ -7060,7 +7060,7 @@
                           "runtime": {
                             "type": "string"
                           },
-                          "schedulerRate": {
+                          "schedule": {
                             "type": "string"
                           },
                           "timeout": {
@@ -8315,7 +8315,7 @@
                           "runtime": {
                             "type": "string"
                           },
-                          "schedulerRate": {
+                          "schedule": {
                             "type": "string"
                           },
                           "timeout": {

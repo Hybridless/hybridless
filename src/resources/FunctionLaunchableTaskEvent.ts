@@ -82,6 +82,7 @@ export class FunctionLaunchableTaskEvent extends FunctionContainerBaseEvent {
       'STAGE': this.plugin.stage,
       'AWS_REGION': { "Ref": "AWS::Region" },
       'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
+      'ECS_ENABLE_CONTAINER_METADATA': true,
     };
   }
   public async getClusterTask(): BPromise {

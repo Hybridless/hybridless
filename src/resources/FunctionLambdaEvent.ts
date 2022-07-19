@@ -100,7 +100,8 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 						} : {}),
 						//eventBridge
 						...((this.event as OFunctionLambdaEventBridge).eventBus ? { eventBus: (this.event as OFunctionLambdaEventBridge).eventBus } : {}),
-						...((this.event as OFunctionLambdaEventBridge).pattern ? { pattern: (this.event as OFunctionLambdaEventBridge).pattern } : {}),
+						...((this.event as OFunctionLambdaEventBridge).pattern ? { pattern: JSON.stringify((this.event as OFunctionLambdaEventBridge).pattern) } : {}),
+						...((this.event as OFunctionLambdaEventBridge).schedule ? { schedule: (this.event as OFunctionLambdaEventBridge).schedule } : {}),
 						//sns
 						...((this.event as OFunctionLambdaSNSEvent).filterPolicy ? { filterPolicy: (this.event as OFunctionLambdaSNSEvent).filterPolicy } : {}),
 						//s3
