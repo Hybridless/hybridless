@@ -97,6 +97,9 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
       'HYBRIDLESS_RUNTIME': true,
       'TIMEOUT': (this.func.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) * 1000,
       'PORT': this.getPort(),
+      // Configs
+      'CPU': (event.cpu || Globals.HTTPD_DefaultCPU),
+      'MEMORY': (event.memory || this.func.funcOptions.memory || Globals.HTTPD_DefaultMemory),
       // General
       'STAGE': this.plugin.stage,
       'AWS_REGION': { "Ref": "AWS::Region" },

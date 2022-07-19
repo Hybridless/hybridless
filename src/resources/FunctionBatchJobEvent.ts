@@ -94,6 +94,9 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
       'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
       // Batch specific
       ...(this.func.funcOptions.timeout || event.timeout ? {'TIMEOUT': event.timeout || this.func.funcOptions.timeout  } : {}),
+      // Configs
+      ...event.cpu ? { 'CPU': (event.cpu || Globals.HTTPD_DefaultCPU) } : {},
+      ...(event.memory || this.func.funcOptions.memory) ? { 'MEMORY': (event.memory || this.func.funcOptions.memory) } : {},
       // General
       'STAGE': this.plugin.stage,
       'ECS_ENABLE_CONTAINER_METADATA': true,

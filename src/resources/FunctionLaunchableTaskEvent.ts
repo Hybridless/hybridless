@@ -78,6 +78,9 @@ export class FunctionLaunchableTaskEvent extends FunctionContainerBaseEvent {
       } : {
         'NEW_RELIC_ENABLED': false
       }),
+      // Configs
+      'CPU': (event.cpu || Globals.Launchable_DefaultCPU),
+      'MEMORY': (event.memory || this.func.funcOptions.memory || Globals.Launchable_DefaultMemory),
       // General
       'STAGE': this.plugin.stage,
       'AWS_REGION': { "Ref": "AWS::Region" },

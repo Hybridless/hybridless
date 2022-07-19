@@ -77,6 +77,9 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
       } : {
         'NEW_RELIC_ENABLED': false
       }),
+      // Configs
+      'CPU': (event.cpu || Globals.Scheduled_DefaultCPU),
+      'MEMORY': (event.memory || this.func.funcOptions.memory || Globals.Scheduled_DefaultMemory),
       // General
       'STAGE': this.plugin.stage,
       'AWS_REGION': { "Ref": "AWS::Region" },

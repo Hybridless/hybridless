@@ -76,6 +76,9 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
       } : {
         'NEW_RELIC_ENABLED': false
       }),
+      // Configs
+      'CPU': (event.cpu || Globals.Process_DefaultCPU),
+      'MEMORY': (event.memory || this.func.funcOptions.memory || Globals.Process_DefaultMemory),
       // General
       'STAGE': this.plugin.stage,
       'AWS_REGION': { "Ref": "AWS::Region" },
