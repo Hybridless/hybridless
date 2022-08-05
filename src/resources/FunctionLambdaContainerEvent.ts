@@ -93,6 +93,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
       ...(isNodeJS ? {'AWS_NODEJS_CONNECTION_REUSE_ENABLED': 1} : {}),
       'ENTRYPOINT': `${this.func.getEntrypoint(this.event)}`,
       'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
+      'TIMEOUT': (event.timeout || this.func.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) * 1000,
       //When using ALB with lambda, CORS should be implemented at code level (this might be a wrong assumption, more reasearch is needed)
       ...(event.protocol == OFunctionLambdaProtocol.httpAlb && (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors ? { 'CORS': JSON.stringify((this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors) } : {}),
       // General

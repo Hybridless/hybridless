@@ -188,6 +188,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 		return {
 			//When using ALB with lambda, CORS should be implemented at code level (this might be a wrong assumption, more reasearch is needed)
 			...(this.event.protocol == OFunctionLambdaProtocol.httpAlb && (this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors ? { 'CORS': JSON.stringify((this.event as OFunctionLambdaHTTPLoadBalancerEvent).cors) } : {}),
+      'TIMEOUT': (this.event.timeout || this.func.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) * 1000,
 		};
 	}
 	/* Cognito authorizer */
