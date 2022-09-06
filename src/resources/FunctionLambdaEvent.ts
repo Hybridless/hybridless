@@ -191,8 +191,8 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
       'TIMEOUT': (this.event.timeout || this.func.funcOptions.timeout || Globals.HTTPD_DefaultTimeout) * 1000,
       // General
       'STAGE': this.plugin.stage,
-      'AWS_REGION': { "Ref": "AWS::Region" },
       // 'AWS_REGION': { "Ref": "AWS::Region" }, -->> Lambda service forbidden
+      // 'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" }, -->> Lambda service forbidden
 		};
 	}
 	/* Cognito authorizer */
