@@ -99,6 +99,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
       // General
       'STAGE': this.plugin.stage,
       'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
+      'AWS_REGION': { "Ref": "AWS::Region" },
     };
   }
   /* lambda helpers */

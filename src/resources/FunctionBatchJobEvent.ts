@@ -101,6 +101,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
       'STAGE': this.plugin.stage,
       'ECS_ENABLE_CONTAINER_METADATA': true,
       'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
+      'AWS_REGION': { "Ref": "AWS::Region" },
     };
   }
   /* cloudformation resources */
