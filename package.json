@@ -21,7 +21,7 @@
     "@hybridless/serverless-ecs-plugin": "0.0.28",
     "babel-loader": "^8.2.5",
     "bluebird": "^3.7.2",
-    "dockerode": "^3.3.2",
+    "dockerode": "^3.3.4",
     "json-schema-ref-parser": "^9.0.9",
     "json-stringify-safe": "^5.0.1",
     "loadash": "^1.0.0",
