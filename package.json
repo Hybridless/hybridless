@@ -30,7 +30,7 @@
     "stack-trace": "0.0.10",
     "tar-fs": "^2.1.1",
     "uuid": "^8.3.2",
-    "webpack": "^5.73.0",
+    "webpack": "^5.74.0",
     "webpack-node-externals": "^3.0.0"
   }
 }
