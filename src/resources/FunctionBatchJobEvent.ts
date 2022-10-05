@@ -120,7 +120,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
         ...(this.func.funcOptions.timeout || event.timeout ? 
             { Timeout: { AttemptDurationSeconds: event.timeout || this.func.funcOptions.timeout } } : {}),
         Parameters: { "inputEvent": "{}" },
-        PlatformCapabilities: [ 'EC2', 'FARGATE' ],
+        PlatformCapabilities: [ event.runsOnFargate ? 'FARGATE' : 'EC2' ],
         ContainerProperties: {
           Command: [ "Ref::inputEvent" ],
           Environment: Object.keys(environment).map((k) => ({Name: k, Value: environment[k]})),

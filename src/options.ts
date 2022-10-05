@@ -269,6 +269,7 @@ export type OFunctionBatchJobEvent = {
   tags?: {[key: string]: string};
   type?: OFunctionBatchJobTypes; //defaults to OFunctionBatchJobTypes.container
   timeout?: number; //takes precendece over func.
+  runsOnFargate?: boolean; //defaults to false
   //container
   cpu?: number;
   logsMultilinePattern?: string; //defaults to '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))'
