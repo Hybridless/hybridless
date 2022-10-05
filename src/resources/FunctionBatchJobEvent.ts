@@ -126,6 +126,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
           JobRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
           Image: repoName,
           Privileged: false,
+          PlatformCapabilities: [ 'EC2', 'FARGATE' ],
           LogConfiguration: {
             LogDriver: "awslogs",
             Options: {
