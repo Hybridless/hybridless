@@ -120,13 +120,13 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
         ...(this.func.funcOptions.timeout || event.timeout ? 
             { Timeout: { AttemptDurationSeconds: event.timeout || this.func.funcOptions.timeout } } : {}),
         Parameters: { "inputEvent": "{}" },
+        PlatformCapabilities: [ 'EC2', 'FARGATE' ],
         ContainerProperties: {
           Command: [ "Ref::inputEvent" ],
           Environment: Object.keys(environment).map((k) => ({Name: k, Value: environment[k]})),
           JobRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
           Image: repoName,
           Privileged: false,
-          PlatformCapabilities: [ 'EC2', 'FARGATE' ],
           LogConfiguration: {
             LogDriver: "awslogs",
             Options: {
