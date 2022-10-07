@@ -193,6 +193,8 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
       'STAGE': this.plugin.stage,
       // 'AWS_REGION': { "Ref": "AWS::Region" }, -->> Lambda service forbidden
       // 'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" }, -->> Lambda service forbidden
+			...(this.func.funcOptions.environment || {}),
+      ...(this.event.environment || {}),
 		};
 	}
 	/* Cognito authorizer */

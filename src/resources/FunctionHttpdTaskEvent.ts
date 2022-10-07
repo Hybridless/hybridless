@@ -106,6 +106,8 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
       'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
       'ECS_ENABLE_CONTAINER_METADATA': true,
       'HEALTH_ROUTE': this.healthRoute,
+      ...(this.func.funcOptions.environment || {}),
+      ...(event.environment || {}),
     };
   }
   public async getClusterTask(): BPromise {

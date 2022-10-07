@@ -13,6 +13,7 @@ export interface OFunction {
   memory?: number; //defaults to 1024
   events?: (OFunctionHTTPDTaskEvent | OFunctionProcessTaskEvent | OFunctionScheduledTaskEvent | OFunctionLambdaEvent | OFunctionLambdaContainerEvent)[];
   tags?: { [key: string]: any } | { [key: string]: any }[];
+  environment?: { [key: string]: (string | object )};
   //ECS cluster
   ecsClusterArn?: any;
   ecsIngressSecGroupId?: string;
@@ -161,6 +162,7 @@ export interface OFunctionEvent {
   memory?: number; //defaults to 1024 - takes precedence over OFunction.memory
   role?: string;
   logsRetentionInDays?: number; //defaults to 365 days
+  environment?: { [key: string]: (string | object )};
 }
 export interface OFunctionContainerBaseEvent extends OFunctionEvent {
   dockerFile?: string;

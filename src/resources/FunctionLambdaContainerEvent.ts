@@ -100,6 +100,8 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
       'STAGE': this.plugin.stage,
       'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
       // 'AWS_REGION': { "Ref": "AWS::Region" }, -->> Lambda service forbidden
+      ...(this.func.funcOptions.environment || {}),
+      ...(event.environment || {}),
     };
   }
   /* lambda helpers */

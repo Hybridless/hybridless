@@ -84,6 +84,8 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
       'AWS_REGION': { "Ref": "AWS::Region" },
       'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
       'ECS_ENABLE_CONTAINER_METADATA': true,
+      ...(this.func.funcOptions.environment || {}),
+      ...(event.environment || {}),
     };
   }
   public async getClusterTask(): BPromise {

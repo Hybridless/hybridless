@@ -102,6 +102,8 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
       'ECS_ENABLE_CONTAINER_METADATA': true,
       'AWS_ACCOUNT_ID': { "Ref": "AWS::AccountId" },
       'AWS_REGION': { "Ref": "AWS::Region" },
+      ...(this.func.funcOptions.environment || {}),
+      ...(event.environment || {}),
     };
   }
   /* cloudformation resources */
@@ -125,6 +127,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
           Command: [ "Ref::inputEvent" ],
           Environment: Object.keys(environment).map((k) => ({Name: k, Value: environment[k]})),
           JobRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
+          ...(event.runsOnFargate ? { ExecutionRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }) } : {}),
           Image: repoName,
           Privileged: false,
           LogConfiguration: {
