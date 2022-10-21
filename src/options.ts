@@ -286,7 +286,7 @@ export type OFunctionLambdaBaseEvent = {
   protocol: OFunctionLambdaProtocol;
   package?: any;
   timeout?: number; //takes precendece over func.
-  onError?: string;
+  onError?: string | any; //allow intrinsict function
 }
 
 export interface OFunctionLambdaHTTPEvent extends OFunctionEvent {
@@ -335,6 +335,7 @@ export interface OFunctionLambdaSQSEvent extends OFunctionEvent {
   protocol: OFunctionLambdaProtocol.sqs;
   protocolArn?: any;
   queueBatchSize?: number;
+  maximumBatchingWindow?: number;
   reportFailureResponse?: boolean;
 }
 export interface OFunctionLambdaSNSEvent extends OFunctionEvent {

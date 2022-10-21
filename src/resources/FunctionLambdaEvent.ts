@@ -87,6 +87,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 						...((this.event as OFunctionLambdaSNSEvent).protocolArn ? { arn: (this.event as OFunctionLambdaSNSEvent).protocolArn } : {}),
 						//sqs
 						...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
+						...((this.event as OFunctionLambdaSQSEvent).maximumBatchingWindow ? { batchSize: (this.event as OFunctionLambdaSQSEvent).maximumBatchingWindow } : {}),
 						...((this.event as OFunctionLambdaSQSEvent).reportFailureResponse ? { functionResponseType: 'ReportBatchItemFailures' } : {}),
 						//ddbstreams
 						...(this.event.protocol == OFunctionLambdaProtocol.dynamostreams ? { 

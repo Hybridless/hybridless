@@ -2044,9 +2044,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -2252,9 +2250,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -2362,12 +2358,13 @@
                         "logsRetentionInDays": {
                           "type": "number"
                         },
+                        "maximumBatchingWindow": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -2379,7 +2376,7 @@
                         "queueBatchSize": {
                           "type": "number"
                         },
-                        "reportFailureReport": {
+                        "reportFailureResponse": {
                           "type": "boolean"
                         },
                         "reservedConcurrency": {
@@ -2458,9 +2455,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -2540,9 +2535,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -2635,9 +2628,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -2720,9 +2711,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -2836,9 +2825,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -2925,9 +2912,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -3011,9 +2996,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -3097,9 +3080,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "pattern": {},
                         "protocol": {
@@ -3182,9 +3163,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -3308,9 +3287,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -3537,9 +3514,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -3668,12 +3643,13 @@
                         "logsRetentionInDays": {
                           "type": "number"
                         },
+                        "maximumBatchingWindow": {
+                          "type": "number"
+                        },
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -3685,7 +3661,7 @@
                         "queueBatchSize": {
                           "type": "number"
                         },
-                        "reportFailureReport": {
+                        "reportFailureResponse": {
                           "type": "boolean"
                         },
                         "reservedConcurrency": {
@@ -3785,9 +3761,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -3888,9 +3862,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -4004,9 +3976,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -4110,9 +4080,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -4247,9 +4215,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -4357,9 +4323,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -4464,9 +4428,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -4571,9 +4533,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "pattern": {},
                         "protocol": {
@@ -4677,9 +4637,7 @@
                         "memory": {
                           "type": "number"
                         },
-                        "onError": {
-                          "type": "string"
-                        },
+                        "onError": {},
                         "package": {},
                         "protocol": {
                           "enum": [
@@ -6836,9 +6794,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -7044,9 +7000,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -7154,12 +7108,13 @@
                           "logsRetentionInDays": {
                             "type": "number"
                           },
+                          "maximumBatchingWindow": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -7171,7 +7126,7 @@
                           "queueBatchSize": {
                             "type": "number"
                           },
-                          "reportFailureReport": {
+                          "reportFailureResponse": {
                             "type": "boolean"
                           },
                           "reservedConcurrency": {
@@ -7250,9 +7205,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -7332,9 +7285,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -7427,9 +7378,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -7512,9 +7461,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -7628,9 +7575,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -7717,9 +7662,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -7803,9 +7746,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -7889,9 +7830,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "pattern": {},
                           "protocol": {
@@ -7974,9 +7913,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -8100,9 +8037,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -8329,9 +8264,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -8460,12 +8393,13 @@
                           "logsRetentionInDays": {
                             "type": "number"
                           },
+                          "maximumBatchingWindow": {
+                            "type": "number"
+                          },
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -8477,7 +8411,7 @@
                           "queueBatchSize": {
                             "type": "number"
                           },
-                          "reportFailureReport": {
+                          "reportFailureResponse": {
                             "type": "boolean"
                           },
                           "reservedConcurrency": {
@@ -8577,9 +8511,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -8680,9 +8612,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -8796,9 +8726,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -8902,9 +8830,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -9039,9 +8965,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -9149,9 +9073,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -9256,9 +9178,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
@@ -9363,9 +9283,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "pattern": {},
                           "protocol": {
@@ -9469,9 +9387,7 @@
                           "memory": {
                             "type": "number"
                           },
-                          "onError": {
-                            "type": "string"
-                          },
+                          "onError": {},
                           "package": {},
                           "protocol": {
                             "enum": [
