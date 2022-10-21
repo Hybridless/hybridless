@@ -122,6 +122,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         ...this.func.getVPC(true, true),
         ...((event.timeout || this.func.funcOptions.timeout) ? { timeout: event.timeout || this.func.funcOptions.timeout } : { timeout: Globals.HTTPD_DefaultTimeout }),
         ...(this.func.funcOptions.memory || event.memory ? { memorySize: this.func.funcOptions.memory || event.memory } : {}),
+        ...(event.onError ? { onError: event.onError } : {}),
         ...(event.reservedConcurrency ? { reservedConcurrency: event.reservedConcurrency } : {}),
         tracing: (event.disableTracing ? false : true), //enable x-ray tracing by default,
         ...(event.logsRetentionInDays && <unknown>event.logsRetentionInDays != 'null' ? { logRetentionInDays: event.logsRetentionInDays } : {}),
@@ -146,6 +147,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
             ...((this.event as OFunctionLambdaSNSEvent).protocolArn ? { arn: (this.event as OFunctionLambdaSNSEvent).protocolArn } : {}),
             //sqs
             ...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
+            ...((this.event as OFunctionLambdaSQSEvent).reportFailureResponse ? { functionResponseType: 'ReportBatchItemFailures' } : {}),
             //ddbstreams
             ...((<OFunctionLambdaContainerEvent>this.event).protocol == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
             //scheduler

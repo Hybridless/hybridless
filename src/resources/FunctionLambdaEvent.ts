@@ -60,6 +60,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				...(this.event.layers ? { layers: this.event.layers } : {}),
 				...(this.event.package ? { package: this.event.package } : {}),
 				...(this.event.reservedConcurrency ? { reservedConcurrency: this.event.reservedConcurrency } : {}),
+				...(this.event.onError ? { onError: this.event.onError } : {}),
 				tracing: (this.event.disableTracing ? false : true), //enable x-ray tracing by default,
 				...(event.logsRetentionInDays && <unknown>event.logsRetentionInDays != 'null' ? { logRetentionInDays: event.logsRetentionInDays } : {}),
 				//Java support
@@ -84,7 +85,9 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 					[this._getProtocolName(this.event.protocol)]: {
 						//multiple
 						...((this.event as OFunctionLambdaSNSEvent).protocolArn ? { arn: (this.event as OFunctionLambdaSNSEvent).protocolArn } : {}),
+						//sqs
 						...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
+						...((this.event as OFunctionLambdaSQSEvent).reportFailureResponse ? { functionResponseType: 'ReportBatchItemFailures' } : {}),
 						//ddbstreams
 						...(this.event.protocol == OFunctionLambdaProtocol.dynamostreams ? { 
 							type: 'dynamodb',

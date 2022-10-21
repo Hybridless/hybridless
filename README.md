@@ -205,6 +205,7 @@ Human readable documentation will is available at [hybridless.com](https://docs.
           reservedConcurrency?: number;
           disableTracing?: boolean; //XRay tracing is enabled by default
           protocol: 'http' ,'httpLoadBalancer' ,'dynamostreams' ,'sqs' ,'sns' ,'scheduler' ,'cloudWatch' ,'cloudWatchLogstream' ,'cognito' ,'s3' ,'none';
+          onError?: string;
 
           /* Lambda specific */
           layers?: string[];
@@ -243,6 +244,7 @@ Human readable documentation will is available at [hybridless.com](https://docs.
             //Protocol: sqs
           protocolArn?: any; 
           queueBatchSize?: number; 
+          reportFailureResponse?: boolean;
             //Protocol: http (api gateway)
           routes: {
               path: string;
