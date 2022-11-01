@@ -131,7 +131,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
           Image: repoName,
           Privileged: false,
           ...(event.softCPU ? {
-              "Ulimits": [ { "SoftLimit": event.softCPU, "Name": "cpu" } ]
+              "Ulimits": [ { "SoftLimit": event.softCPU, "Name": "cpu", "HardLimit": -1 } ]
           } : {}),
           LogConfiguration: {
             LogDriver: "awslogs",
