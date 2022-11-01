@@ -97,6 +97,8 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
         name: TaskName,
         cpu: (event.cpu || Globals.Process_DefaultCPU),
         memory: (event.memory || this.func.funcOptions.memory || Globals.Process_DefaultMemory),
+        softMemory: event.softMemory,
+        softCPU: event.softCPU,
         ec2LaunchType: !!event.ec2LaunchType,
         ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: true } : {}),
         ...(!event.ec2LaunchType ? { disablePublicIPAssign: true } : {}),

@@ -120,6 +120,8 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
         //Task
         cpu: (event.cpu || Globals.HTTPD_DefaultCPU),
         memory: (event.memory || this.func.funcOptions.memory || Globals.HTTPD_DefaultMemory),
+        softMemory: event.softMemory,
+        softCPU: event.softCPU,
         taskRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }),
         image: `${ECRRepoFullURL}`,
         ...(event.entrypoint ? { entrypoint: event.entrypoint } : {}),

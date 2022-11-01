@@ -189,6 +189,8 @@ export interface OFunctionTaskBaseEvent extends OFunctionContainerBaseEvent {
   //Task
   concurrency?: number; //defaults to 1
   cpu?: number; //defaults to 512
+  softCPU?: number;
+  softMemory?: number;
   logsMultilinePattern?: string; //defaults to '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))'
 }
 export interface OFunctionEC2TaskBaseEvent extends OFunctionContainerBaseEvent {
@@ -274,6 +276,8 @@ export type OFunctionBatchJobEvent = {
   runsOnFargate?: boolean; //defaults to false
   //container
   cpu?: number;
+  softCPU?: number;
+  // softMemory?: number; -- not yet supported
   logsMultilinePattern?: string; //defaults to '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))'
 } & OFunctionContainerBaseEvent;
 

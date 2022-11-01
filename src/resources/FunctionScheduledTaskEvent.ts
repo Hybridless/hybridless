@@ -98,6 +98,8 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
         name: TaskName,
         cpu: (event.cpu || Globals.Scheduled_DefaultCPU),
         memory: (event.memory || this.func.funcOptions.memory || Globals.Scheduled_DefaultMemory),
+        softMemory: event.softMemory,
+        softCPU: event.softCPU,
         ec2LaunchType: !!event.ec2LaunchType,
         ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: false } : {}),
         ...(!event.ec2LaunchType ? { disablePublicIPAssign: true } : {}),

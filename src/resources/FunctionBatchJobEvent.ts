@@ -130,6 +130,9 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
           ...(event.runsOnFargate ? { ExecutionRoleArn: (event.role || { 'Fn::GetAtt': ['IamRoleLambdaExecution', 'Arn'] }) } : {}),
           Image: repoName,
           Privileged: false,
+          ...(event.softCPU ? {
+              "Ulimits": [ { "SoftLimit": event.softCPU, "Name": "cpu" } ]
+          } : {}),
           LogConfiguration: {
             LogDriver: "awslogs",
             Options: {
