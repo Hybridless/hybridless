@@ -6,3 +6,4 @@ node_modules/
 resources/assets/
 *.js
 *.js.map
+.DS_Store

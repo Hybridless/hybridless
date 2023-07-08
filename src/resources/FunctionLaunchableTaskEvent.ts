@@ -35,7 +35,7 @@ export class FunctionLaunchableTaskEvent extends FunctionContainerBaseEvent {
           { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
           { name: Globals.Launchable_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
         ),
-        { name: 'task-launchable/Index-Launchable-NodejsX', dir: safeDir + '/resources/assets', dest: 'proxy.js' },
+        { name: Globals.Launchable_EntrypointByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'proxy.js' },
         (this.plugin.options.disableWebpack ?
           { name: '.', dir: serverlessDir, dest: '/usr/src/app' } :
           { name: '.webpack/service', dir: serverlessDir, dest: '/usr/src/app' }),

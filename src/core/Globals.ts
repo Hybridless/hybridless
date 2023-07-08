@@ -46,6 +46,14 @@ export default class Globals {
       throw new Error(`Container environments requires dockerFile to be set!`);
     } throw new Error(`Unknown event *httpd* environment type! ${environment} is not a valid environment, can't continue!`);
   }
+  public static HTTPD_EntrypointByRuntime(environment: OFunctionHttpdTaskRuntime): string {
+    if (environment == OFunctionHttpdTaskRuntime.nodejs10 || environment == OFunctionHttpdTaskRuntime.nodejs13 || 
+        environment == OFunctionHttpdTaskRuntime.nodejs14 || environment == OFunctionHttpdTaskRuntime.nodejs16) {
+      return 'task-httpd/Index-Httpd-NodejsX';
+    } else if (environment == OFunctionHttpdTaskRuntime.nodejs18) {
+      return 'task-httpd/Index-Httpd-NodejsESM';
+    } throw new Error(`Unknown event *httpd* environment type for entrypoint! ${environment} is not a valid environment, can't continue!`);
+  }
   public static HTTPD_HealthCheckByRuntime(environment: OFunctionHttpdTaskRuntime): string {
     return `/healthCheck/${uuidv4()}`
   }
@@ -105,6 +113,14 @@ export default class Globals {
     } else if (environment == OFunctionLaunchableTaskRuntime.container) {
       throw new Error(`Container environments requires dockerFile to be set!`);
     } throw new Error(`Unknown event *launchable* environment type! ${environment} is not a valid environment, can't continue!`);
+  }
+  public static Launchable_EntrypointByRuntime(environment: OFunctionLaunchableTaskRuntime): string {
+    if (environment == OFunctionLaunchableTaskRuntime.nodejs10 || environment == OFunctionLaunchableTaskRuntime.nodejs13 || 
+        environment == OFunctionLaunchableTaskRuntime.nodejs14 || environment == OFunctionLaunchableTaskRuntime.nodejs16) {
+      return 'task-launchable/Index-Launchable-NodejsX';
+    } else if (environment == OFunctionLaunchableTaskRuntime.nodejs18) {
+      return 'task-launchable/Index-Launchable-NodejsESM';
+    } throw new Error(`Unknown event *launchable* environment type for entrypoint! ${environment} is not a valid environment, can't continue!`);
   }
   //Lambda Container stuff
   public static LambdaContainer_DefaultMemory = 1024;

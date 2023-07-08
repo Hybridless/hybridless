@@ -10,4 +10,4 @@ WORKDIR /usr/src/app
 RUN cd /usr/src/hybridless-runtime/ && npm i -S cuid
 
 # Run the specified command within the container.
-ENTRYPOINT ["node", "../hybridless-runtime/proxy.js"] 
+ENTRYPOINT ["node", "../hybridless-runtime/proxy.mjs"] 

@@ -1,0 +1,19 @@
+import Runtime from "@hybridless/runtime-nodejs-httpd";
+import { dirname } from "path";
+import { fileURLToPath } from "url";
+const __dirname = dirname(fileURLToPath(import.meta.url));
+//
+const runtimeInstance = new Runtime({
+  host: '0.0.0.0',
+  port: process.env.PORT,
+  timeout: process.env.TIMEOUT,
+  cors: (process.env.CORS ? JSON.parse(process.env.CORS) : null),
+  function: {
+    path: process.env.ENTRYPOINT,
+    handler: process.env.ENTRYPOINT_FUNC,
+    preload: true
+  },
+  healthCheckRoute: process.env.HEALTH_ROUTE,
+  baseDir: `${__dirname}/../app/`
+});
+runtimeInstance.start();

@@ -7,4 +7,4 @@ COPY /usr/src/app/ /usr/src/app/
 WORKDIR /usr/src/app
 
 # Run the specified command within the container.
-ENTRYPOINT node -e "require('./$ENTRYPOINT').$ENTRYPOINT_FUNC()"
+ENTRYPOINT node -e "import('./$ENTRYPOINT').then( m => m['$ENTRYPOINT_FUNC']() )"
