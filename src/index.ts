@@ -10,7 +10,6 @@ import _ = require('lodash');
 import BPromise = require('bluebird');
 import DepsManager from "./core/DepsManager";
 import Globals from "./core/Globals";
-import { DefaultDeserializer } from "v8";
 
 
 //
@@ -443,8 +442,8 @@ class hybridless {
       ...(_globalHybridless.depManager.isWebpackRequired() ? require(Globals.Deps_Webpack).lib.entries : {})
     };
   }
-  public static getWebpackExternals(): object {
-    return (_globalHybridless.depManager.isWebpackRequired() ? require("webpack-node-externals")() : {});
+  public static getWebpackExternals(optionalArgs?: any): object {
+    return (_globalHybridless.depManager.isWebpackRequired() ? require("webpack-node-externals")(optionalArgs) : {});
   }
   public static isWebpackLocal(): boolean {
     return (_globalHybridless.depManager.isWebpackRequired() ? require(Globals.Deps_Webpack).lib.webpack.isLocal : false);
