@@ -172,6 +172,7 @@ export interface OFunctionContainerBaseEvent extends OFunctionEvent {
    * @maxItems 99999
    */
   additionalDockerFiles?: { from: string, to: string }[];
+  dockerBuildArgs?: { [key: string]: string };
 }
 
 

@@ -86,6 +86,7 @@ Human readable documentation will is available at [hybridless.com](https://docs.
           dockerFile?: string; //relative path to the project
           entrypoint?: string; //in case of using container runtimes, you can always make custom entrypoints
           additionalDockerFiles?: [{ from: string, to: string }?];
+          dockerBuildArgs?: { [key: string]: string };
 
           /* Task type specific */
           //Only allowed for httpd, process and schdulerTask
@@ -94,7 +95,7 @@ Human readable documentation will is available at [hybridless.com](https://docs.
           newRelicKey?: string;//activates new relic on the supported runtimes
           propagateTags?: 'OFF' | 'SERVICE' | 'TASK' | undefined; //defaults to undefined
           placementConstraints?: { expression: string, type: 'distinctInstance' | 'memberOf' }[];
-          placementStrategies?: { field: 'string', type: 'binpack' | 'random' | 'spread' }[];
+          placementStrategies?: { field: string, type: 'binpack' | 'random' | 'spread' }[];
           capacityProviderStrategy?: { base: number, capacityProvider: string, weight: number }[];
             //Task
           concurrency?: number; //defaults to 1

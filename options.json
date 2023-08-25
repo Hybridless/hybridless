@@ -404,6 +404,12 @@
                         "daemonType": {
                           "type": "boolean"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -557,7 +563,6 @@
                             "additionalProperties": false,
                             "properties": {
                               "field": {
-                                "const": "string",
                                 "type": "string"
                               },
                               "type": {
@@ -987,6 +992,12 @@
                         "cpu": {
                           "type": "number"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -1140,7 +1151,6 @@
                             "additionalProperties": false,
                             "properties": {
                               "field": {
-                                "const": "string",
                                 "type": "string"
                               },
                               "type": {
@@ -1267,6 +1277,12 @@
                         "daemonType": {
                           "type": "boolean"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -1350,7 +1366,6 @@
                             "additionalProperties": false,
                             "properties": {
                               "field": {
-                                "const": "string",
                                 "type": "string"
                               },
                               "type": {
@@ -1450,6 +1465,12 @@
                         "cpu": {
                           "type": "number"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -1533,7 +1554,6 @@
                             "additionalProperties": false,
                             "properties": {
                               "field": {
-                                "const": "string",
                                 "type": "string"
                               },
                               "type": {
@@ -1636,6 +1656,12 @@
                         "daemonType": {
                           "type": "boolean"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -1719,7 +1745,6 @@
                             "additionalProperties": false,
                             "properties": {
                               "field": {
-                                "const": "string",
                                 "type": "string"
                               },
                               "type": {
@@ -1835,6 +1860,12 @@
                         "cpu": {
                           "type": "number"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -1918,7 +1949,6 @@
                             "additionalProperties": false,
                             "properties": {
                               "field": {
-                                "const": "string",
                                 "type": "string"
                               },
                               "type": {
@@ -3230,6 +3260,12 @@
                         "disableTracing": {
                           "type": "boolean"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -3347,6 +3383,12 @@
                         "disableTracing": {
                           "type": "boolean"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -3455,6 +3497,12 @@
                         "disableTracing": {
                           "type": "boolean"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -3559,6 +3607,12 @@
                         "disableTracing": {
                           "type": "boolean"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -3660,6 +3714,12 @@
                         },
                         "disableTracing": {
                           "type": "boolean"
+                        },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
                         },
                         "dockerFile": {
                           "type": "string"
@@ -3773,6 +3833,12 @@
                         "disableTracing": {
                           "type": "boolean"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -3870,6 +3936,12 @@
                         },
                         "disableTracing": {
                           "type": "boolean"
+                        },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
                         },
                         "dockerFile": {
                           "type": "string"
@@ -4004,6 +4076,12 @@
                         "disableTracing": {
                           "type": "boolean"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -4110,6 +4188,12 @@
                         "disableTracing": {
                           "type": "boolean"
                         },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
+                        },
                         "dockerFile": {
                           "type": "string"
                         },
@@ -4212,6 +4296,12 @@
                         "cognitoUserPoolArn": {},
                         "disableTracing": {
                           "type": "boolean"
+                        },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
                         },
                         "dockerFile": {
                           "type": "string"
@@ -4353,6 +4443,12 @@
                         },
                         "disableTracing": {
                           "type": "boolean"
+                        },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
                         },
                         "dockerFile": {
                           "type": "string"
@@ -4550,6 +4646,12 @@
                         },
                         "disableTracing": {
                           "type": "boolean"
+                        },
+                        "dockerBuildArgs": {
+                          "additionalProperties": {
+                            "type": "string"
+                          },
+                          "type": "object"
                         },
                         "dockerFile": {
                           "type": "string"
@@ -5118,6 +5220,12 @@
                           "daemonType": {
                             "type": "boolean"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -5271,7 +5379,6 @@
                               "additionalProperties": false,
                               "properties": {
                                 "field": {
-                                  "const": "string",
                                   "type": "string"
                                 },
                                 "type": {
@@ -5701,6 +5808,12 @@
                           "cpu": {
                             "type": "number"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -5854,7 +5967,6 @@
                               "additionalProperties": false,
                               "properties": {
                                 "field": {
-                                  "const": "string",
                                   "type": "string"
                                 },
                                 "type": {
@@ -5981,6 +6093,12 @@
                           "daemonType": {
                             "type": "boolean"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -6064,7 +6182,6 @@
                               "additionalProperties": false,
                               "properties": {
                                 "field": {
-                                  "const": "string",
                                   "type": "string"
                                 },
                                 "type": {
@@ -6164,6 +6281,12 @@
                           "cpu": {
                             "type": "number"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -6247,7 +6370,6 @@
                               "additionalProperties": false,
                               "properties": {
                                 "field": {
-                                  "const": "string",
                                   "type": "string"
                                 },
                                 "type": {
@@ -6350,6 +6472,12 @@
                           "daemonType": {
                             "type": "boolean"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -6433,7 +6561,6 @@
                               "additionalProperties": false,
                               "properties": {
                                 "field": {
-                                  "const": "string",
                                   "type": "string"
                                 },
                                 "type": {
@@ -6549,6 +6676,12 @@
                           "cpu": {
                             "type": "number"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -6632,7 +6765,6 @@
                               "additionalProperties": false,
                               "properties": {
                                 "field": {
-                                  "const": "string",
                                   "type": "string"
                                 },
                                 "type": {
@@ -7944,6 +8076,12 @@
                           "disableTracing": {
                             "type": "boolean"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -8061,6 +8199,12 @@
                           "disableTracing": {
                             "type": "boolean"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -8169,6 +8313,12 @@
                           "disableTracing": {
                             "type": "boolean"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -8273,6 +8423,12 @@
                           "disableTracing": {
                             "type": "boolean"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -8374,6 +8530,12 @@
                           },
                           "disableTracing": {
                             "type": "boolean"
+                          },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
                           },
                           "dockerFile": {
                             "type": "string"
@@ -8487,6 +8649,12 @@
                           "disableTracing": {
                             "type": "boolean"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -8584,6 +8752,12 @@
                           },
                           "disableTracing": {
                             "type": "boolean"
+                          },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
                           },
                           "dockerFile": {
                             "type": "string"
@@ -8718,6 +8892,12 @@
                           "disableTracing": {
                             "type": "boolean"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -8824,6 +9004,12 @@
                           "disableTracing": {
                             "type": "boolean"
                           },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
+                          },
                           "dockerFile": {
                             "type": "string"
                           },
@@ -8926,6 +9112,12 @@
                           "cognitoUserPoolArn": {},
                           "disableTracing": {
                             "type": "boolean"
+                          },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
                           },
                           "dockerFile": {
                             "type": "string"
@@ -9067,6 +9259,12 @@
                           },
                           "disableTracing": {
                             "type": "boolean"
+                          },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
                           },
                           "dockerFile": {
                             "type": "string"
@@ -9264,6 +9462,12 @@
                           },
                           "disableTracing": {
                             "type": "boolean"
+                          },
+                          "dockerBuildArgs": {
+                            "additionalProperties": {
+                              "type": "string"
+                            },
+                            "type": "object"
                           },
                           "dockerFile": {
                             "type": "string"

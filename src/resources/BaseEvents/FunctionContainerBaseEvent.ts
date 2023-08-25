@@ -52,7 +52,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
       const ECRRepoURL: string = (await this._getFullECRRepoImageURL());
       //Build image
       const files = this.getContainerFiles();
-      await this.plugin.docker.buildImage(files, `${localImageName}:${this.currentTag}`, this.event.runtime);
+      await this.plugin.docker.buildImage(files, `${localImageName}:${this.currentTag}`, this.event.runtime, this.getContainerBuildArgs());
       //Prepare to push to registry by tagging it 
       const tagResp = await this._runCommand(`docker tag ${localImageName}:${this.currentTag} ${ECRRepoURL}`, '');
       if (tagResp.stderr) reject(tagResp.stderr);
@@ -86,6 +86,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
 
   //subclasses support
   protected getContainerFiles(): DockerFiles { return null; }
+  protected getContainerBuildArgs(): { [key: string]: string } | null { return null; }
   protected getContainerEnvironments(): any { return {}; }
   public async getClusterTask(): BPromise { return BPromise.resolve(); }
 

@@ -106,6 +106,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
       ...(event.environment || {}),
     };
   }
+  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionBatchJobEvent>this.event).dockerBuildArgs; }
   /* cloudformation resources */
   private async _generateJobDefinition(): BPromise<any> {
     const event: OFunctionBatchJobEvent = (<OFunctionBatchJobEvent>this.event);

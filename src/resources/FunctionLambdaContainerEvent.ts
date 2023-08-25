@@ -104,6 +104,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
       ...(event.environment || {}),
     };
   }
+  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionLambdaContainerEvent>this.event).dockerBuildArgs; }
   /* lambda helpers */
   private async _generateLambdaFunction(): BPromise<any> {
     const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);

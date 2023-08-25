@@ -88,6 +88,7 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
       ...(event.environment || {}),
     };
   }
+  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionProcessTaskEvent>this.event).dockerBuildArgs; }
   public async getClusterTask(): BPromise {
     const TaskName = this._getTaskName();
     const ECRRepoFullURL = await this.getContainerImageURL();
