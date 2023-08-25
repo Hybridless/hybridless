@@ -184,7 +184,7 @@ export interface OFunctionTaskBaseEvent extends OFunctionContainerBaseEvent {
   newRelicKey?: string;//
   propagateTags?: OPropagateTagsType; //defaults to false
   placementConstraints?: { expression: string, type: 'distinctInstance' | 'memberOf' }[];
-  placementStrategies?: { field: 'string', type: 'binpack' | 'random' | 'spread' }[];
+  placementStrategies?: { field: string, type: 'binpack' | 'random' | 'spread' }[];
   capacityProviderStrategy?: { base: number, capacityProvider: string, weight: number }[];
   //Task
   concurrency?: number; //defaults to 1
