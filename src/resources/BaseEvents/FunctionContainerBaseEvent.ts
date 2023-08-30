@@ -64,8 +64,8 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     return new BPromise(async (resolve, reject) => {
       const ECRRepoURL: string = (await this._getFullECRRepoImageURL());
       //Authenticate with registry
-      const authResp = await this._runCommand(`aws ecr get-login-password --region ${this.plugin.region} | docker login -u AWS ${ECRRepoURL} --password-stdin`, '');
-      if (authResp.stderr && authResp.stderr.includes('ERROR')) reject(authResp.stderr);
+      const authResp = await this._runCommand(`aws ecr get-login-password --region ${this.plugin.region} | docker login -u AWS ${ECRRepoURL} --password-stdin`, '', true);
+      if (authResp.stderr && authResp.stderr.includes('ERROR') && !authResp.stderr.includes('The specified item already exists in the keychain')) reject(authResp.stderr);
       //Push to ECR
       this.plugin.logger.info(`Pushing docker image on repo ${this._getECRRepoName()}..`);
       const pushResp = await this._runCommand(`docker push ${ECRRepoURL}`, '');
@@ -153,7 +153,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
   }
 
   //CMD helper
-  private async _runCommand(command, params): BPromise {
+  private async _runCommand(command, params, allowFailure?: boolean): BPromise {
     return new BPromise(async (resolve, reject) => {
       if (!params) params = [];
       let formattedParams = params.join(' ');
@@ -162,8 +162,12 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
         const resp = await executor(command + ' ' + formattedParams);
         resolve(resp);
       } catch (err) {
-        this.plugin.logger.error('Error while running command', err.stdout.toString());
-        reject(err);
+        if (allowFailure) {
+          resolve(err);
+        } else {
+          this.plugin.logger.error('Error while running command', err.stdout.toString());
+          reject(err);
+        }
       }
     });
   }
