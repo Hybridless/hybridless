@@ -1,6 +1,9 @@
 {
   "additionalProperties": false,
   "properties": {
+    "buildConcurrency": {
+      "type": "number"
+    },
     "disableWebpack": {
       "type": "boolean"
     },

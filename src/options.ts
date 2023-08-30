@@ -2,6 +2,7 @@
 export interface OPlugin {
   functions: { [key: string]: OFunction } | { [key: string]: OFunction }[];
   disableWebpack?: boolean;
+  buildConcurrency?: number;
   tags?: { [key: string]: any } | { [key: string]: any }[];
 }
 

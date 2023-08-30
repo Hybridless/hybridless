@@ -12,7 +12,7 @@ import BPromise = require('bluebird');
 //
 export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
   public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionLambdaContainerEvent, index: number) {
-    super(plugin, func, event, index);
+    super(plugin, func, event, index, true);
   }
   /* Base Event Overwrites */
   public async spread(): BPromise {
@@ -153,7 +153,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
             //ddbstreams
             ...((<OFunctionLambdaContainerEvent>this.event).protocol == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
             //scheduler
-            ...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: (this.event as OFunctionLambdaSchedulerEvent).schedulerRate } : {}),
+            ...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: [(this.event as OFunctionLambdaSchedulerEvent).schedulerRate] } : {}),
             ...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? {
               input:
                 typeof (this.event as OFunctionLambdaSchedulerEvent).schedulerInput == 'string' ?

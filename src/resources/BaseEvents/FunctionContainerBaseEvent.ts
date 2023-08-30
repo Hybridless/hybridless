@@ -13,8 +13,10 @@ const executor = util.promisify(child.exec);
 //
 export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent> {
   private readonly currentTag: string;
-  public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionEvent, index: number) {
+  private readonly unifyEventsContainer: boolean;
+  public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionEvent, index: number, unifyEventsContainer?: boolean) {
     super(plugin, func, event, index);
+    this.unifyEventsContainer = unifyEventsContainer;
     this.currentTag = Date.now() + '';
   }
 
@@ -34,6 +36,10 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     });
   }
   public async createRequiredResources(): BPromise {
+    // Check for unified build
+    if (this.unifyEventsContainer && this.index != 0) {
+      return BPromise.resolve();
+    }
     const ECRRepoName = this._getECRRepoName();
     //Check if existing repo exists
     const ecrs = await this.plugin.serverless.getProvider('aws').request('ECR', 'describeRepositories', {});
@@ -48,6 +54,11 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
   }
   public async build(): BPromise {
     return new BPromise(async (resolve, reject) => {
+      // Check for unified build
+      if (this.unifyEventsContainer && this.index != 0) {
+        return resolve();
+      }
+      // 
       const localImageName = this._getECRRepoName();
       const ECRRepoURL: string = (await this._getFullECRRepoImageURL());
       //Build image
@@ -62,6 +73,11 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
   }
   public async push(): BPromise {
     return new BPromise(async (resolve, reject) => {
+      // Check for unified build
+      if (this.unifyEventsContainer && this.index != 0) {
+        return resolve();
+      }
+      //
       const ECRRepoURL: string = (await this._getFullECRRepoImageURL());
       //Authenticate with registry
       const authResp = await this._runCommand(`aws ecr get-login-password --region ${this.plugin.region} | docker login -u AWS ${ECRRepoURL} --password-stdin`, '', true);
@@ -77,6 +93,11 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
     });
   }
   public async cleanup(): BPromise {
+    // Check for unified build
+    if (this.unifyEventsContainer && this.index != 0) {
+      return BPromise.resolve();
+    }
+    //
     const ECRRepoName = this._getECRRepoName();
     return await this._cleanupOldImages(ECRRepoName);
   }
@@ -92,7 +113,7 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionEvent
 
   //Private
   private _getECRRepoName(): string {
-    return `${this.plugin.getName()}/${this.func.getName()}.${this.index}-${this.plugin.stage}.v2`.toLowerCase();
+    return `${this.plugin.getName()}/${this.func.getName()}.${this.unifyEventsContainer ? 0 : this.index}-${this.plugin.stage}.v2`.toLowerCase();
   }
   private async _getFullECRRepoImageURL() {
     const accID = await this.plugin.getAccountID();

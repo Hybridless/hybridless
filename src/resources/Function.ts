@@ -1,5 +1,6 @@
 import { OFunction, OFunctionEvent, OFunctionBatchJobEvent, OVPCOptions_Shared, OVPCOptions_Dedicated, OFunctionProcessTaskEvent, OFunctionLaunchableTaskEvent, OFunctionHTTPDTaskEvent, OFunctionEventType, OFunctionLambdaEvent, OFunctionLambdaContainerEvent, OFunctionScheduledTaskEvent } from "../options";
 import Hybridless = require("..");
+import * as PromisePool from "es6-promise-pool";
 //Event types
 import { FunctionProcessTaskEvent } from "./FunctionProcessTaskEvent";
 import { FunctionHTTPDTaskEvent } from "./FunctionHttpdTaskEvent";
@@ -14,6 +15,7 @@ import { FunctionLaunchableTaskEvent } from "./FunctionLaunchableTaskEvent";
 import _ = require('lodash');
 import BPromise = require('bluebird');
 import Globals from "../core/Globals";
+// 
 
 export class BaseFunction {
   private _funcOptions: OFunction;
@@ -94,12 +96,15 @@ export class BaseFunction {
   public async build(): BPromise {
     //For type of event, compile the function
     return new BPromise(async (resolve) => {
-      await new BPromise.all(this.events.map((event) => {
-        if (event && event.isEnabled()) {
-          this.plugin.logger.log(`Building event ${this.functionName}:${event.eventType}...`);
-          return event.build();
-        } return BPromise.resolve();
-      }))
+      // @ts-ignore
+      await new PromisePool((function* () {
+        for (let event of this.events) {
+          if (event && event.isEnabled()) {
+            this.plugin.logger.log(`Building event ${this.functionName}:${event.eventType}...`);
+            yield event.build();
+          }
+        }
+      }).bind(this), this.plugin.options.buildConcurrency | Globals.BuildDefaultConcurrency).start()
       resolve();
     });
   }

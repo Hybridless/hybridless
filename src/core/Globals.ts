@@ -8,6 +8,7 @@ export default class Globals {
   public static PluginDefaultProvider: string = 'aws';
   public static DockerLatestTag: string = 'latest';
   public static DockerPreDeploymentTag: string = 'previous';
+  public static BuildDefaultConcurrency: number = 10;
   //Dependecies
   public static Deps_Webpack = 'serverless-webpack';
   public static Deps_ECS = '@hybridless/serverless-ecs-plugin';
