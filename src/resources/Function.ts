@@ -104,7 +104,7 @@ export class BaseFunction {
             yield event.build();
           }
         }
-      }).bind(this), this.plugin.options.buildConcurrency | Globals.BuildDefaultConcurrency).start()
+      }).bind(this), this.plugin.options.buildConcurrency || Globals.BuildDefaultConcurrency).start()
       resolve();
     });
   }
