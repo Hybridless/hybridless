@@ -58,6 +58,8 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				...(this.func.funcOptions.memory || this.event.memory ? { memorySize: this.event.memory || this.func.funcOptions.memory } : {}),
 				...(this.event.runtime ? { runtime: this.event.runtime } : {}),
 				...(this.event.layers ? { layers: this.event.layers } : {}),
+				...(this.event.iamRoleStatementsInherit ? { iamRoleStatementsInherit: this.event.iamRoleStatementsInherit } : {}),
+				...(this.event.iamRoleStatements ? { iamRoleStatements: this.event.iamRoleStatements } : {}),
 				...(this.event.package ? { package: this.event.package } : {}),
 				...(this.event.reservedConcurrency ? { reservedConcurrency: this.event.reservedConcurrency } : {}),
 				...(this.event.onError ? { onError: this.event.onError } : {}),

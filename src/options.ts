@@ -398,6 +398,8 @@ export interface OFunctionLambdaNoneEvent extends OFunctionEvent {
 export type OFunctionLambdaEvent = {
   layers?: string[];
   eventType: OFunctionEventType.lambda;
+  iamRoleStatementsInherit?: null | boolean;
+  iamRoleStatements?: any;
 } & OFunctionLambdaBaseEvent  //lambda base
   //Any lambda event source
   & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent |
