@@ -127,6 +127,9 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         ...(event.reservedConcurrency ? { reservedConcurrency: event.reservedConcurrency } : {}),
         tracing: (event.disableTracing ? false : true), //enable x-ray tracing by default,
         ...(event.logsRetentionInDays && <unknown>event.logsRetentionInDays != 'null' ? { logRetentionInDays: event.logsRetentionInDays } : {}),
+        //
+        ...(this.event.iamRoleStatementsInherit ? { iamRoleStatementsInherit: this.event.iamRoleStatementsInherit } : {}),
+				...(this.event.iamRoleStatements ? { iamRoleStatements: this.event.iamRoleStatements } : {}),
         //Lambda events means routes on this scope
         ...this._getLambdaEvents(event)
       }

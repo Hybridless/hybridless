@@ -164,6 +164,8 @@ export interface OFunctionEvent {
   role?: string;
   logsRetentionInDays?: number; //defaults to 365 days
   environment?: { [key: string]: (string | object )};
+  iamRoleStatementsInherit?: null | boolean;
+  iamRoleStatements?: any;
 }
 export interface OFunctionContainerBaseEvent extends OFunctionEvent {
   dockerFile?: string;
@@ -398,8 +400,6 @@ export interface OFunctionLambdaNoneEvent extends OFunctionEvent {
 export type OFunctionLambdaEvent = {
   layers?: string[];
   eventType: OFunctionEventType.lambda;
-  iamRoleStatementsInherit?: null | boolean;
-  iamRoleStatements?: any;
 } & OFunctionLambdaBaseEvent  //lambda base
   //Any lambda event source
   & (OFunctionLambdaHTTPEvent | OFunctionLambdaSQSEvent | OFunctionLambdaSNSEvent |

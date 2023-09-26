@@ -1,12 +1,12 @@
 {
   "name": "@hybridless/hybridless",
-  "version": "0.0.146",
+  "version": "0.0.148",
   "description": "",
   "main": "index.js",
   "scripts": {
     "clean": "rm -rf ./*.js ./options.json ./*.js.map ./bin/ ./.serverless/ ./resources/ ./core/",
     "generate-plugin-schema": "typescript-json-schema --required --noExtraProps src/options.ts '*' > options.json && node config/export-plugin-schema.js",
-    "build": "npm run clean && npm run generate-plugin-schema && tsc -p ./tsconfig.json && npm run copy:assets",
+    "build": "npm run clean && npm run generate-plugin-schema && npx tsc -p ./tsconfig.json && npm run copy:assets",
     "test": "echo \"Error: no test specified\" && exit 1",
     "copy:assets": "cp -R ./src/assets ./resources/assets"
   },
