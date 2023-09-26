@@ -484,10 +484,6 @@
                             }
                           ]
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "limitHeaders": {
                           "items": {
                             "additionalProperties": false,
@@ -1076,10 +1072,6 @@
                             }
                           ]
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "limitHeaders": {
                           "items": {
                             "additionalProperties": false,
@@ -1337,10 +1329,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsMultilinePattern": {
                           "type": "string"
                         },
@@ -1528,10 +1516,6 @@
                         },
                         "handler": {
                           "type": "string"
-                        },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
                         },
                         "logsMultilinePattern": {
                           "type": "string"
@@ -1724,10 +1708,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsMultilinePattern": {
                           "type": "string"
                         },
@@ -1932,10 +1912,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsMultilinePattern": {
                           "type": "string"
                         },
@@ -2101,10 +2077,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "layers": {
                           "items": {
                             "type": "string"
@@ -2201,10 +2173,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "layers": {
                           "items": {
                             "type": "string"
@@ -2297,10 +2265,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "layers": {
                           "items": {
                             "type": "string"
@@ -2378,10 +2342,6 @@
                         },
                         "handler": {
                           "type": "string"
-                        },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
                         },
                         "layers": {
                           "items": {
@@ -2471,10 +2431,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "layers": {
                           "items": {
                             "type": "string"
@@ -2559,10 +2515,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "layers": {
                           "items": {
                             "type": "string"
@@ -2639,10 +2591,6 @@
                         },
                         "handler": {
                           "type": "string"
-                        },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
                         },
                         "layers": {
                           "items": {
@@ -2756,10 +2704,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "layers": {
                           "items": {
                             "type": "string"
@@ -2845,10 +2789,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "layers": {
                           "items": {
                             "type": "string"
@@ -2930,10 +2870,6 @@
                         },
                         "handler": {
                           "type": "string"
-                        },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
                         },
                         "layers": {
                           "items": {
@@ -3082,10 +3018,6 @@
                               "type": "string"
                             }
                           ]
-                        },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
                         },
                         "layers": {
                           "items": {
@@ -3237,10 +3169,6 @@
                         },
                         "handler": {
                           "type": "string"
-                        },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
                         },
                         "layers": {
                           "items": {
@@ -3380,10 +3308,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsRetentionInDays": {
                           "type": "number"
                         },
@@ -3507,10 +3431,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsRetentionInDays": {
                           "type": "number"
                         },
@@ -3630,10 +3550,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsRetentionInDays": {
                           "type": "number"
                         },
@@ -3738,10 +3654,6 @@
                         },
                         "handler": {
                           "type": "string"
-                        },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
                         },
                         "logsRetentionInDays": {
                           "type": "number"
@@ -3858,10 +3770,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsRetentionInDays": {
                           "type": "number"
                         },
@@ -3973,10 +3881,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsRetentionInDays": {
                           "type": "number"
                         },
@@ -4080,10 +3984,6 @@
                         },
                         "handler": {
                           "type": "string"
-                        },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
                         },
                         "logsRetentionInDays": {
                           "type": "number"
@@ -4224,10 +4124,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsRetentionInDays": {
                           "type": "number"
                         },
@@ -4340,10 +4236,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsRetentionInDays": {
                           "type": "number"
                         },
@@ -4452,10 +4344,6 @@
                         },
                         "handler": {
                           "type": "string"
-                        },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
                         },
                         "logsRetentionInDays": {
                           "type": "number"
@@ -4631,10 +4519,6 @@
                               "type": "string"
                             }
                           ]
-                        },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
                         },
                         "limitHeader": {
                           "additionalProperties": false,
@@ -4814,10 +4698,6 @@
                         "handler": {
                           "type": "string"
                         },
-                        "iamRoleStatements": {},
-                        "iamRoleStatementsInherit": {
-                          "type": "boolean"
-                        },
                         "logsRetentionInDays": {
                           "type": "number"
                         },
@@ -4860,6 +4740,10 @@
               },
               "handler": {
                 "type": "string"
+              },
+              "iamRoleStatements": {},
+              "iamRoleStatementsInherit": {
+                "type": "boolean"
               },
               "memory": {
                 "type": "number"
@@ -5420,10 +5304,6 @@
                               }
                             ]
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "limitHeaders": {
                             "items": {
                               "additionalProperties": false,
@@ -6012,10 +5892,6 @@
                               }
                             ]
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "limitHeaders": {
                             "items": {
                               "additionalProperties": false,
@@ -6273,10 +6149,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsMultilinePattern": {
                             "type": "string"
                           },
@@ -6464,10 +6336,6 @@
                           },
                           "handler": {
                             "type": "string"
-                          },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
                           },
                           "logsMultilinePattern": {
                             "type": "string"
@@ -6660,10 +6528,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsMultilinePattern": {
                             "type": "string"
                           },
@@ -6868,10 +6732,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsMultilinePattern": {
                             "type": "string"
                           },
@@ -7037,10 +6897,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "layers": {
                             "items": {
                               "type": "string"
@@ -7137,10 +6993,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "layers": {
                             "items": {
                               "type": "string"
@@ -7233,10 +7085,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "layers": {
                             "items": {
                               "type": "string"
@@ -7314,10 +7162,6 @@
                           },
                           "handler": {
                             "type": "string"
-                          },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
                           },
                           "layers": {
                             "items": {
@@ -7407,10 +7251,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "layers": {
                             "items": {
                               "type": "string"
@@ -7495,10 +7335,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "layers": {
                             "items": {
                               "type": "string"
@@ -7575,10 +7411,6 @@
                           },
                           "handler": {
                             "type": "string"
-                          },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
                           },
                           "layers": {
                             "items": {
@@ -7692,10 +7524,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "layers": {
                             "items": {
                               "type": "string"
@@ -7781,10 +7609,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "layers": {
                             "items": {
                               "type": "string"
@@ -7866,10 +7690,6 @@
                           },
                           "handler": {
                             "type": "string"
-                          },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
                           },
                           "layers": {
                             "items": {
@@ -8018,10 +7838,6 @@
                                 "type": "string"
                               }
                             ]
-                          },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
                           },
                           "layers": {
                             "items": {
@@ -8173,10 +7989,6 @@
                           },
                           "handler": {
                             "type": "string"
-                          },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
                           },
                           "layers": {
                             "items": {
@@ -8316,10 +8128,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsRetentionInDays": {
                             "type": "number"
                           },
@@ -8443,10 +8251,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsRetentionInDays": {
                             "type": "number"
                           },
@@ -8566,10 +8370,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsRetentionInDays": {
                             "type": "number"
                           },
@@ -8674,10 +8474,6 @@
                           },
                           "handler": {
                             "type": "string"
-                          },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
                           },
                           "logsRetentionInDays": {
                             "type": "number"
@@ -8794,10 +8590,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsRetentionInDays": {
                             "type": "number"
                           },
@@ -8909,10 +8701,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsRetentionInDays": {
                             "type": "number"
                           },
@@ -9016,10 +8804,6 @@
                           },
                           "handler": {
                             "type": "string"
-                          },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
                           },
                           "logsRetentionInDays": {
                             "type": "number"
@@ -9160,10 +8944,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsRetentionInDays": {
                             "type": "number"
                           },
@@ -9276,10 +9056,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsRetentionInDays": {
                             "type": "number"
                           },
@@ -9388,10 +9164,6 @@
                           },
                           "handler": {
                             "type": "string"
-                          },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
                           },
                           "logsRetentionInDays": {
                             "type": "number"
@@ -9567,10 +9339,6 @@
                                 "type": "string"
                               }
                             ]
-                          },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
                           },
                           "limitHeader": {
                             "additionalProperties": false,
@@ -9750,10 +9518,6 @@
                           "handler": {
                             "type": "string"
                           },
-                          "iamRoleStatements": {},
-                          "iamRoleStatementsInherit": {
-                            "type": "boolean"
-                          },
                           "logsRetentionInDays": {
                             "type": "number"
                           },
@@ -9796,6 +9560,10 @@
                 },
                 "handler": {
                   "type": "string"
+                },
+                "iamRoleStatements": {},
+                "iamRoleStatementsInherit": {
+                  "type": "boolean"
                 },
                 "memory": {
                   "type": "number"

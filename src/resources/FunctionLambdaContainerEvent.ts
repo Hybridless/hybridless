@@ -128,8 +128,8 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         tracing: (event.disableTracing ? false : true), //enable x-ray tracing by default,
         ...(event.logsRetentionInDays && <unknown>event.logsRetentionInDays != 'null' ? { logRetentionInDays: event.logsRetentionInDays } : {}),
         //
-        ...(this.event.iamRoleStatementsInherit ? { iamRoleStatementsInherit: this.event.iamRoleStatementsInherit } : {}),
-				...(this.event.iamRoleStatements ? { iamRoleStatements: this.event.iamRoleStatements } : {}),
+        ...(this.func.funcOptions.iamRoleStatementsInherit ? { iamRoleStatementsInherit: this.func.funcOptions.iamRoleStatementsInherit } : {}),
+				...(this.func.funcOptions.iamRoleStatements ? { iamRoleStatements: this.func.funcOptions.iamRoleStatements } : {}),
         //Lambda events means routes on this scope
         ...this._getLambdaEvents(event)
       }

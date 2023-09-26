@@ -23,6 +23,9 @@ export interface OFunction {
   albListenerArn?: any;
   albIsPrivate?: boolean;
   albAdditionalTimeout?: number; //defaults to 1 second
+  //IAM 
+  iamRoleStatementsInherit?: null | boolean;
+  iamRoleStatements?: any;
 }
 
 //follows @hybridless/serverless-ecs-plugin model for compatibility purposes :)
@@ -164,8 +167,6 @@ export interface OFunctionEvent {
   role?: string;
   logsRetentionInDays?: number; //defaults to 365 days
   environment?: { [key: string]: (string | object )};
-  iamRoleStatementsInherit?: null | boolean;
-  iamRoleStatements?: any;
 }
 export interface OFunctionContainerBaseEvent extends OFunctionEvent {
   dockerFile?: string;
