@@ -1,8 +1,8 @@
 import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEvent"; //base class
 //
 import Hybridless = require("..");
-import { BaseFunction } from "./Function";
-import { OFunctionBatchJobTypes, OFunctionBatchJobEvent, OFunctionBatchJobRuntime } from "../options";
+import { Function as BaseFunction } from "./Function";
+import { OFunctionBatchJobTypes, OFunctionBatchJobEvent, OFunctionBatchJobRuntime, OFunctionContainerOptionalImage } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -17,6 +17,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
   /* Base Event Overwrites */
   public async spread(): BPromise {
     return new BPromise(async (resolve) => {
+      await super.spread()
       //generate log group
       const logGroup = this._generateLogGroup();
       if (logGroup) this.plugin.appendResource(this._getJobName('LogGroup'), logGroup);
@@ -37,9 +38,9 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
   /* Container Base Event Overwrites */
   protected getContainerFiles(): DockerFiles {
     const event: OFunctionBatchJobEvent = (<OFunctionBatchJobEvent>this.event);
-    const customDockerFile = event.dockerFile;
+    const customDockerFile = (<OFunctionContainerOptionalImage>event).dockerFile;
     const serverlessDir = this.plugin.serverless.config.servicePath;
-    const additionalDockerFiles = ((<OFunctionBatchJobEvent>this.event).additionalDockerFiles || []).map((file) => {
+    const additionalDockerFiles = ((<OFunctionContainerOptionalImage>this.event).additionalDockerFiles || []).map((file) => {
       return { name: file.from, dir: serverlessDir, dest: file.to }
     });
     //Envs
@@ -106,11 +107,11 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
       ...(event.environment || {}),
     };
   }
-  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionBatchJobEvent>this.event).dockerBuildArgs; }
+  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionContainerOptionalImage>this.event).dockerBuildArgs; }
   /* cloudformation resources */
   private async _generateJobDefinition(): BPromise<any> {
     const event: OFunctionBatchJobEvent = (<OFunctionBatchJobEvent>this.event);
-    const repoName = await this.getContainerImageURL();
+    const repoName = await this.image.getContainerImageURL();
     const environment = { ...this.plugin.getEnvironmentIvars(), ...this.getContainerEnvironments() };
     return {
       Type: "AWS::Batch::JobDefinition",

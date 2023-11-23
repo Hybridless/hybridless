@@ -1,10 +1,10 @@
 import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEvent"; //base class
 //
 import Hybridless = require("..");
-import { BaseFunction } from "./Function";
+import { Function as BaseFunction } from "./Function";
 import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaContainerEvent, 
          OFunctionLambdaContainerRuntime, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaHTTPLoadBalancerEvent, OFunctionLambdaProtocol, 
-         OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent, OFunctionLambdaEventBridge } from "../options";
+         OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent, OFunctionLambdaEventBridge, OFunctionContainerOptionalImage } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -17,6 +17,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
   /* Base Event Overwrites */
   public async spread(): BPromise {
     return new BPromise(async (resolve) => {
+      await super.spread();
       //generate lambda
       const lambda = await this._generateLambdaFunction();
       this.plugin.appendServerlessFunction(lambda);
@@ -41,9 +42,9 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
   /* Container Base Event Overwrites */
   protected getContainerFiles(): DockerFiles {
     const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
-    const customDockerFile = event.dockerFile;
+    const customDockerFile = (<OFunctionContainerOptionalImage>this.event).dockerFile;
     const serverlessDir = this.plugin.serverless.config.servicePath;
-    const additionalDockerFiles = ((<OFunctionLambdaContainerEvent>this.event).additionalDockerFiles || []).map((file) => {
+    const additionalDockerFiles = ((<OFunctionContainerOptionalImage>this.event).additionalDockerFiles || []).map((file) => {
       return { name: file.from, dir: serverlessDir, dest: file.to }
     });
     //Envs
@@ -104,11 +105,11 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
       ...(event.environment || {}),
     };
   }
-  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionLambdaContainerEvent>this.event).dockerBuildArgs; }
+  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionContainerOptionalImage>this.event).dockerBuildArgs; }
   /* lambda helpers */
   private async _generateLambdaFunction(): BPromise<any> {
     const event: OFunctionLambdaContainerEvent = (<OFunctionLambdaContainerEvent>this.event);
-    const repoName = await this.getContainerImageURL();
+    const repoName = await this.image.getContainerImageURL();
     if (!event.protocol) this.plugin.logger.error(`Missing protocol for lambda container event ${this._getFunctionName()}. Can't continue!`);
     return {
       [this._getFunctionName()]: {

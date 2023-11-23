@@ -20,10 +20,10 @@ export default class Docker {
     });
   }
   //
-  public async buildImage(files: DockerFiles, imageName: string, env: string, args?: { [key: string]: string }): BPromise {
+  public async buildImage(files: DockerFiles, imageName: string, args?: { [key: string]: string }): BPromise {
     const chunks = [];
     return new BPromise(async (resolve, reject) => {
-      this.plugin.logger.info(`Building docker image.. (${env})`);
+      this.plugin.logger.info(`Building docker image.. (${imageName})`);
       const tarData = await this._packDocker(files);
       await this._d.buildImage(tarData, { 
         t: imageName,

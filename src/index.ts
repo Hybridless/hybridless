@@ -1,4 +1,5 @@
-import { BaseFunction } from "./resources/Function";
+import { Function as BaseFunction } from "./resources/Function";
+import { Image } from "./resources/Image";
 import { FunctionBaseEvent } from "./resources/BaseEvents/FunctionBaseEvent";
 import { FunctionContainerBaseEvent } from "./resources/BaseEvents/FunctionContainerBaseEvent";
 import { OPlugin } from "./options";
@@ -30,6 +31,7 @@ class hybridless {
   public readonly configurationVariablesSources: any;
   //Resources
   public functions: BaseFunction[];
+  public images: Image[];
   //Aux
   public service: any; //serverless service
   public provider: any;
@@ -45,6 +47,7 @@ class hybridless {
     this.docker = new Docker(this);
     this.depManager = new DepsManager(this);
     this.functions = [];
+    this.images = [];
     //Schema
     this.serverless.configSchemaHandler.defineTopLevelProperty('hybridless', PluginOptionsSchema);
     //Env resolution
@@ -146,6 +149,11 @@ class hybridless {
         tmpOptions.functions = {}; //reset
         for (let func of tmp) tmpOptions.functions = { ...tmpOptions.functions, ...func };
       }
+      if (Array.isArray(tmpOptions.images)) {
+        const tmp = tmpOptions.images;
+        tmpOptions.images = {}; //reset
+        for (let img of tmp) tmpOptions.images = { ...tmpOptions.images, ...img };
+      }
       this.options = tmpOptions;
       //Initialize stuff
       this.provider = this.serverless.getProvider(Globals.PluginDefaultProvider);
@@ -166,11 +174,23 @@ class hybridless {
           }
         } else this.logger.warn(`Skipping function ${funcName}, resource is invalid!`);
       }
+      //Initialize images
+      for (let imageName of Object.keys(this.options.images)) {
+        const found = this.images.find((img: Image) => img.imageName == imageName);
+        if (this.options.images[imageName]) {
+          if (found) found.options = this.options.images[imageName];
+          else {
+            const image: Image = new Image(this, this.options.images[imageName], `${imageName}`);
+            if (image) this.images.push(image);
+            else this.logger.warn(`Skipping image ${imageName}, resource is invalid!`);
+          }
+        } else this.logger.warn(`Skipping image ${imageName}, resource is invalid!`);
+      }
       //
       resolve();
     });
   }
-  //spread functions, cluster, tasks -- propagates to functions
+  //spread functions, images, cluster, tasks -- propagates to functions
   private async spread(): BPromise {
     return new BPromise(async (resolve) => {
       this.logger.log('Spreading components...');
@@ -180,6 +200,8 @@ class hybridless {
         resolve();
         return;
       }
+      //For each image
+      for (let image of this.images) await image.spread();
       //For each function
       for (let func of this.functions) await func.spread();
       //
@@ -189,6 +211,8 @@ class hybridless {
   //Check dependencies, install and validate spreaded configuration -- propagates to functions
   private async checkDependencies(): BPromise {
     return new BPromise(async (resolve) => {
+      //For each image
+      for (let image of this.images) await image.checkDependencies();
       //For each function
       for (let func of this.functions) await func.checkDependencies();
       //Check with manager
@@ -208,10 +232,12 @@ class hybridless {
         resolve();
         return;
       }
-      //For each function
+      //For each function & image
       await new BPromise.all(this.functions.map((func) => {
         return func.createRequiredResources();
-      }));
+      }).concat(this.images.map((image) => {
+        return image.createRequiredResources();
+      })));
       //
       resolve();
     });
@@ -232,11 +258,13 @@ class hybridless {
         resolve();
         return;
       }
-      //For each function
-      this.logger.log('Building components from functions...');
+      //For each function and image
+      this.logger.log('Building components from functions and images...');
       await new BPromise.all(this.functions.map((func) => {
         return func.build();
-      }));
+      }).concat(this.images.map((image) => {
+        return image.build();
+      })));
       //
       resolve();
     });
@@ -251,10 +279,12 @@ class hybridless {
         return;
       }
       //For each function
-      this.logger.log('Pushing components from functions...');
+      this.logger.log('Pushing components from functions and images...');
       await new BPromise.all(this.functions.map((func) => {
         return func.push();
-      }));
+      }).concat(this.images.map((image) => {
+        return image.push();
+      })));
       //
       resolve();
     });
@@ -277,6 +307,9 @@ class hybridless {
       //For each function
       this.logger.log('Cleaning up functions...');
       for (let func of this.functions) await func.cleanup();
+      //For each function
+      this.logger.log('Cleaning up images...');
+      for (let image of this.images) await image.cleanup();
       //
       resolve();
     });
@@ -293,7 +326,9 @@ class hybridless {
       }));
     } return [];
   }
-  //get service name
+  public getImageById(imageId): Image | null {
+    return this.images.find((i) => i.imageName == imageId)
+  }
   public getName(): string {
     return this.provider.naming.getNormalizedFunctionName(`${this.service.service}`.replace(/-/g, ''));
   }
@@ -387,15 +422,15 @@ class hybridless {
           //Check for event at index or any first occurence of container based event
           if (params[1] != undefined) {
             const funcEvent: FunctionBaseEvent<any> = func.getEventAtIndex(params[1]);
-            if (funcEvent && funcEvent['getContainerImageURL']) {
-              const imageURL = await (<(FunctionContainerBaseEvent)>funcEvent).getContainerImageURL();
+            if (funcEvent && funcEvent?.['image']?.['getContainerImageURL']) {
+              const imageURL = await (<(FunctionContainerBaseEvent)>funcEvent).image.getContainerImageURL();
               return { value: imageURL };
             }
           } else {
             for (let i = 0; i < func.getEventsCount(); i++) {
               const funcEvent: FunctionBaseEvent<any> = func.getEventAtIndex(i);
-              if (funcEvent && funcEvent['getContainerImageURL']) {
-                const imageURL = await (<(FunctionContainerBaseEvent)>funcEvent).getContainerImageURL();
+              if (funcEvent && funcEvent?.['image']?.['getContainerImageURL']) {
+                const imageURL = await (<(FunctionContainerBaseEvent)>funcEvent).image.getContainerImageURL();
                 return { value: imageURL };
               }
             }

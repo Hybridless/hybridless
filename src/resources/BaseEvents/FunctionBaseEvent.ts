@@ -1,17 +1,17 @@
 import Hybridless = require("../..");
-import { BaseFunction } from "../Function";
+import { Function } from "../Function";
 import { OFunctionEventType, OFunctionEvent } from "../../options";
 //
 import BPromise = require('bluebird');
 //
 export abstract class FunctionBaseEvent<T> {
   protected readonly plugin: Hybridless;
-  protected readonly func: BaseFunction;
+  protected readonly func: Function;
   private _event: T;
   protected readonly index: number;
   public readonly eventType: OFunctionEventType;
   //
-  public constructor(plugin: Hybridless, func: BaseFunction, event: T, index: number) {
+  public constructor(plugin: Hybridless, func: Function, event: T, index: number) {
     this.plugin = plugin;
     this.func = func;
     this._event = event;

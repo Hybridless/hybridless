@@ -1,9 +1,21 @@
 //Plugin
 export interface OPlugin {
   functions: { [key: string]: OFunction } | { [key: string]: OFunction }[];
+  images: { [key: string]: OImage } | { [key: string]: OImage }[];
   disableWebpack?: boolean;
   buildConcurrency?: number;
   tags?: { [key: string]: any } | { [key: string]: any }[];
+}
+
+//Image
+export interface OImage {
+  dockerFile: string;
+  /**
+   * @minItems 0
+   * @maxItems 99999
+   */
+  additionalDockerFiles?: { from: string, to: string }[];
+  dockerBuildArgs?: { [key: string]: string };
 }
 
 //Function
@@ -168,9 +180,12 @@ export interface OFunctionEvent {
   logsRetentionInDays?: number; //defaults to 365 days
   environment?: { [key: string]: (string | object )};
 }
-export interface OFunctionContainerBaseEvent extends OFunctionEvent {
+
+export interface OFunctionContainerReusableImage extends OFunctionEvent {
+  imageId?: string;
+}
+export interface OFunctionContainerOptionalImage extends OFunctionEvent {
   dockerFile?: string;
-  entrypoint?: string; //incase of using container runtimes, you can always make custom entrypoints
   /**
    * @minItems 0
    * @maxItems 99999
@@ -178,12 +193,15 @@ export interface OFunctionContainerBaseEvent extends OFunctionEvent {
   additionalDockerFiles?: { from: string, to: string }[];
   dockerBuildArgs?: { [key: string]: string };
 }
+export type OFunctionContainerBaseEvent = {
+  entrypoint?: string; //incase of using container runtimes, you can always make custom entrypoints
+} & (OFunctionContainerReusableImage | OFunctionContainerOptionalImage)
 
 
 /**
  ** TASK BASED **
 **/
-export interface OFunctionTaskBaseEvent extends OFunctionContainerBaseEvent {
+export type OFunctionTaskBaseEvent = OFunctionContainerBaseEvent & {
   //Service
   ec2LaunchType?: boolean; //defaults to false, if true will laucnh task into EC2
   newRelicKey?: string;//
@@ -198,11 +216,11 @@ export interface OFunctionTaskBaseEvent extends OFunctionContainerBaseEvent {
   softMemory?: number;
   logsMultilinePattern?: string; //defaults to '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))'
 }
-export interface OFunctionEC2TaskBaseEvent extends OFunctionContainerBaseEvent {
+export type OFunctionEC2TaskBaseEvent = {
   ec2LaunchType?: true;
   daemonType?: boolean;
 }
-export interface OFunctionFargateTaskBaseEvent extends OFunctionContainerBaseEvent {
+export type OFunctionFargateTaskBaseEvent = {
   ec2LaunchType?: false | undefined;
 }
 export type OFunctionHTTPDTaskEvent = {

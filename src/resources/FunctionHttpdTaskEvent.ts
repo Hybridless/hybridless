@@ -1,8 +1,8 @@
 import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEvent"; //base class
 //
 import Hybridless = require("..");
-import { BaseFunction } from "./Function";
-import { OFunctionHTTPDTaskEvent, OFunctionHttpdTaskRuntime } from "../options";
+import { Function as BaseFunction } from "./Function";
+import { OFunctionContainerOptionalImage, OFunctionHTTPDTaskEvent, OFunctionHttpdTaskRuntime } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -17,9 +17,9 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
   /* Container Base Event Overwrites */
   protected getContainerFiles(): DockerFiles {
     const event: OFunctionHTTPDTaskEvent = (<OFunctionHTTPDTaskEvent>this.event);
-    const customDockerFile = event.dockerFile;
+    const customDockerFile = (<OFunctionContainerOptionalImage>event).dockerFile;
     const serverlessDir = this.plugin.serverless.config.servicePath;
-    const additionalDockerFiles = ((<OFunctionHTTPDTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
+    const additionalDockerFiles = ((<OFunctionContainerOptionalImage>this.event).additionalDockerFiles || []).map((file) => {
       return { name: file.from, dir: serverlessDir, dest: file.to }
     });
     //Envs
@@ -111,10 +111,10 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
       ...(event.environment || {}),
     };
   }
-  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionHTTPDTaskEvent>this.event).dockerBuildArgs; }
+  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionContainerOptionalImage>this.event).dockerBuildArgs; }
   public async getClusterTask(): BPromise {
-    const TaskName = this._getTaskName();
-    const ECRRepoFullURL = await this.getContainerImageURL();
+    const TaskName = this.getTaskName();
+    const ECRRepoFullURL = await this.image.getContainerImageURL();
     const event: OFunctionHTTPDTaskEvent = (<OFunctionHTTPDTaskEvent>this.event);
     return new BPromise(async (resolve) => {
       resolve({

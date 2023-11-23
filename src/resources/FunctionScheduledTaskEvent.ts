@@ -1,8 +1,8 @@
 import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEvent"; //base class
 //
 import Hybridless = require("..");
-import { BaseFunction } from "./Function";
-import { OFunctionScheduledTaskEvent, OFunctionScheduledTaskRuntime } from "../options";
+import { Function as BaseFunction } from "./Function";
+import { OFunctionContainerOptionalImage, OFunctionScheduledTaskEvent, OFunctionScheduledTaskRuntime } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -15,9 +15,9 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
   /* Container Base Event Overwrites */
   protected getContainerFiles(): DockerFiles {
     const event: OFunctionScheduledTaskEvent = (<OFunctionScheduledTaskEvent>this.event);
-    const customDockerFile = (<OFunctionScheduledTaskEvent>this.event).dockerFile;
+    const customDockerFile = (<OFunctionContainerOptionalImage>this.event)?.dockerFile;
     const serverlessDir = this.plugin.serverless.config.servicePath;
-    const additionalDockerFiles = ((<OFunctionScheduledTaskEvent>this.event).additionalDockerFiles || []).map((file) => {
+    const additionalDockerFiles = ((<OFunctionContainerOptionalImage>this.event).additionalDockerFiles || []).map((file) => {
       return { name: file.from, dir: serverlessDir, dest: file.to }
     });
     //Get build directory (todo: figureout oneliner)
@@ -89,10 +89,10 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
       ...(event.environment || {}),
     };
   }
-  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionScheduledTaskEvent>this.event).dockerBuildArgs; }
+  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionContainerOptionalImage>this.event).dockerBuildArgs; }
   public async getClusterTask(): BPromise {
-    const TaskName = this._getTaskName();
-    const ECRRepoFullURL = await this.getContainerImageURL();
+    const TaskName = this.getTaskName();
+    const ECRRepoFullURL = await this.image.getContainerImageURL();
     const event: OFunctionScheduledTaskEvent = (<OFunctionScheduledTaskEvent>this.event);
     return new BPromise(async (resolve) => {
       resolve({

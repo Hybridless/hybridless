@@ -1,7 +1,7 @@
 import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent"; //base class
 //
 import Hybridless = require("..");
-import { BaseFunction } from "./Function";
+import { Function } from "./Function";
 import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaDynamoStreamsEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, 
 				 OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaHTTPLoadBalancerEvent, OFunctionLambdaProtocol, OFunctionLambdaS3Event, 
 				 OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent, OFunctionLambdaEventBridge } from "../options";
@@ -10,7 +10,7 @@ import BPromise = require('bluebird');
 import Globals from "../core/Globals";
 //
 export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent> {
-	public constructor(plugin: Hybridless, func: BaseFunction, event: OFunctionLambdaEvent, index: number) {
+	public constructor(plugin: Hybridless, func: Function, event: OFunctionLambdaEvent, index: number) {
 		super(plugin, func, event, index);
 	}
 	//Plugin lifecycle
@@ -58,8 +58,8 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				...(this.func.funcOptions.memory || this.event.memory ? { memorySize: this.event.memory || this.func.funcOptions.memory } : {}),
 				...(this.event.runtime ? { runtime: this.event.runtime } : {}),
 				...(this.event.layers ? { layers: this.event.layers } : {}),
-				...(this.event.iamRoleStatementsInherit ? { iamRoleStatementsInherit: this.event.iamRoleStatementsInherit } : {}),
-				...(this.event.iamRoleStatements ? { iamRoleStatements: this.event.iamRoleStatements } : {}),
+				...(this.func.funcOptions.iamRoleStatementsInherit ? { iamRoleStatementsInherit: this.func.funcOptions.iamRoleStatementsInherit } : {}),
+				...(this.func.funcOptions ? { iamRoleStatements: this.func.funcOptions.iamRoleStatements } : {}),
 				...(this.event.package ? { package: this.event.package } : {}),
 				...(this.event.reservedConcurrency ? { reservedConcurrency: this.event.reservedConcurrency } : {}),
 				...(this.event.onError ? { onError: this.event.onError } : {}),

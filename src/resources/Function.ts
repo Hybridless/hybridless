@@ -17,7 +17,7 @@ import BPromise = require('bluebird');
 import Globals from "../core/Globals";
 // 
 
-export class BaseFunction {
+export class Function {
   private _funcOptions: OFunction;
   private readonly plugin: Hybridless;
   private readonly functionName: string;
@@ -212,7 +212,7 @@ export class BaseFunction {
 
 
   //Helpers
-  private parseFunction(plugin: Hybridless, func: BaseFunction, event: OFunctionEvent, index: number): FunctionBaseEvent<OFunctionEvent> {
+  private parseFunction(plugin: Hybridless, func: Function, event: OFunctionEvent, index: number): FunctionBaseEvent<OFunctionEvent> {
     if (event.eventType == OFunctionEventType.process) {
       return new FunctionProcessTaskEvent(plugin, func, <OFunctionProcessTaskEvent>event, index);
     } else if (event.eventType == OFunctionEventType.httpd) {

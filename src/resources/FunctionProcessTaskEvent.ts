@@ -1,8 +1,8 @@
 import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEvent"; //base class
 //
 import Hybridless = require("..");
-import { BaseFunction } from "./Function";
-import { OFunctionProcessTaskEvent, OFunctionProcessTaskRuntime } from "../options";
+import { Function as BaseFunction } from "./Function";
+import { OFunctionContainerOptionalImage, OFunctionProcessTaskEvent, OFunctionProcessTaskRuntime } from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -15,9 +15,9 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
   /* Container Base Event Overwrites */
   protected getContainerFiles(): DockerFiles {
     const event: OFunctionProcessTaskEvent = (<OFunctionProcessTaskEvent>this.event);
-    const customDockerFile = event.dockerFile;
+    const customDockerFile = (<OFunctionContainerOptionalImage>this.event)?.dockerFile;
     const serverlessDir = this.plugin.serverless.config.servicePath;
-    const additionalDockerFiles = (event.additionalDockerFiles || []).map((file) => {
+    const additionalDockerFiles = ((<OFunctionContainerOptionalImage>this.event).additionalDockerFiles || []).map((file) => {
       return { name: file.from, dir: serverlessDir, dest: file.to }
     });
     //Get build directory (todo: figureout oneliner)
@@ -88,10 +88,10 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
       ...(event.environment || {}),
     };
   }
-  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionProcessTaskEvent>this.event).dockerBuildArgs; }
+  protected getContainerBuildArgs(): { [key: string]: string } | null { return (<OFunctionContainerOptionalImage>this.event).dockerBuildArgs; }
   public async getClusterTask(): BPromise {
-    const TaskName = this._getTaskName();
-    const ECRRepoFullURL = await this.getContainerImageURL();
+    const TaskName = this.getTaskName();
+    const ECRRepoFullURL = await this.image.getContainerImageURL();
     const event: OFunctionProcessTaskEvent = (<OFunctionProcessTaskEvent>this.event);
     return new BPromise(async (resolve) => {
       resolve({
