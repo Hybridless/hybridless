@@ -163,7 +163,7 @@ class hybridless {
       this.region = this.service.provider.region;
 
       //Initialize functions
-      for (let funcName of Object.keys(this.options.functions)) {
+      for (let funcName of Object.keys(this.options.functions || {})) {
         const found = this.functions.find((func: BaseFunction) => func.getName(true) == funcName);
         if (this.options.functions[funcName]) {
           if (found) found.funcOptions = this.options.functions[funcName];
@@ -175,7 +175,7 @@ class hybridless {
         } else this.logger.warn(`Skipping function ${funcName}, resource is invalid!`);
       }
       //Initialize images
-      for (let imageName of Object.keys(this.options.images)) {
+      for (let imageName of Object.keys(this.options.images || {})) {
         const found = this.images.find((img: Image) => img.imageName == imageName);
         if (this.options.images[imageName]) {
           if (found) found.options = this.options.images[imageName];
