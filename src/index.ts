@@ -149,7 +149,7 @@ class hybridless {
         tmpOptions.functions = {}; //reset
         for (let func of tmp) tmpOptions.functions = { ...tmpOptions.functions, ...func };
       }
-      if (Array.isArray(tmpOptions.images)) {
+      if (tmpOptions.images && Array.isArray(tmpOptions.images)) {
         const tmp = tmpOptions.images;
         tmpOptions.images = {}; //reset
         for (let img of tmp) tmpOptions.images = { ...tmpOptions.images, ...img };

@@ -15675,6 +15675,9 @@
                     "from": {
                       "type": "string"
                     },
+                    "path": {
+                      "type": "string"
+                    },
                     "to": {
                       "type": "string"
                     }
@@ -15716,6 +15719,9 @@
                     "additionalProperties": false,
                     "properties": {
                       "from": {
+                        "type": "string"
+                      },
+                      "path": {
                         "type": "string"
                       },
                       "to": {

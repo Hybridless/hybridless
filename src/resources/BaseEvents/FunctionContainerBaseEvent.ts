@@ -33,12 +33,13 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionConta
       // TODO: debug log
     } else {
       const files = this.getContainerFiles()
+      const dockerFile = files.find((f) => f.dest == 'Dockerfile')
       this.image = new Image(this.plugin, {
-        dockerFile: files.find((f) => f.dest == 'Dockerfile').name,
+        dockerFile: dockerFile.name,
         additionalDockerFiles: files.filter((f) => f.dest != 'Dockerfile')
-                                    .map((f) => ({from: f.name, to: f.dest})),
+                                    .map((f) => ({from: f.name, to: f.dest, path: f.dir})),
         dockerBuildArgs: this.getContainerBuildArgs()
-      }, this.getImageName())
+      }, this.getImageName(), dockerFile.dir)
     }
     return BPromise.resolve(); 
   }

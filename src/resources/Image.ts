@@ -25,12 +25,14 @@ export class Image {
   private readonly plugin: Hybridless;
   public readonly imageName: string;
   private readonly currentTag: string;
+  private readonly dockerFilePath: string;
   //
-  public constructor(plugin: Hybridless, imageOptions: OImage, imageName: string, ) {
+  public constructor(plugin: Hybridless, imageOptions: OImage, imageName: string, dockerFilePath?: string) {
     this.plugin = plugin;
     this.imageOptions = imageOptions;
     this.imageName = imageName;
     this.currentTag = Date.now() + '';
+    this.dockerFilePath = dockerFilePath;
   }
 
   //setter
@@ -112,10 +114,10 @@ export class Image {
     const customDockerFile = this.imageOptions.dockerFile;
     const serverlessDir = this.plugin.serverless.config.servicePath;
     const additionalDockerFiles = (this.imageOptions.additionalDockerFiles || []).map((file) => {
-      return { name: file.from, dir: serverlessDir, dest: file.to }
+      return { name: file.from, dir: file.path || serverlessDir, dest: file.to }
     });
     return [
-      { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' },
+      { name: customDockerFile, dir: this.dockerFilePath || serverlessDir, dest: 'Dockerfile' },
       ...additionalDockerFiles
     ]
   }

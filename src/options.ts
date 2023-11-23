@@ -14,7 +14,7 @@ export interface OImage {
    * @minItems 0
    * @maxItems 99999
    */
-  additionalDockerFiles?: { from: string, to: string }[];
+  additionalDockerFiles?: { from: string, to: string, path?: string }[];
   dockerBuildArgs?: { [key: string]: string };
 }
 
