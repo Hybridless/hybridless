@@ -1,4 +1,6 @@
 import cuid from 'cuid';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
 //Interruption handler
 process.on('SIGINT', function() {
   console.log("Caught interrupt signal");
