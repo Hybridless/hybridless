@@ -52,15 +52,20 @@ export class Image {
     return new BPromise.resolve();
   }
   //create image extra required resources (ECR for example)
-  public async createRequiredResources(): BPromise {
+  public async createRequiredResources(nextToken?: string): BPromise {
     const ECRRepoName = this._getECRRepoName();
     //Check if existing repo exists
-    const ecrs = await this.plugin.serverless.getProvider('aws').request('ECR', 'describeRepositories', {});
+    const ecrs = await this.plugin.serverless.getProvider('aws').request('ECR', 'describeRepositories', {
+      ...(nextToken ? { nextToken } : {})
+    });
     if (ecrs) {
       const existingECR = ecrs.repositories.find((repo) => repo.repositoryName == ECRRepoName);
       if (existingECR) {
         this.plugin.logger.info(`ECR repo ${ECRRepoName} already exists, skipping it!`);
         return BPromise.resolve();
+      } else if (ecrs.nextToken) { /* check if read was capped */
+        // check again with nextToken
+        return this.createRequiredResources(ecrs.nextToken);
       }
     }
     return this._createECRRepo(ECRRepoName);
