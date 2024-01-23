@@ -40,7 +40,7 @@ process.on('SIGINT', function() {
     catch (e) { console.log('[Hybridless Runtime] - Error while decoding process arguments!', e); }
     //Invoke
     const __dirname = dirname(fileURLToPath(import.meta.url))
-    const functionPath = `${__dirname}/../app/${process.env.ENTRYPOINT}`;
+    const functionPath = `${__dirname}/../app/${process.env.ENTRYPOINT}.mjs`;
     const resp = await invoke(functionPath, input);
     //Return
     console.debug(resp);
