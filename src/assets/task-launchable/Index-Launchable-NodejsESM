@@ -28,7 +28,7 @@ process.on('SIGINT', function() {
           resolve({ err, data });
         });
         try {
-          const resp = await ((await import(`${functionPath}`))[process.env.ENTRYPOINT_FUNC](event, context));
+          const resp = await ((await import(`${functionPath}`))[process.env.ENTRYPOINT_FUNC](input, context));
           if (resp) resolve({data: resp});
         } catch (e) { reject(e); }
       });
