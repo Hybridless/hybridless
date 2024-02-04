@@ -55,7 +55,8 @@ class hybridless {
     //Commands
     this.commands = {
       hybridless: {
-        usage: 'Hybridless TODO',
+        usage: 'hybridless build-all - to build all images',
+        lifecycleEvents: ['build-all'],
         commands: {
           create: {
             type: 'entrypoint',
@@ -86,11 +87,18 @@ class hybridless {
     };
     //Hooks
     this.hooks = {
+      //
+      'hybridless:build-all': () => BPromise.bind(this)
+        .then(this.setup) //0
+        .then(this.spread) //1
+        .then(this.checkDependencies) //2
+        .then(this.compile) //4
+        .then(this.build), //5
       // Cmds
       'hybridless:create:setup': () => BPromise.bind(this).then(this.setup), //0
       'hybridless:create:spread': () => BPromise.bind(this).then(this.spread), //1
       'hybridless:create:checkDependencies': () => BPromise.bind(this).then(this.checkDependencies), //2
-      'hybridless:create:createResources': () => BPromise.bind(this).then(this.createResouces), //3
+      'hybridless:create:createResources': () => BPromise.bind(this).then(this.createResources), //3
       'hybridless:prebuild:compile': () => BPromise.bind(this).then(this.compile), //4
       'hybridless:build:build': () => BPromise.bind(this).then(this.build), //5
       'hybridless:push:push': () => BPromise.bind(this).then(this.push), //6
@@ -224,7 +232,7 @@ class hybridless {
     });
   }
   //create extra resources (ECR, policies) -- propagates to functions
-  private async createResouces(): BPromise {
+  private async createResources(): BPromise {
     return new BPromise(async (resolve) => {
       //No components specified, don't process
       if (!this.options || !Object.keys(this.options).length) {
