@@ -165,6 +165,14 @@ export default class Globals {
       return 'job-batch/Dockerfile-Job-Java8';
     } else if (environment == OFunctionBatchJobRuntime.java8al12) {
       return 'job-batch/Dockerfile-Job-Java8al12';
-    } throw new Error(`Unknown event *process* environment type! ${environment} is not a valid environment, can't continue!`);
+    } throw new Error(`Unknown event *job* environment type! ${environment} is not a valid environment, can't continue!`);
+  }
+  public static BatchJob_EntrypointByRuntime(environment: OFunctionBatchJobRuntime): string {
+    if (environment == OFunctionBatchJobRuntime.nodejs10 || environment == OFunctionBatchJobRuntime.nodejs12 || 
+        environment == OFunctionBatchJobRuntime.nodejs14 || environment == OFunctionBatchJobRuntime.nodejs16) {
+      return 'job-batch/Index-Job-NodejsX';
+    } else if (environment == OFunctionBatchJobRuntime.nodejs18) {
+      return 'job-batch/Index-Job-NodejsESM';
+    } throw new Error(`Unknown event *job* environment type for entrypoint! ${environment} is not a valid environment, can't continue!`);
   }
 }
