@@ -1,6 +1,6 @@
 {
   "name": "@hybridless/hybridless",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -26,7 +26,7 @@
     "json-schema-ref-parser": "^9.0.9",
     "json-stringify-safe": "^5.0.1",
     "loadash": "^1.0.0",
-    "serverless-plugin-log-retention": "^2.0.0",
+    "@hybridless/serverless-plugin-log-retention": "^2.0.0",
     "serverless-webpack": "^5.13.0",
     "stack-trace": "0.0.10",
     "tar-fs": "^3.0.4",
