@@ -1,4 +1,4 @@
-FROM ghcr.io/hybridless/go:latest
+FROM ghcr.io/hybridless/go:1.21
 
 # Set the working directory inside the container
 WORKDIR /app

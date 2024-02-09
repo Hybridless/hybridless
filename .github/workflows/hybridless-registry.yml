@@ -37,7 +37,7 @@ jobs:
           - node:18-slim
           - webdevops/php-nginx:alpine-php5
           - webdevops/php-nginx:alpine-php7
-          - go:latest
+          - golang:1.21
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Sync Docker Image to Registry
