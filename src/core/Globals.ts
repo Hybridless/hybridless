@@ -15,7 +15,7 @@ export default class Globals {
   public static Deps_LambdaLogsRetention  = '@hybridless/serverless-plugin-log-retention';
   //Java support
   public static Mvn_Build_Command = 'mvn clean install';
-  public static Go_Build_Command = 'go mod tidy';
+  public static Go_Build_Command = 'go mod tidy && go build -o ./build/';
   //Defaults
   public static DefaultLogsMultilinePattern = '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))';
   public static DefaultHealthCheckInterval = 15;
@@ -44,6 +44,8 @@ export default class Globals {
       return 'task-httpd/Dockerfile-Httpd-PHP5'
     } else if (environment == OFunctionHttpdTaskRuntime.php7) {
       return 'task-httpd/Dockerfile-Httpd-PHP7'
+    } else if (environment == OFunctionHttpdTaskRuntime.go) {
+      return 'task-httpd/Dockerfile-Httpd-Go'
     } else if (environment == OFunctionHttpdTaskRuntime.container) {
       throw new Error(`Container environments requires dockerFile to be set!`);
     } throw new Error(`Unknown event *httpd* environment type! ${environment} is not a valid environment, can't continue!`);

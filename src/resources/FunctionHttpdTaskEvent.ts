@@ -25,6 +25,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
     //Envs
     const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
     const isPHP = (event && event.runtime && event.runtime.toLowerCase().indexOf('php') != -1);
+    const isGo = (event && event.runtime && event.runtime.toLowerCase().indexOf('go') != -1);
     const isPureContainer = (event.runtime == OFunctionHttpdTaskRuntime.container);
     //Get build directory
     let safeDir: any = __dirname.split('/');
@@ -56,6 +57,15 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
         { name: handleRootFolder, dir: serverlessDir, dest: '/app/' },
         ...additionalDockerFiles
       ];
+    } else if (isGo) {
+      return [
+        (customDockerFile ?
+          { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
+          { name: Globals.HTTPD_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
+        ),
+        { name: 'build', dir: serverlessDir, dest: '/app/' },
+        ...additionalDockerFiles
+      ];
     } else if (isPureContainer) {
       return [
         { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' },
@@ -69,6 +79,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
     const event: OFunctionHTTPDTaskEvent = (<OFunctionHTTPDTaskEvent>this.event);
     const isPHP = (event && event.runtime && event.runtime.toLowerCase().indexOf('php') != -1)
     const isNodeJS = (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1);
+    const isGo = (event && event.runtime && event.runtime.toLowerCase().indexOf('go') != -1);
     const isPureContainer = (event.runtime == OFunctionHttpdTaskRuntime.container);
     return {
       //Plataform specific
@@ -78,6 +89,9 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
         'ENTRYPOINT_FUNC': this.func.getEntrypointFunction(this.event),
         // Proxy
         ...(event.cors ? { 'CORS': JSON.stringify(event.cors) } : {}),
+      }),
+      ...(isGo && {
+        'ENTRYPOINT': `./${this.func.getEntrypoint(this.event)}`,
       }),
       ...(isPHP && {
         'WEB_DOCUMENT_INDEX': this.func.getEntrypointFunction(this.event)

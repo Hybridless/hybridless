@@ -144,6 +144,8 @@ export class Function {
       noFuncHandler.splice(noFuncHandler.length - 1, 1);
       noFuncHandler = noFuncHandler.join('/');
       return noFuncHandler;
+    } else if (event && event.runtime && event.runtime.toLowerCase().indexOf('go') != -1) {
+      return (event.handler || this.funcOptions.handler);
     } else if (event && event.runtime && event.runtime.toLowerCase().indexOf('node') != -1) { //NodeJS event
       //get handler without last component (function)
       let noFuncHandler: any = (event.handler || this.funcOptions.handler).split('.');
