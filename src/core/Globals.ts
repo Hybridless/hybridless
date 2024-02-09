@@ -12,9 +12,10 @@ export default class Globals {
   //Dependecies
   public static Deps_Webpack = 'serverless-webpack';
   public static Deps_ECS = '@hybridless/serverless-ecs-plugin';
-  public static Deps_LambdaLogsRetention  = 'serverless-plugin-log-retention';
+  public static Deps_LambdaLogsRetention  = '@hybridless/serverless-plugin-log-retention';
   //Java support
   public static Mvn_Build_Command = 'mvn clean install';
+  public static Go_Build_Command = 'go mod tidy';
   //Defaults
   public static DefaultLogsMultilinePattern = '(([a-zA-Z0-9\-]* \[[a-zA-Za-]*\] )|(\[[a-zA-Za -]*\] ))';
   public static DefaultHealthCheckInterval = 15;

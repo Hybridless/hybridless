@@ -11,6 +11,7 @@ export default class DepsManager {
   private requiresECSRolePermission: boolean;
   private requiresECS: boolean;
   private requiresMvn: boolean;
+  private requiresGo: boolean;
   private requiresLogsRetention: boolean;
   //
   private readonly plugin: Hybridless;
@@ -24,12 +25,14 @@ export default class DepsManager {
   public enableECSPlugin(): void { this.requiresECS = true; }
   public enableECSRolePermission(): void { this.requiresECSRolePermission = true; }
   public enableMvn(): void { this.requiresMvn = true; }
+  public enableGo(): void { this.requiresGo = true; }
   //
   public isLogsRetentionRequired(): boolean { return this.requiresWebpack; }
   public isWebpackRequired(): boolean { return this.requiresWebpack; }
   public isECSRolePermissionRequired(): boolean { return this.requiresECSRolePermission; }
   public isECSRequired(): boolean { return this.requiresECS; }
   public isMvnRequired(): boolean { return this.requiresMvn; }
+  public isGoRequired(): boolean { return this.requiresGo; }
   //
   public async loadDependecies(): BPromise {
     const pluginsList = this.plugin.service.plugins;
@@ -55,8 +58,9 @@ export default class DepsManager {
     //   // .then(() => (!this.depManager.isWebpackRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('webpack:compile')))
     //   // .then(() => (!this.depManager.isWebpackRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('webpack:package')));
     // }
-    return BPromise.resolve()
-            .then(() => (!this.isMvnRequired() ? BPromise.resolve() : this._compileJava()));
+    if (this.isMvnRequired()) return BPromise.resolve().then(() => this._compileJava());
+    if (this.isGoRequired()) return BPromise.resolve().then(() => this._compileGo());
+    return BPromise.resolve();
   }
   /*  private  */
   private _isPluginInstalledServerless(pluginsList: Array<string>, dependency: string): boolean {
@@ -67,6 +71,17 @@ export default class DepsManager {
     return new BPromise(async (resolve, reject) => {
       this.plugin.logger.info('MVN is required to compile Java code, compiling...');
       const exec = await this._runCommand(Globals.Mvn_Build_Command);
+      if (exec && exec.stderr && exec.stderr.toLowerCase().indexOf('error')) reject(exec.stderr);
+      else {
+        // if (exec && exec.stdout) this.plugin.logger.debug(exec.stdout); -- Maven output seems huge enough to desconsider it and just output on errors
+        resolve();
+      }
+    });
+  }
+  private async _compileGo(): BPromise {
+    return new BPromise(async (resolve, reject) => {
+      this.plugin.logger.info('Go is required to compile GoLang code, compiling...');
+      const exec = await this._runCommand(Globals.Go_Build_Command);
       if (exec && exec.stderr && exec.stderr.toLowerCase().indexOf('error')) reject(exec.stderr);
       else {
         // if (exec && exec.stdout) this.plugin.logger.debug(exec.stdout); -- Maven output seems huge enough to desconsider it and just output on errors

@@ -2,7 +2,7 @@ FROM ghcr.io/hybridless/node:18-alpine
 
 # Copy files
 COPY /usr/src/app/ /usr/src/app/
-COPY proxy.js /usr/src/hybridless-runtime/proxy.js
+COPY proxy.js /usr/src/hybridless-runtime/proxy.mjs
 
 # Set the working directory
 WORKDIR /usr/src/app

@@ -15775,9 +15775,5 @@
       ]
     }
   },
-  "required": [
-    "functions",
-    "images"
-  ],
   "type": "object"
 }

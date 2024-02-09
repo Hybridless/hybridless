@@ -1,7 +1,7 @@
 //Plugin
 export interface OPlugin {
-  functions: { [key: string]: OFunction } | { [key: string]: OFunction }[];
-  images: { [key: string]: OImage } | { [key: string]: OImage }[];
+  functions?: { [key: string]: OFunction } | { [key: string]: OFunction }[];
+  images?: { [key: string]: OImage } | { [key: string]: OImage }[];
   disableWebpack?: boolean;
   buildConcurrency?: number;
   tags?: { [key: string]: any } | { [key: string]: any }[];
@@ -75,6 +75,7 @@ export enum OFunctionHttpdTaskRuntime {
   nodejs18 = 'nodejs18',
   php5 = 'php5',
   php7 = 'php7',
+  go = 'go',
   container = 'container'
 };
 export enum OFunctionProcessTaskRuntime {
