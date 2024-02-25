@@ -1,4 +1,4 @@
-FROM ghcr.io/hybridless/go:1.21
+FROM ghcr.io/hybridless/golang:1.21
 
 # Set the working directory inside the container
 WORKDIR /app
@@ -8,6 +8,7 @@ EXPOSE $PORT
 
 # Copy files
 COPY /app/ /app/
-
+#
+RUN chmod +x go.sh
 # Command to run the executable
-CMD ["./$ENTRYPOINT"]
+ENTRYPOINT ["./go.sh"]

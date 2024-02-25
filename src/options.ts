@@ -232,6 +232,7 @@ export type OFunctionHTTPDTaskEvent = {
     path: string;
     method?: string;
     priority?: number; //defaults to 1
+    albListenerArn?: string;
   }[];
   cors?: {
     origin: string;
@@ -254,6 +255,7 @@ export type OFunctionHTTPDTaskEvent = {
   healthCheckHealthyCount?: number; //defaults to 2
   healthCheckUnhealthyCount?: number; //defaults to 5
   healthCheckRoute?: string; //default will use auto generated health route
+  healthCheckStatusCode?: number;
   //AS
   autoScale?: {
     min?: number; //default to 1

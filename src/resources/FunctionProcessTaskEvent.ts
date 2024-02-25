@@ -108,8 +108,8 @@ export class FunctionProcessTaskEvent extends FunctionContainerBaseEvent {
         ...(event.entrypoint ? { entrypoint: event.entrypoint } : {}),
         desiredCount: (event.concurrency || Globals.Process_DefaultConcurrency),
         environment: {
-          ...this.plugin.getEnvironmentIvars(),
           ...this.getContainerEnvironments(),
+          ...this.plugin.getEnvironmentIvars(),
         },
         //default stuff
         logsMultilinePattern: (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),

@@ -22,6 +22,7 @@ export default class Globals {
   public static DefaultHealthCheckTimeout = 10;
   public static DefaultHealthCheckHealthyCount = 2;
   public static DefaultHealthCheckUnhealthCount = 5;
+  public static DefaultHealthCheckStatusCode = 200;
   public static DefaultLoadBalancerAdditionalTimeout = 1;
   public static DefaultLogRetetionInDays = 90;
   //HTTPD stuff

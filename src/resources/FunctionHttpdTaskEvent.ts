@@ -63,6 +63,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
           { name: customDockerFile, dir: serverlessDir, dest: 'Dockerfile' } :
           { name: Globals.HTTPD_ImageByRuntime(event.runtime), dir: safeDir + '/resources/assets', dest: 'Dockerfile' }
         ),
+        { name: 'task-httpd/Index-Httpd-Go', dir: safeDir + '/resources/assets', dest: `/app/go.sh` },
         { name: 'build', dir: serverlessDir, dest: '/app/' },
         ...additionalDockerFiles
       ];
@@ -146,8 +147,8 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
         ec2LaunchType: !!event.ec2LaunchType,
         ...(!!event.ec2LaunchType && event.daemonType ? { daemonEc2Type: true } : {}),
         environment: {
-          ...this.plugin.getEnvironmentIvars(),
           ...this.getContainerEnvironments(),
+          ...this.plugin.getEnvironmentIvars(),
         },
         ...(event.autoScale && <unknown>event.autoScale != 'null' ? { autoScale: event.autoScale } : {}),
         logsMultilinePattern: (event.logsMultilinePattern || Globals.DefaultLogsMultilinePattern),
@@ -172,6 +173,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
         healthCheckTimeout: (event.healthCheckTimeout || Globals.DefaultHealthCheckTimeout),
         healthCheckHealthyCount: (event.healthCheckHealthyCount || Globals.DefaultHealthCheckHealthyCount),
         healthCheckUnhealthyCount: (event.healthCheckUnhealthyCount || Globals.DefaultHealthCheckUnhealthCount),
+        healthCheckStatusCode: (event.healthCheckStatusCode || Globals.DefaultHealthCheckStatusCode),
         listeners: [{
           port: this.getPort(),
           albProtocol: (event.certificateArns ? 'HTTPS' : 'HTTP'),

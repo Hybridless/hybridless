@@ -117,8 +117,8 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         //container
         image: repoName,
         environment: {
-          ...this.plugin.getEnvironmentIvars(),
           ...this.getContainerEnvironments(),
+          ...this.plugin.getEnvironmentIvars(),
         },
         //default stuff
         ...this.func.getVPC(true, true),

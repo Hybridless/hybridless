@@ -112,7 +112,7 @@ export class FunctionBatchJobEvent extends FunctionContainerBaseEvent {
   private async _generateJobDefinition(): BPromise<any> {
     const event: OFunctionBatchJobEvent = (<OFunctionBatchJobEvent>this.event);
     const repoName = await this.image.getContainerImageURL();
-    const environment = { ...this.plugin.getEnvironmentIvars(), ...this.getContainerEnvironments() };
+    const environment = { ...this.getContainerEnvironments(), ...this.plugin.getEnvironmentIvars() };
     return {
       Type: "AWS::Batch::JobDefinition",
       DependsOn: [ this._getJobName('LogGroup') ],

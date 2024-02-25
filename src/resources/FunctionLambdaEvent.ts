@@ -49,8 +49,8 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 			[this._getFunctionName()]: {
 				name: `${this.plugin.getName()}-${this.func.getName()}-${this.plugin.stage}`,
 				environment: {
-					...this.plugin.getEnvironmentIvars(),
 					...this._getLambdaEnvironments(),
+					...this.plugin.getEnvironmentIvars(),
 				},
 				//default stuff
 				handler: this.event.handler || this.func.funcOptions.handler,

@@ -109,8 +109,8 @@ export class FunctionScheduledTaskEvent extends FunctionContainerBaseEvent {
         ...(event.entrypoint ? { entrypoint: event.entrypoint } : {}),
         desiredCount: 0, //runs on demand
         environment: {
-          ...this.plugin.getEnvironmentIvars(),
           ...this.getContainerEnvironments(),
+          ...this.plugin.getEnvironmentIvars(),
         },
         //default stuff
         ...(event.placementStrategies && <unknown>event.placementStrategies != 'null' ? { placementStrategies: event.placementStrategies } : {}),
