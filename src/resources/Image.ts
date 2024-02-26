@@ -112,6 +112,11 @@ export class Image {
     const ECRRepoName = this._getECRRepoName();
     return await this._cleanupOldImages(ECRRepoName);
   }
+  //delete events
+  public async delete(): BPromise {
+    const ECRRepoName = this._getECRRepoName();
+    return await this._deleteECRRepo(ECRRepoName);
+  }
 
   
   //Private
@@ -180,6 +185,14 @@ export class Image {
         })
       });
     } else return BPromise.reject('Could not create ECR repo!');
+  }
+
+  private async _deleteECRRepo(ECRRepoName: string): BPromise {
+    //Create ECR
+    this.plugin.logger.info(`Deleting ECR repo ${ECRRepoName}..`);
+    return await this.plugin.serverless.getProvider('aws').request('ECR', 'deleteRepository', {
+      repositoryName: ECRRepoName, force: true
+    });
   }
   private async _cleanupOldImages(ECRRepoName: string): BPromise {
     //Find ECR repo images

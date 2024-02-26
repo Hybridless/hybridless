@@ -134,6 +134,19 @@ export class Function {
       resolve();
     });
   }
+  //delete events
+  public async delete(): BPromise {
+    //For type of event, cleanup the function
+    return new BPromise(async (resolve) => {
+      await new BPromise.all(this.events.map((event) => {
+        if (event) {
+          this.plugin.logger.log(`Deleting ${this.functionName}:${event.eventType}...`);
+          return event.delete();
+        } return BPromise.resolve();
+      }));
+      resolve();
+    });
+  }
 
   //Public getters
   public getEntrypoint(event: OFunctionEvent): string {

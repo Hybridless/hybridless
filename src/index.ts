@@ -81,6 +81,10 @@ class hybridless {
           cleanup: {
             type: 'entrypoint',
             lifecycleEvents: ['cleanupContainers']
+          },
+          delete: {
+            type: 'entrypoint',
+            lifecycleEvents: ['ecrRepos']
           }
         }
       }
@@ -105,6 +109,7 @@ class hybridless {
       'hybridless:predeploy:compileCloudFormation': () => BPromise.bind(this).then(this.compileCloudFormation), //7
       'hybridless:predeploy:pack': () => BPromise.bind(this).then(this.modifyExecutionRole), //8
       'hybridless:cleanup:cleanupContainers': () => BPromise.bind(this).then(this.cleanupContainers), //9
+      'hybridless:delete:ecrRepos': () => BPromise.bind(this).then(this.setup).then(this.delete),
       // Real hooks
       'before:package:initialize': () => {
         return BPromise.bind(this)
@@ -132,6 +137,11 @@ class hybridless {
       'aws:deploy:finalize:cleanup': () => {
         return BPromise.bind(this)
           .then(() => this.serverless.pluginManager.spawn('hybridless:cleanup')) //Optional 9
+      },
+      // stack remove support
+      'before:remove:remove': () => {
+        return BPromise.bind(this)
+          .then(() => this.serverless.pluginManager.spawn('hybridless:delete'))
       }
     };
   }
@@ -318,6 +328,19 @@ class hybridless {
       //For each function
       this.logger.log('Cleaning up images...');
       for (let image of this.images) await image.cleanup();
+      //
+      resolve();
+    });
+  }
+  //Delete ECR repos
+  private async delete(): BPromise {
+    return new BPromise(async (resolve) => {
+      //For each function
+      this.logger.log('Deleting functions ECR repos...');
+      for (let func of this.functions) await func.delete();
+      //For each function
+      this.logger.log('Deleting images ECR repos...');
+      for (let image of this.images) await image.delete();
       //
       resolve();
     });

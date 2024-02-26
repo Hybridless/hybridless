@@ -93,6 +93,15 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionConta
     if (!this.usesReusableImages) return this.image.cleanup();
     else return BPromise.resolve()
   }
+  public async delete(): BPromise {
+    // Check for unified build
+    if (this.unifiedEventsContainer && this.index != 0) {
+      return BPromise.resolve();
+    }
+    // 
+    if (!this.usesReusableImages) return this.image.delete();
+    else return BPromise.resolve()
+  }
 
   //subclasses support
   protected getContainerFiles(): DockerFiles { return null; }
