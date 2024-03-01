@@ -214,7 +214,7 @@ class hybridless {
       this.logger.log('Spreading components...');
       //No components specified, don't process
       if (!this.options || !Object.keys(this.options).length) {
-        this.logger.error('No components to be processed.');
+        this.logger.warn('No components to be processed.');
         resolve();
         return;
       }
@@ -246,7 +246,7 @@ class hybridless {
     return new BPromise(async (resolve) => {
       //No components specified, don't process
       if (!this.options || !Object.keys(this.options).length) {
-        this.logger.error('No components to push.');
+        this.logger.warn('No components to push.');
         resolve();
         return;
       }
@@ -272,7 +272,7 @@ class hybridless {
     return new BPromise(async (resolve) => {
       //No components specified, don't process
       if (!this.options || !Object.keys(this.options).length) {
-        this.logger.error('No components to build.');
+        this.logger.warn('No components to build.');
         resolve();
         return;
       }
@@ -292,7 +292,7 @@ class hybridless {
     return new BPromise(async (resolve) => {
       //No components specified, don't process
       if (!this.options || !Object.keys(this.options).length) {
-        this.logger.error('No components to push.');
+        this.logger.warn('No components to push.');
         resolve();
         return;
       }
