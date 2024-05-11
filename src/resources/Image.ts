@@ -28,6 +28,7 @@ export class Image {
   public set options(options: OImage) {
     this.imageOptions = options;
   }
+  get options() { return this.imageOptions }
   // public get funcOptions() { return this._funcOptions; }
 
   //public
