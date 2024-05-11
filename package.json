@@ -1,6 +1,6 @@
 {
   "name": "@hybridless/hybridless",
-  "version": "0.1.21",
+  "version": "0.1.26",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -18,9 +18,9 @@
   },
   "dependencies": {
     "@babel/core": "^7.23.7",
-    "@hybridless/serverless-ecs-plugin": "^0.0.50",
+    "@hybridless/serverless-ecs-plugin": "^0.0.53",
     "@hybridless/serverless-plugin-log-retention": "^2.0.0",
-    "babel-loader": "^9.1.3",
+    "babel-loader": "^8.x.x",
     "bluebird": "^3.7.2",
     "dockerode": "^3.3.5",
     "es6-promise-pool": "^2.5.0",

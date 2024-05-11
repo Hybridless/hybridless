@@ -174,6 +174,7 @@ export class FunctionHTTPDTaskEvent extends FunctionContainerBaseEvent {
         healthCheckHealthyCount: (event.healthCheckHealthyCount || Globals.DefaultHealthCheckHealthyCount),
         healthCheckUnhealthyCount: (event.healthCheckUnhealthyCount || Globals.DefaultHealthCheckUnhealthCount),
         healthCheckStatusCode: (event.healthCheckStatusCode || Globals.DefaultHealthCheckStatusCode),
+        ...(event.deregistrationDelay ? { deregistrationDelay: event.deregistrationDelay } : {}),
         listeners: [{
           port: this.getPort(),
           albProtocol: (event.certificateArns ? 'HTTPS' : 'HTTP'),

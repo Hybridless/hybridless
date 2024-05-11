@@ -386,6 +386,9 @@
                         "daemonType": {
                           "type": "boolean"
                         },
+                        "deregistrationDelay": {
+                          "type": "number"
+                        },
                         "ec2LaunchType": {
                           "const": true,
                           "type": "boolean"
@@ -951,6 +954,9 @@
                           "type": "object"
                         },
                         "cpu": {
+                          "type": "number"
+                        },
+                        "deregistrationDelay": {
                           "type": "number"
                         },
                         "ec2LaunchType": {
@@ -1544,6 +1550,9 @@
                         "daemonType": {
                           "type": "boolean"
                         },
+                        "deregistrationDelay": {
+                          "type": "number"
+                        },
                         "dockerBuildArgs": {
                           "additionalProperties": {
                             "type": "string"
@@ -2136,6 +2145,9 @@
                           "type": "object"
                         },
                         "cpu": {
+                          "type": "number"
+                        },
+                        "deregistrationDelay": {
                           "type": "number"
                         },
                         "dockerBuildArgs": {
@@ -8235,6 +8247,9 @@
                           "daemonType": {
                             "type": "boolean"
                           },
+                          "deregistrationDelay": {
+                            "type": "number"
+                          },
                           "ec2LaunchType": {
                             "const": true,
                             "type": "boolean"
@@ -8800,6 +8815,9 @@
                             "type": "object"
                           },
                           "cpu": {
+                            "type": "number"
+                          },
+                          "deregistrationDelay": {
                             "type": "number"
                           },
                           "ec2LaunchType": {
@@ -9393,6 +9411,9 @@
                           "daemonType": {
                             "type": "boolean"
                           },
+                          "deregistrationDelay": {
+                            "type": "number"
+                          },
                           "dockerBuildArgs": {
                             "additionalProperties": {
                               "type": "string"
@@ -9985,6 +10006,9 @@
                             "type": "object"
                           },
                           "cpu": {
+                            "type": "number"
+                          },
+                          "deregistrationDelay": {
                             "type": "number"
                           },
                           "dockerBuildArgs": {

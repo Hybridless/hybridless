@@ -256,6 +256,7 @@ export type OFunctionHTTPDTaskEvent = {
   healthCheckUnhealthyCount?: number; //defaults to 5
   healthCheckRoute?: string; //default will use auto generated health route
   healthCheckStatusCode?: number;
+  deregistrationDelay?: number;
   //AS
   autoScale?: {
     min?: number; //default to 1
