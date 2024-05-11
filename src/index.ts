@@ -281,7 +281,7 @@ class hybridless {
       await new BPromise.all(this.functions.map((func) => {
         return func.build();
       }).concat(this.images.map((image) => {
-        return image.build();
+        return image.options.enabled === false ? Promise.resolve() : image.build();
       })));
       //
       resolve();
@@ -301,7 +301,7 @@ class hybridless {
       await new BPromise.all(this.functions.map((func) => {
         return func.push();
       }).concat(this.images.map((image) => {
-        return image.push();
+        return image.options.enabled === false ? Promise.resolve() : image.push();
       })));
       //
       resolve();

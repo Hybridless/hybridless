@@ -16,6 +16,7 @@ export interface OImage {
    */
   additionalDockerFiles?: { from: string, to: string, path?: string }[];
   dockerBuildArgs?: { [key: string]: string };
+  enabled?: boolean; //defaults to true
 }
 
 //Function

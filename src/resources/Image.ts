@@ -1,22 +1,11 @@
-import { OFunction, OFunctionEvent, OFunctionBatchJobEvent, OVPCOptions_Shared, OVPCOptions_Dedicated, OFunctionProcessTaskEvent, OFunctionLaunchableTaskEvent, OFunctionHTTPDTaskEvent, OFunctionEventType, OFunctionLambdaEvent, OFunctionLambdaContainerEvent, OFunctionScheduledTaskEvent, OImage } from "../options";
+import { OImage } from "../options";
 import Hybridless = require("..");
-import * as PromisePool from "es6-promise-pool";
 import util = require('util');
 import child = require('child_process');
-//Event types
-import { FunctionProcessTaskEvent } from "./FunctionProcessTaskEvent";
-import { FunctionHTTPDTaskEvent } from "./FunctionHttpdTaskEvent";
-import { FunctionContainerBaseEvent } from "./BaseEvents/FunctionContainerBaseEvent";
-import { FunctionBaseEvent } from "./BaseEvents/FunctionBaseEvent";
-import { FunctionLambdaEvent } from "./FunctionLambdaEvent";
-import { FunctionLambdaContainerEvent } from "./FunctionLambdaContainerEvent";
-import { FunctionBatchJobEvent } from "./FunctionBatchJobEvent";
-import { FunctionScheduledTaskEvent } from "./FunctionScheduledTaskEvent";
-import { FunctionLaunchableTaskEvent } from "./FunctionLaunchableTaskEvent";
 //
 import _ = require('lodash');
 import BPromise = require('bluebird');
-import Globals, { DockerFiles } from "../core/Globals";
+import { DockerFiles } from "../core/Globals";
 // 
 const executor = util.promisify(child.exec);
 

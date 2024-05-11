@@ -15772,6 +15772,9 @@
               },
               "dockerFile": {
                 "type": "string"
+              },
+              "enabled": {
+                "type": "boolean"
               }
             },
             "required": [
@@ -15818,6 +15821,9 @@
                 },
                 "dockerFile": {
                   "type": "string"
+                },
+                "enabled": {
+                  "type": "boolean"
                 }
               },
               "required": [
