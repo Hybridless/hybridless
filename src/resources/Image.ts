@@ -69,9 +69,15 @@ export class Image {
       //Build image
       const files = this.getContainerFiles();
       await this.plugin.docker.buildImage(files, `${localImageName}:${this.currentTag}`, this.getContainerBuildArgs());
-      //Prepare to push to registry by tagging it 
+      // Prepare to push to registry by tagging it 
       const tagResp = await this._runCommand(`docker tag ${localImageName}:${this.currentTag} ${ECRRepoURL}`, '');
       if (tagResp.stderr) reject(tagResp.stderr);
+      // Tag optional tag
+      if (this.options.additionalTag) {
+        const newRepoURL = ECRRepoURL.replace(this.currentTag, this.options.additionalTag)
+        const addTagResp = await this._runCommand(`docker tag ${localImageName}:${this.currentTag} ${newRepoURL}`, '');
+        if (addTagResp.stderr) reject(addTagResp.stderr);
+      }
       //
       resolve();
     });
@@ -91,6 +97,13 @@ export class Image {
         if (pushResp && pushResp.stderr && pushResp.stderr.toLowerCase().indexOf('error')) reject(pushResp.stderr);
         else if (!pushResp || pushResp.stdout.toLowerCase().indexOf('error') == -1) {
           if (pushResp && pushResp.stdout) this.plugin.logger.debug(pushResp.stdout);
+          // Push optional tag
+          if (this.options.additionalTag) {
+            this.plugin.logger.info(`Pushing docker image to additional tag (${this.options.additionalTag}).`);
+            const newRepoURL = ECRRepoURL.replace(this.currentTag, this.options.additionalTag)
+            const addPushResp = await this._runCommand(`docker push ${newRepoURL}`, '');
+            if (addPushResp && addPushResp.stderr && addPushResp.stderr.toLowerCase().indexOf('error')) return reject(addPushResp.stderr);
+          }
           resolve();
         } else reject(pushResp.stdout);
       });
@@ -192,7 +205,12 @@ export class Image {
     });
     if (ecrImages && ecrImages.imageIds) {
       //filter out by removing just deployed image
-      const removeImages = ecrImages.imageIds.filter((i) => i.imageTag != this.currentTag);
+      const removeImages = ecrImages.imageIds.filter((i) => {
+        return (
+          i.imageTag != this.currentTag && 
+          (!this.options.additionalTag || i.imageTag != this.options.additionalTag)
+        )
+      });
       //remove images if found
       if (removeImages.length > 0) {
         this.plugin.logger.info(`Cleaning up ${removeImages.length} unused images on ECR repo ${ECRRepoName}..`);

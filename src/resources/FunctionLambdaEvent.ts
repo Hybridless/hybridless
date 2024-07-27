@@ -60,6 +60,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				...(this.func.funcOptions.memory || this.event.memory ? { memorySize: this.event.memory || this.func.funcOptions.memory } : {}),
 				...(this.event.runtime ? { runtime: this.event.runtime } : {}),
 				...(this.event.layers ? { layers: this.event.layers } : {}),
+				...(this.event.snapStart ? { snapStart: this.event.snapStart } : {}),
 				...(this.func.funcOptions.iamRoleStatementsInherit ? { iamRoleStatementsInherit: this.func.funcOptions.iamRoleStatementsInherit } : {}),
 				...(this.func.funcOptions ? { iamRoleStatements: this.func.funcOptions.iamRoleStatements } : {}),
 				...(this.event.package ? { package: this.event.package } : {}),

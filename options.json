@@ -605,6 +605,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -1175,6 +1178,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -1775,6 +1781,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -2372,6 +2381,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -2536,6 +2548,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -2696,6 +2711,9 @@
                         },
                         "runtime": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "softCPU": {
                           "type": "number"
@@ -2888,6 +2906,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -3075,6 +3096,9 @@
                         },
                         "runtime": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "softCPU": {
                           "type": "number"
@@ -3254,6 +3278,9 @@
                         },
                         "schedulerRate": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "softCPU": {
                           "type": "number"
@@ -3432,6 +3459,9 @@
                         "schedulerRate": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -3639,6 +3669,9 @@
                         "schedulerRate": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -3842,6 +3875,9 @@
                         },
                         "schedulerRate": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "softCPU": {
                           "type": "number"
@@ -3965,6 +4001,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -4053,6 +4092,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -4136,6 +4178,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -4216,6 +4261,9 @@
                         "schedulerInput": {},
                         "schedulerRate": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -4308,6 +4356,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -4384,6 +4435,9 @@
                         },
                         "runtime": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -4486,6 +4540,9 @@
                           },
                           "type": "array"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -4574,6 +4631,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -4659,6 +4719,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -4740,6 +4803,9 @@
                         },
                         "runtime": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -4959,6 +5025,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -5044,6 +5113,9 @@
                         "schedule": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -5163,6 +5235,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -5251,6 +5326,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -5334,6 +5412,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -5414,6 +5495,9 @@
                         "schedulerInput": {},
                         "schedulerRate": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -5506,6 +5590,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -5582,6 +5669,9 @@
                         },
                         "runtime": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -5684,6 +5774,9 @@
                           },
                           "type": "array"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -5772,6 +5865,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -5857,6 +5953,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -5938,6 +6037,9 @@
                         },
                         "runtime": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -6157,6 +6259,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -6241,6 +6346,9 @@
                         },
                         "schedule": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -6388,6 +6496,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -6503,6 +6614,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -6613,6 +6727,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -6720,6 +6837,9 @@
                         "schedulerInput": {},
                         "schedulerRate": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -6839,6 +6959,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -6942,6 +7065,9 @@
                         },
                         "runtime": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -7071,6 +7197,9 @@
                           },
                           "type": "array"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -7186,6 +7315,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -7298,6 +7430,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -7406,6 +7541,9 @@
                         },
                         "runtime": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -7652,6 +7790,9 @@
                         "runtime": {
                           "type": "string"
                         },
+                        "snapStart": {
+                          "type": "boolean"
+                        },
                         "timeout": {
                           "type": "number"
                         }
@@ -7763,6 +7904,9 @@
                         },
                         "schedule": {
                           "type": "string"
+                        },
+                        "snapStart": {
+                          "type": "boolean"
                         },
                         "timeout": {
                           "type": "number"
@@ -8466,6 +8610,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -9036,6 +9183,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -9636,6 +9786,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -10233,6 +10386,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -10397,6 +10553,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -10557,6 +10716,9 @@
                           },
                           "runtime": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "softCPU": {
                             "type": "number"
@@ -10749,6 +10911,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -10936,6 +11101,9 @@
                           },
                           "runtime": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "softCPU": {
                             "type": "number"
@@ -11115,6 +11283,9 @@
                           },
                           "schedulerRate": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "softCPU": {
                             "type": "number"
@@ -11293,6 +11464,9 @@
                           "schedulerRate": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -11500,6 +11674,9 @@
                           "schedulerRate": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -11703,6 +11880,9 @@
                           },
                           "schedulerRate": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "softCPU": {
                             "type": "number"
@@ -11826,6 +12006,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -11914,6 +12097,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -11997,6 +12183,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -12077,6 +12266,9 @@
                           "schedulerInput": {},
                           "schedulerRate": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -12169,6 +12361,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -12245,6 +12440,9 @@
                           },
                           "runtime": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -12347,6 +12545,9 @@
                             },
                             "type": "array"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -12435,6 +12636,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -12520,6 +12724,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -12601,6 +12808,9 @@
                           },
                           "runtime": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -12820,6 +13030,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -12905,6 +13118,9 @@
                           "schedule": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -13024,6 +13240,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -13112,6 +13331,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -13195,6 +13417,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -13275,6 +13500,9 @@
                           "schedulerInput": {},
                           "schedulerRate": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -13367,6 +13595,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -13443,6 +13674,9 @@
                           },
                           "runtime": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -13545,6 +13779,9 @@
                             },
                             "type": "array"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -13633,6 +13870,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -13718,6 +13958,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -13799,6 +14042,9 @@
                           },
                           "runtime": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -14018,6 +14264,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -14102,6 +14351,9 @@
                           },
                           "schedule": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -14249,6 +14501,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -14364,6 +14619,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -14474,6 +14732,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -14581,6 +14842,9 @@
                           "schedulerInput": {},
                           "schedulerRate": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -14700,6 +14964,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -14803,6 +15070,9 @@
                           },
                           "runtime": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -14932,6 +15202,9 @@
                             },
                             "type": "array"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -15047,6 +15320,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -15159,6 +15435,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -15267,6 +15546,9 @@
                           },
                           "runtime": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -15513,6 +15795,9 @@
                           "runtime": {
                             "type": "string"
                           },
+                          "snapStart": {
+                            "type": "boolean"
+                          },
                           "timeout": {
                             "type": "number"
                           }
@@ -15624,6 +15909,9 @@
                           },
                           "schedule": {
                             "type": "string"
+                          },
+                          "snapStart": {
+                            "type": "boolean"
                           },
                           "timeout": {
                             "type": "number"
@@ -15764,6 +16052,9 @@
                 "minItems": 0,
                 "type": "array"
               },
+              "additionalTag": {
+                "type": "string"
+              },
               "dockerBuildArgs": {
                 "additionalProperties": {
                   "type": "string"
@@ -15812,6 +16103,9 @@
                   "maxItems": 99999,
                   "minItems": 0,
                   "type": "array"
+                },
+                "additionalTag": {
+                  "type": "string"
                 },
                 "dockerBuildArgs": {
                   "additionalProperties": {

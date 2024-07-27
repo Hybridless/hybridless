@@ -16,6 +16,7 @@ export interface OImage {
    */
   additionalDockerFiles?: { from: string, to: string, path?: string }[];
   dockerBuildArgs?: { [key: string]: string };
+  additionalTag?: string
   enabled?: boolean; //defaults to true
 }
 
@@ -177,6 +178,7 @@ export interface OFunctionEvent {
   eventType: OFunctionEventType;
   handler?: string; //this, takes precende over function handler - Usefulll for multi-purpose clusters
   enabled?: boolean; //defaults to true
+  snapStart?: boolean; //default to false
   memory?: number; //defaults to 1024 - takes precedence over OFunction.memory
   role?: string;
   logsRetentionInDays?: number; //defaults to 365 days
