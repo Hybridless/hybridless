@@ -128,6 +128,9 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
         ...(event.reservedConcurrency ? { reservedConcurrency: event.reservedConcurrency } : {}),
         tracing: (event.disableTracing ? false : true), //enable x-ray tracing by default,
         ...(event.logsRetentionInDays && <unknown>event.logsRetentionInDays != 'null' ? { logRetentionInDays: event.logsRetentionInDays } : {}),
+        ...(event.snapStart ? { snapStart: event.snapStart } : {}),
+				...(event.concurrencyAutoscaling ? { concurrencyAutoscaling: event.concurrencyAutoscaling } : {}),
+				...(event.provisionedConcurrency ? { provisionedConcurrency: event.provisionedConcurrency } : {}),
         //
         ...(this.func.funcOptions.iamRoleStatementsInherit ? { iamRoleStatementsInherit: this.func.funcOptions.iamRoleStatementsInherit } : {}),
 				...(this.func.funcOptions.iamRoleStatements ? { iamRoleStatements: this.func.funcOptions.iamRoleStatements } : {}),

@@ -13,6 +13,7 @@ export default class DepsManager {
   private requiresMvn: boolean;
   private requiresGo: boolean;
   private requiresLogsRetention: boolean;
+  private requiresProvisionedConcurrencyAutoscaling: boolean;
   //
   private readonly plugin: Hybridless;
   //
@@ -24,12 +25,16 @@ export default class DepsManager {
   public enableWebpack(): void { this.requiresWebpack = true; }
   public enableECSPlugin(): void { this.requiresECS = true; }
   public enableECSRolePermission(): void { this.requiresECSRolePermission = true; }
+  public enableProvisionedConcurrencyAutoscaling(): void { this.requiresProvisionedConcurrencyAutoscaling = true; }
+  
   public enableMvn(): void { this.requiresMvn = true; }
   public enableGo(): void { this.requiresGo = true; }
   //
   public isLogsRetentionRequired(): boolean { return this.requiresWebpack; }
   public isWebpackRequired(): boolean { return this.requiresWebpack; }
   public isECSRolePermissionRequired(): boolean { return this.requiresECSRolePermission; }
+  public isProvisionedConcurrencyAutoscaling(): boolean { return this.requiresProvisionedConcurrencyAutoscaling; }
+  
   public isECSRequired(): boolean { return this.requiresECS; }
   public isMvnRequired(): boolean { return this.requiresMvn; }
   public isGoRequired(): boolean { return this.requiresGo; }
@@ -48,6 +53,10 @@ export default class DepsManager {
     if (this.requiresLogsRetention && !this._isPluginInstalledServerless(pluginsList, Globals.Deps_LambdaLogsRetention)) {
       this.plugin.logger.info('Lambda logs retention plugin is required, enabling it!');
       await this.plugin.serverless.pluginManager.addPlugin(require(Globals.Deps_LambdaLogsRetention));
+    }
+    if (this.requiresProvisionedConcurrencyAutoscaling && !this._isPluginInstalledServerless(pluginsList, Globals.Deps_LambdaProvisionedConcurrencyAutoscaling)) {
+      this.plugin.logger.info('Lambda provisioned concurrency autoscaling plugin is required, enabling it!');
+      await this.plugin.serverless.pluginManager.addPlugin(require(Globals.Deps_LambdaProvisionedConcurrencyAutoscaling));
     }
     return BPromise.resolve();
   }

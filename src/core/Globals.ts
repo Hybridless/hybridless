@@ -13,6 +13,7 @@ export default class Globals {
   public static Deps_Webpack = 'serverless-webpack';
   public static Deps_ECS = '@hybridless/serverless-ecs-plugin';
   public static Deps_LambdaLogsRetention  = '@hybridless/serverless-plugin-log-retention';
+  public static Deps_LambdaProvisionedConcurrencyAutoscaling  = 'serverless-provisioned-concurrency-autoscaling';
   //Java support
   public static Mvn_Build_Command = 'mvn clean install';
   public static Go_Build_Command = 'go mod tidy && go build -o ./build/';

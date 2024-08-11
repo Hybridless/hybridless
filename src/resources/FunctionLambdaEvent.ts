@@ -31,6 +31,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 			if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('java') != -1 && !this.plugin.options.disableWebpack) this.plugin.depManager.enableMvn();
 			if (this.event.runtime && this.event.runtime.toLowerCase().indexOf('go') != -1 && !this.plugin.options.disableWebpack) this.plugin.depManager.enableGo();
 			if (this.event.logsRetentionInDays) this.plugin.depManager.enableLogsRetention();
+			if (this.event.concurrencyAutoscaling) this.plugin.depManager.enableProvisionedConcurrencyAutoscaling()
 			resolve();
 		});
 	}
@@ -61,6 +62,8 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 				...(this.event.runtime ? { runtime: this.event.runtime } : {}),
 				...(this.event.layers ? { layers: this.event.layers } : {}),
 				...(this.event.snapStart ? { snapStart: this.event.snapStart } : {}),
+				...(this.event.concurrencyAutoscaling ? { concurrencyAutoscaling: this.event.concurrencyAutoscaling } : {}),
+				...(this.event.provisionedConcurrency ? { provisionedConcurrency: this.event.provisionedConcurrency } : {}),
 				...(this.func.funcOptions.iamRoleStatementsInherit ? { iamRoleStatementsInherit: this.func.funcOptions.iamRoleStatementsInherit } : {}),
 				...(this.func.funcOptions ? { iamRoleStatements: this.func.funcOptions.iamRoleStatements } : {}),
 				...(this.event.package ? { package: this.event.package } : {}),

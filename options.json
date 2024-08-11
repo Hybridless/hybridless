@@ -605,9 +605,6 @@
                         "runtime": {
                           "type": "string"
                         },
-                        "snapStart": {
-                          "type": "boolean"
-                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -1177,9 +1174,6 @@
                         },
                         "runtime": {
                           "type": "string"
-                        },
-                        "snapStart": {
-                          "type": "boolean"
                         },
                         "softCPU": {
                           "type": "number"
@@ -1781,9 +1775,6 @@
                         "runtime": {
                           "type": "string"
                         },
-                        "snapStart": {
-                          "type": "boolean"
-                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -2381,9 +2372,6 @@
                         "runtime": {
                           "type": "string"
                         },
-                        "snapStart": {
-                          "type": "boolean"
-                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -2548,9 +2536,6 @@
                         "runtime": {
                           "type": "string"
                         },
-                        "snapStart": {
-                          "type": "boolean"
-                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -2711,9 +2696,6 @@
                         },
                         "runtime": {
                           "type": "string"
-                        },
-                        "snapStart": {
-                          "type": "boolean"
                         },
                         "softCPU": {
                           "type": "number"
@@ -2906,9 +2888,6 @@
                         "runtime": {
                           "type": "string"
                         },
-                        "snapStart": {
-                          "type": "boolean"
-                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -3096,9 +3075,6 @@
                         },
                         "runtime": {
                           "type": "string"
-                        },
-                        "snapStart": {
-                          "type": "boolean"
                         },
                         "softCPU": {
                           "type": "number"
@@ -3278,9 +3254,6 @@
                         },
                         "schedulerRate": {
                           "type": "string"
-                        },
-                        "snapStart": {
-                          "type": "boolean"
                         },
                         "softCPU": {
                           "type": "number"
@@ -3458,9 +3431,6 @@
                         },
                         "schedulerRate": {
                           "type": "string"
-                        },
-                        "snapStart": {
-                          "type": "boolean"
                         },
                         "softCPU": {
                           "type": "number"
@@ -3669,9 +3639,6 @@
                         "schedulerRate": {
                           "type": "string"
                         },
-                        "snapStart": {
-                          "type": "boolean"
-                        },
                         "softCPU": {
                           "type": "number"
                         },
@@ -3875,9 +3842,6 @@
                         },
                         "schedulerRate": {
                           "type": "string"
-                        },
-                        "snapStart": {
-                          "type": "boolean"
                         },
                         "softCPU": {
                           "type": "number"
@@ -3897,6 +3861,7 @@
                       "additionalProperties": false,
                       "properties": {
                         "cognitoAuthorizerArn": {},
+                        "concurrencyAutoscaling": {},
                         "cors": {
                           "additionalProperties": false,
                           "properties": {
@@ -3974,6 +3939,9 @@
                           "const": "http",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -4019,6 +3987,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -4077,6 +4046,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "queueBatchSize": {
                           "type": "number"
                         },
@@ -4109,6 +4081,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -4169,6 +4142,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -4195,6 +4171,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -4249,6 +4226,9 @@
                           "const": "scheduler",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -4279,6 +4259,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -4344,6 +4325,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "queueBatchSize": {
                           "type": "number"
                         },
@@ -4373,6 +4357,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -4427,6 +4412,9 @@
                           "const": "none",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -4453,6 +4441,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -4506,6 +4495,9 @@
                         "protocol": {
                           "const": "s3",
                           "type": "string"
+                        },
+                        "provisionedConcurrency": {
+                          "type": "number"
                         },
                         "reservedConcurrency": {
                           "type": "number"
@@ -4568,6 +4560,7 @@
                           "type": "string"
                         },
                         "cloudWatchInput": {},
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -4622,6 +4615,9 @@
                           "const": "cloudWatch",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -4656,6 +4652,7 @@
                         "cloudWatchLogGroup": {
                           "type": "string"
                         },
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -4710,6 +4707,9 @@
                           "const": "cloudWatchLogstream",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -4741,6 +4741,7 @@
                           "type": "string"
                         },
                         "cognitoUserPoolArn": {},
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -4795,6 +4796,9 @@
                           "const": "cognito",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -4841,6 +4845,7 @@
                           ],
                           "type": "object"
                         },
+                        "concurrencyAutoscaling": {},
                         "cors": {
                           "additionalProperties": false,
                           "properties": {
@@ -4985,6 +4990,9 @@
                           "const": "httpLoadBalancer",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -5043,6 +5051,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -5100,6 +5109,9 @@
                         "protocol": {
                           "const": "eventBridge",
                           "type": "string"
+                        },
+                        "provisionedConcurrency": {
+                          "type": "number"
                         },
                         "reservedConcurrency": {
                           "type": "number"
@@ -5131,6 +5143,7 @@
                       "additionalProperties": false,
                       "properties": {
                         "cognitoAuthorizerArn": {},
+                        "concurrencyAutoscaling": {},
                         "cors": {
                           "additionalProperties": false,
                           "properties": {
@@ -5208,6 +5221,9 @@
                           "const": "http",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -5253,6 +5269,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -5311,6 +5328,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "queueBatchSize": {
                           "type": "number"
                         },
@@ -5343,6 +5363,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -5403,6 +5424,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -5429,6 +5453,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -5483,6 +5508,9 @@
                           "const": "scheduler",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -5513,6 +5541,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -5578,6 +5607,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "queueBatchSize": {
                           "type": "number"
                         },
@@ -5607,6 +5639,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -5661,6 +5694,9 @@
                           "const": "none",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -5687,6 +5723,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -5740,6 +5777,9 @@
                         "protocol": {
                           "const": "s3",
                           "type": "string"
+                        },
+                        "provisionedConcurrency": {
+                          "type": "number"
                         },
                         "reservedConcurrency": {
                           "type": "number"
@@ -5802,6 +5842,7 @@
                           "type": "string"
                         },
                         "cloudWatchInput": {},
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -5856,6 +5897,9 @@
                           "const": "cloudWatch",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -5890,6 +5934,7 @@
                         "cloudWatchLogGroup": {
                           "type": "string"
                         },
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -5944,6 +5989,9 @@
                           "const": "cloudWatchLogstream",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -5975,6 +6023,7 @@
                           "type": "string"
                         },
                         "cognitoUserPoolArn": {},
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -6029,6 +6078,9 @@
                           "const": "cognito",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -6075,6 +6127,7 @@
                           ],
                           "type": "object"
                         },
+                        "concurrencyAutoscaling": {},
                         "cors": {
                           "additionalProperties": false,
                           "properties": {
@@ -6219,6 +6272,9 @@
                           "const": "httpLoadBalancer",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -6277,6 +6333,7 @@
                     {
                       "additionalProperties": false,
                       "properties": {
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -6334,6 +6391,9 @@
                         "protocol": {
                           "const": "eventBridge",
                           "type": "string"
+                        },
+                        "provisionedConcurrency": {
+                          "type": "number"
                         },
                         "reservedConcurrency": {
                           "type": "number"
@@ -6386,6 +6446,7 @@
                           "type": "array"
                         },
                         "cognitoAuthorizerArn": {},
+                        "concurrencyAutoscaling": {},
                         "cors": {
                           "additionalProperties": false,
                           "properties": {
@@ -6469,6 +6530,9 @@
                           "const": "http",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -6535,6 +6599,7 @@
                           "minItems": 0,
                           "type": "array"
                         },
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -6599,6 +6664,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "queueBatchSize": {
                           "type": "number"
                         },
@@ -6652,6 +6720,7 @@
                           "minItems": 0,
                           "type": "array"
                         },
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -6718,6 +6787,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -6765,6 +6837,7 @@
                           "minItems": 0,
                           "type": "array"
                         },
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -6825,6 +6898,9 @@
                           "const": "scheduler",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -6876,6 +6952,7 @@
                           "minItems": 0,
                           "type": "array"
                         },
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -6947,6 +7024,9 @@
                           "type": "string"
                         },
                         "protocolArn": {},
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "queueBatchSize": {
                           "type": "number"
                         },
@@ -6997,6 +7077,7 @@
                           "minItems": 0,
                           "type": "array"
                         },
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -7057,6 +7138,9 @@
                           "const": "none",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -7104,6 +7188,7 @@
                           "minItems": 0,
                           "type": "array"
                         },
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -7163,6 +7248,9 @@
                         "protocol": {
                           "const": "s3",
                           "type": "string"
+                        },
+                        "provisionedConcurrency": {
+                          "type": "number"
                         },
                         "reservedConcurrency": {
                           "type": "number"
@@ -7246,6 +7334,7 @@
                           "type": "string"
                         },
                         "cloudWatchInput": {},
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -7306,6 +7395,9 @@
                           "const": "cloudWatch",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -7361,6 +7453,7 @@
                         "cloudWatchLogGroup": {
                           "type": "string"
                         },
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -7421,6 +7514,9 @@
                           "const": "cloudWatchLogstream",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -7473,6 +7569,7 @@
                           "type": "string"
                         },
                         "cognitoUserPoolArn": {},
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -7532,6 +7629,9 @@
                         "protocol": {
                           "const": "cognito",
                           "type": "string"
+                        },
+                        "provisionedConcurrency": {
+                          "type": "number"
                         },
                         "reservedConcurrency": {
                           "type": "number"
@@ -7600,6 +7700,7 @@
                           ],
                           "type": "object"
                         },
+                        "concurrencyAutoscaling": {},
                         "cors": {
                           "additionalProperties": false,
                           "properties": {
@@ -7750,6 +7851,9 @@
                           "const": "httpLoadBalancer",
                           "type": "string"
                         },
+                        "provisionedConcurrency": {
+                          "type": "number"
+                        },
                         "reservedConcurrency": {
                           "type": "number"
                         },
@@ -7829,6 +7933,7 @@
                           "minItems": 0,
                           "type": "array"
                         },
+                        "concurrencyAutoscaling": {},
                         "disableTracing": {
                           "type": "boolean"
                         },
@@ -7892,6 +7997,9 @@
                         "protocol": {
                           "const": "eventBridge",
                           "type": "string"
+                        },
+                        "provisionedConcurrency": {
+                          "type": "number"
                         },
                         "reservedConcurrency": {
                           "type": "number"
@@ -8610,9 +8718,6 @@
                           "runtime": {
                             "type": "string"
                           },
-                          "snapStart": {
-                            "type": "boolean"
-                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -9182,9 +9287,6 @@
                           },
                           "runtime": {
                             "type": "string"
-                          },
-                          "snapStart": {
-                            "type": "boolean"
                           },
                           "softCPU": {
                             "type": "number"
@@ -9786,9 +9888,6 @@
                           "runtime": {
                             "type": "string"
                           },
-                          "snapStart": {
-                            "type": "boolean"
-                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -10386,9 +10485,6 @@
                           "runtime": {
                             "type": "string"
                           },
-                          "snapStart": {
-                            "type": "boolean"
-                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -10553,9 +10649,6 @@
                           "runtime": {
                             "type": "string"
                           },
-                          "snapStart": {
-                            "type": "boolean"
-                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -10716,9 +10809,6 @@
                           },
                           "runtime": {
                             "type": "string"
-                          },
-                          "snapStart": {
-                            "type": "boolean"
                           },
                           "softCPU": {
                             "type": "number"
@@ -10911,9 +11001,6 @@
                           "runtime": {
                             "type": "string"
                           },
-                          "snapStart": {
-                            "type": "boolean"
-                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -11101,9 +11188,6 @@
                           },
                           "runtime": {
                             "type": "string"
-                          },
-                          "snapStart": {
-                            "type": "boolean"
                           },
                           "softCPU": {
                             "type": "number"
@@ -11283,9 +11367,6 @@
                           },
                           "schedulerRate": {
                             "type": "string"
-                          },
-                          "snapStart": {
-                            "type": "boolean"
                           },
                           "softCPU": {
                             "type": "number"
@@ -11463,9 +11544,6 @@
                           },
                           "schedulerRate": {
                             "type": "string"
-                          },
-                          "snapStart": {
-                            "type": "boolean"
                           },
                           "softCPU": {
                             "type": "number"
@@ -11674,9 +11752,6 @@
                           "schedulerRate": {
                             "type": "string"
                           },
-                          "snapStart": {
-                            "type": "boolean"
-                          },
                           "softCPU": {
                             "type": "number"
                           },
@@ -11880,9 +11955,6 @@
                           },
                           "schedulerRate": {
                             "type": "string"
-                          },
-                          "snapStart": {
-                            "type": "boolean"
                           },
                           "softCPU": {
                             "type": "number"
@@ -11902,6 +11974,7 @@
                         "additionalProperties": false,
                         "properties": {
                           "cognitoAuthorizerArn": {},
+                          "concurrencyAutoscaling": {},
                           "cors": {
                             "additionalProperties": false,
                             "properties": {
@@ -11979,6 +12052,9 @@
                             "const": "http",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -12024,6 +12100,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -12082,6 +12159,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "queueBatchSize": {
                             "type": "number"
                           },
@@ -12114,6 +12194,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -12174,6 +12255,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -12200,6 +12284,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -12254,6 +12339,9 @@
                             "const": "scheduler",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -12284,6 +12372,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -12349,6 +12438,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "queueBatchSize": {
                             "type": "number"
                           },
@@ -12378,6 +12470,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -12432,6 +12525,9 @@
                             "const": "none",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -12458,6 +12554,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -12511,6 +12608,9 @@
                           "protocol": {
                             "const": "s3",
                             "type": "string"
+                          },
+                          "provisionedConcurrency": {
+                            "type": "number"
                           },
                           "reservedConcurrency": {
                             "type": "number"
@@ -12573,6 +12673,7 @@
                             "type": "string"
                           },
                           "cloudWatchInput": {},
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -12627,6 +12728,9 @@
                             "const": "cloudWatch",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -12661,6 +12765,7 @@
                           "cloudWatchLogGroup": {
                             "type": "string"
                           },
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -12715,6 +12820,9 @@
                             "const": "cloudWatchLogstream",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -12746,6 +12854,7 @@
                             "type": "string"
                           },
                           "cognitoUserPoolArn": {},
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -12800,6 +12909,9 @@
                             "const": "cognito",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -12846,6 +12958,7 @@
                             ],
                             "type": "object"
                           },
+                          "concurrencyAutoscaling": {},
                           "cors": {
                             "additionalProperties": false,
                             "properties": {
@@ -12990,6 +13103,9 @@
                             "const": "httpLoadBalancer",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -13048,6 +13164,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -13105,6 +13222,9 @@
                           "protocol": {
                             "const": "eventBridge",
                             "type": "string"
+                          },
+                          "provisionedConcurrency": {
+                            "type": "number"
                           },
                           "reservedConcurrency": {
                             "type": "number"
@@ -13136,6 +13256,7 @@
                         "additionalProperties": false,
                         "properties": {
                           "cognitoAuthorizerArn": {},
+                          "concurrencyAutoscaling": {},
                           "cors": {
                             "additionalProperties": false,
                             "properties": {
@@ -13213,6 +13334,9 @@
                             "const": "http",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -13258,6 +13382,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -13316,6 +13441,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "queueBatchSize": {
                             "type": "number"
                           },
@@ -13348,6 +13476,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -13408,6 +13537,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -13434,6 +13566,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -13488,6 +13621,9 @@
                             "const": "scheduler",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -13518,6 +13654,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -13583,6 +13720,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "queueBatchSize": {
                             "type": "number"
                           },
@@ -13612,6 +13752,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -13666,6 +13807,9 @@
                             "const": "none",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -13692,6 +13836,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -13745,6 +13890,9 @@
                           "protocol": {
                             "const": "s3",
                             "type": "string"
+                          },
+                          "provisionedConcurrency": {
+                            "type": "number"
                           },
                           "reservedConcurrency": {
                             "type": "number"
@@ -13807,6 +13955,7 @@
                             "type": "string"
                           },
                           "cloudWatchInput": {},
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -13861,6 +14010,9 @@
                             "const": "cloudWatch",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -13895,6 +14047,7 @@
                           "cloudWatchLogGroup": {
                             "type": "string"
                           },
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -13949,6 +14102,9 @@
                             "const": "cloudWatchLogstream",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -13980,6 +14136,7 @@
                             "type": "string"
                           },
                           "cognitoUserPoolArn": {},
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -14034,6 +14191,9 @@
                             "const": "cognito",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -14080,6 +14240,7 @@
                             ],
                             "type": "object"
                           },
+                          "concurrencyAutoscaling": {},
                           "cors": {
                             "additionalProperties": false,
                             "properties": {
@@ -14224,6 +14385,9 @@
                             "const": "httpLoadBalancer",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -14282,6 +14446,7 @@
                       {
                         "additionalProperties": false,
                         "properties": {
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -14339,6 +14504,9 @@
                           "protocol": {
                             "const": "eventBridge",
                             "type": "string"
+                          },
+                          "provisionedConcurrency": {
+                            "type": "number"
                           },
                           "reservedConcurrency": {
                             "type": "number"
@@ -14391,6 +14559,7 @@
                             "type": "array"
                           },
                           "cognitoAuthorizerArn": {},
+                          "concurrencyAutoscaling": {},
                           "cors": {
                             "additionalProperties": false,
                             "properties": {
@@ -14474,6 +14643,9 @@
                             "const": "http",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -14540,6 +14712,7 @@
                             "minItems": 0,
                             "type": "array"
                           },
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -14604,6 +14777,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "queueBatchSize": {
                             "type": "number"
                           },
@@ -14657,6 +14833,7 @@
                             "minItems": 0,
                             "type": "array"
                           },
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -14723,6 +14900,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -14770,6 +14950,7 @@
                             "minItems": 0,
                             "type": "array"
                           },
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -14830,6 +15011,9 @@
                             "const": "scheduler",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -14881,6 +15065,7 @@
                             "minItems": 0,
                             "type": "array"
                           },
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -14952,6 +15137,9 @@
                             "type": "string"
                           },
                           "protocolArn": {},
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "queueBatchSize": {
                             "type": "number"
                           },
@@ -15002,6 +15190,7 @@
                             "minItems": 0,
                             "type": "array"
                           },
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -15062,6 +15251,9 @@
                             "const": "none",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -15109,6 +15301,7 @@
                             "minItems": 0,
                             "type": "array"
                           },
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -15168,6 +15361,9 @@
                           "protocol": {
                             "const": "s3",
                             "type": "string"
+                          },
+                          "provisionedConcurrency": {
+                            "type": "number"
                           },
                           "reservedConcurrency": {
                             "type": "number"
@@ -15251,6 +15447,7 @@
                             "type": "string"
                           },
                           "cloudWatchInput": {},
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -15311,6 +15508,9 @@
                             "const": "cloudWatch",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -15366,6 +15566,7 @@
                           "cloudWatchLogGroup": {
                             "type": "string"
                           },
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -15426,6 +15627,9 @@
                             "const": "cloudWatchLogstream",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -15478,6 +15682,7 @@
                             "type": "string"
                           },
                           "cognitoUserPoolArn": {},
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -15537,6 +15742,9 @@
                           "protocol": {
                             "const": "cognito",
                             "type": "string"
+                          },
+                          "provisionedConcurrency": {
+                            "type": "number"
                           },
                           "reservedConcurrency": {
                             "type": "number"
@@ -15605,6 +15813,7 @@
                             ],
                             "type": "object"
                           },
+                          "concurrencyAutoscaling": {},
                           "cors": {
                             "additionalProperties": false,
                             "properties": {
@@ -15755,6 +15964,9 @@
                             "const": "httpLoadBalancer",
                             "type": "string"
                           },
+                          "provisionedConcurrency": {
+                            "type": "number"
+                          },
                           "reservedConcurrency": {
                             "type": "number"
                           },
@@ -15834,6 +16046,7 @@
                             "minItems": 0,
                             "type": "array"
                           },
+                          "concurrencyAutoscaling": {},
                           "disableTracing": {
                             "type": "boolean"
                           },
@@ -15897,6 +16110,9 @@
                           "protocol": {
                             "const": "eventBridge",
                             "type": "string"
+                          },
+                          "provisionedConcurrency": {
+                            "type": "number"
                           },
                           "reservedConcurrency": {
                             "type": "number"

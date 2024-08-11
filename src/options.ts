@@ -178,7 +178,6 @@ export interface OFunctionEvent {
   eventType: OFunctionEventType;
   handler?: string; //this, takes precende over function handler - Usefulll for multi-purpose clusters
   enabled?: boolean; //defaults to true
-  snapStart?: boolean; //default to false
   memory?: number; //defaults to 1024 - takes precedence over OFunction.memory
   role?: string;
   logsRetentionInDays?: number; //defaults to 365 days
@@ -319,6 +318,9 @@ export type OFunctionLambdaBaseEvent = {
   disableTracing?: boolean; //XRay tracing is enabled by default
   protocol: OFunctionLambdaProtocol;
   package?: any;
+  snapStart?: boolean; //default to false
+  provisionedConcurrency?: number; //default is not set
+  concurrencyAutoscaling?: any; //default is not set -- serverless-provisioned-concurrency-autoscaling
   timeout?: number; //takes precendece over func.
   onError?: string | any; //allow intrinsict function
 }
