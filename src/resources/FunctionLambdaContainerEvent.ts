@@ -4,7 +4,8 @@ import Hybridless = require("..");
 import { Function as BaseFunction } from "./Function";
 import { OFunctionLambdaCloudWatchEvent, OFunctionLambdaCloudWatchLogStream, OFunctionLambdaCognitoTrigger, OFunctionLambdaContainerEvent, 
          OFunctionLambdaContainerRuntime, OFunctionLambdaEvent, OFunctionLambdaHTTPEvent, OFunctionLambdaHTTPLoadBalancerEvent, OFunctionLambdaProtocol, 
-         OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent, OFunctionLambdaEventBridge, OFunctionContainerOptionalImage } from "../options";
+         OFunctionLambdaS3Event, OFunctionLambdaSchedulerEvent, OFunctionLambdaSNSEvent, OFunctionLambdaSQSEvent, OFunctionLambdaEventBridge, OFunctionContainerOptionalImage, 
+         OFunctionLambdaDynamoStreamsEvent} from "../options";
 //
 import Globals, { DockerFiles } from "../core/Globals";
 //
@@ -157,8 +158,12 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
             ...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
             ...((this.event as OFunctionLambdaSQSEvent).maximumBatchingWindow ? { maximumBatchingWindow: (this.event as OFunctionLambdaSQSEvent).maximumBatchingWindow } : {}),
             ...((this.event as OFunctionLambdaSQSEvent).reportFailureResponse ? { functionResponseType: 'ReportBatchItemFailures' } : {}),
-            //ddbstreams
-            ...((<OFunctionLambdaContainerEvent>this.event).protocol == OFunctionLambdaProtocol.dynamostreams ? { type: 'dynamodb' } : {}),
+            	//ddbstreams
+						...((<OFunctionLambdaContainerEvent>this.event).protocol == OFunctionLambdaProtocol.dynamostreams ? { 
+							type: 'dynamodb',
+							...((this.event as OFunctionLambdaDynamoStreamsEvent).filterPatterns ? { filterPatterns: (this.event as OFunctionLambdaDynamoStreamsEvent).filterPatterns } : {}),
+							...((this.event as OFunctionLambdaDynamoStreamsEvent).maximumRetryAttempts ? { maximumRetryAttempts: (this.event as OFunctionLambdaDynamoStreamsEvent).maximumRetryAttempts } : {}),
+						} : {}),
             //scheduler
             ...((this.event as OFunctionLambdaSchedulerEvent).schedulerRate ? { rate: [(this.event as OFunctionLambdaSchedulerEvent).schedulerRate] } : {}),
             ...((this.event as OFunctionLambdaSchedulerEvent).schedulerInput ? {
