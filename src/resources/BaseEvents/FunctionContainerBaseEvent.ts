@@ -30,7 +30,6 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionConta
     //
     if (this.usesReusableImages) {
       this.image = this.plugin.getImageById((<OFunctionContainerReusableImage>this.event)?.imageId)
-      // TODO: debug log
     } else {
       const files = this.getContainerFiles()
       const dockerFile = files.find((f) => f.dest == 'Dockerfile')
@@ -84,13 +83,13 @@ export class FunctionContainerBaseEvent extends FunctionBaseEvent<OFunctionConta
     if (!this.usesReusableImages) return this.image.push();
     else return BPromise.resolve()
   }
-  public async cleanup(): BPromise {
+  public async cleanup(soft?: boolean): BPromise {
     // Check for unified build
     if (this.unifiedEventsContainer && this.index != 0) {
       return BPromise.resolve();
     }
     // 
-    if (!this.usesReusableImages) return this.image.cleanup();
+    if (!this.usesReusableImages) return this.image.cleanup(soft);
     else return BPromise.resolve()
   }
   public async delete(): BPromise {

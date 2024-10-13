@@ -97,7 +97,8 @@ class hybridless {
         .then(this.spread) //1
         .then(this.checkDependencies) //2
         .then(this.compile) //4
-        .then(this.build), //5
+        .then(this.build) //5
+        .then(() => this.cleanupContainers(true)), //6
       // Cmds
       'hybridless:create:setup': () => BPromise.bind(this).then(this.setup), //0
       'hybridless:create:spread': () => BPromise.bind(this).then(this.spread), //1
@@ -320,14 +321,14 @@ class hybridless {
       .then(() => (!this.depManager.isECSRequired() ? BPromise.resolve() : this.serverless.pluginManager.spawn('serverless-ecs-plugin:compile')));
   }
   //Cleanup old containers from registry
-  private async cleanupContainers(): BPromise {
+  private async cleanupContainers(soft?: boolean): BPromise {
     return new BPromise(async (resolve) => {
       //For each function
       this.logger.log('Cleaning up functions...');
-      for (let func of this.functions) await func.cleanup();
+      for (let func of this.functions) await func.cleanup(soft);
       //For each function
       this.logger.log('Cleaning up images...');
-      for (let image of this.images) await image.cleanup();
+      for (let image of this.images) await image.cleanup(soft);
       //
       resolve();
     });

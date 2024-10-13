@@ -28,7 +28,7 @@ export abstract class FunctionBaseEvent<T> {
   public abstract createRequiredResources(): BPromise; //3
   public abstract build(): BPromise; //4
   public abstract push(): BPromise; //5
-  public abstract cleanup(): BPromise; //optional 6
+  public abstract cleanup(soft?: boolean): BPromise; //optional 6
   public abstract delete(): BPromise; //optional
   //Helper
   public isEnabled(): boolean {

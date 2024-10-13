@@ -122,13 +122,13 @@ export class Function {
     });
   }
   //cleanup events
-  public async cleanup(): BPromise {
+  public async cleanup(soft?: boolean): BPromise {
     //For type of event, cleanup the function
     return new BPromise(async (resolve) => {
       await new BPromise.all(this.events.map((event) => {
         if (event && event.isEnabled()) {
           this.plugin.logger.log(`Cleaning up ${this.functionName}:${event.eventType}...`);
-          return event.cleanup();
+          return event.cleanup(soft);
         } return BPromise.resolve();
       }));
       resolve();

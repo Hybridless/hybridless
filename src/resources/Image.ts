@@ -10,9 +10,10 @@ import { DockerFiles } from "../core/Globals";
 const executor = util.promisify(child.exec);
 
 export class Image {
-  private imageOptions: OImage;
-  private readonly plugin: Hybridless;
   public readonly imageName: string;
+  private imageOptions: OImage;
+  private dockerImageIds: string[];
+  private readonly plugin: Hybridless;
   private readonly currentTag: string;
   private readonly dockerFilePath: string;
   //
@@ -68,7 +69,7 @@ export class Image {
       const ECRRepoURL: string = (await this._getFullECRRepoImageURL());
       //Build image
       const files = this.getContainerFiles();
-      await this.plugin.docker.buildImage(files, `${localImageName}:${this.currentTag}`, this.getContainerBuildArgs());
+      this.dockerImageIds = await this.plugin.docker.buildImage(files, `${localImageName}:${this.currentTag}`, this.getContainerBuildArgs());
       // Prepare to push to registry by tagging it 
       const tagResp = await this._runCommand(`docker tag ${localImageName}:${this.currentTag} ${ECRRepoURL}`, '');
       if (tagResp.stderr) reject(tagResp.stderr);
@@ -111,9 +112,12 @@ export class Image {
     });
   }
   //cleanup events
-  public async cleanup(): BPromise {
+  public async cleanup(soft?: boolean): BPromise {
     const ECRRepoName = this._getECRRepoName();
-    return await this._cleanupOldImages(ECRRepoName);
+    return await BPromise.all([
+      soft ? BPromise.resolve() : this._cleanupOldImages(ECRRepoName),
+      this.dockerImageIds?.length > 0 ? this._cleanupLocalImages(ECRRepoName) : BPromise.resolve()
+    ]);
   }
   //delete events
   public async delete(): BPromise {
@@ -222,5 +226,10 @@ export class Image {
         return BPromise.resolve(); //dont need to throw for this :) 
       }
     } else return BPromise.reject('Could not find ECR repo images!');
+  }
+  private async _cleanupLocalImages(ECRRepoName: string): BPromise {
+    this.plugin.logger.info(`Cleaning up local docker image for: ${ECRRepoName}..`);
+    const imageIds = this.dockerImageIds
+    return await BPromise.all(imageIds.map((i) => this.plugin.docker.deleteImage(i)));
   }
 }

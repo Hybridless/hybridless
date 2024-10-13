@@ -35,9 +35,13 @@ export default class Docker {
           response.on('error', (err) => reject(err));
           response.on('end', () => {
             const resp = Buffer.concat(chunks).toString('utf8');
-            if (resp.includes('Successfully built')) {
+            // Extract IDs
+            const regex = /"ID":"sha256:([a-fA-F0-9]{64})"/g;
+            const matches = [...resp.matchAll(regex)];
+            const IDs = matches.map(match => match[1]);
+            if (resp.includes('Successfully built') && IDs) {
               this.plugin.logger.info('Docker image built!');
-              resolve(resp);
+              resolve(IDs);
             } else {
               this.plugin.logger.info('Docker image build error!');
               reject(resp);
@@ -47,6 +51,21 @@ export default class Docker {
       });
     });
   }
+  public async deleteImage(imageName: string): BPromise {
+    return new BPromise(async (resolve, reject) => {
+      this.plugin.logger.info(`Deleting docker image.. (${imageName})`);
+      const image = await this._d.getImage(imageName)
+      if (image)  {
+        await image.remove({ force: true })
+        this.plugin.logger.info('Docker image removed!')
+        resolve()
+      } else {
+        this.plugin.logger.info('Docker image not found error!')
+        reject('Docker image not found error!')
+      }
+    });
+  }
+
   private async _packDocker(files: DockerFiles): BPromise {
     return new BPromise((resolve, reject) => {
       resolve(tarFS.pack('/', {
