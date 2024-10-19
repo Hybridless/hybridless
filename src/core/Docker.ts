@@ -54,14 +54,20 @@ export default class Docker {
   public async deleteImage(imageName: string): BPromise {
     return new BPromise(async (resolve, reject) => {
       this.plugin.logger.info(`Deleting docker image.. (${imageName})`);
-      const image = await this._d.getImage(imageName)
+      try {
+        const image = await this._d.getImage(imageName)
       if (image)  {
         await image.remove({ force: true })
         this.plugin.logger.info('Docker image removed!')
         resolve()
       } else {
-        this.plugin.logger.info('Docker image not found error!')
-        reject('Docker image not found error!')
+        this.plugin.logger.warn('Docker image not found error!')
+        resolve()
+      }
+      }
+      catch (e) {
+        this.plugin.logger.warn(`Error while deleting image! ${e}`)
+        resolve()
       }
     });
   }
