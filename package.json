@@ -1,6 +1,6 @@
 {
   "name": "@hybridless/hybridless",
-  "version": "0.1.42",
+  "version": "0.1.43",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -13,11 +13,11 @@
   "license": "GNU GPLv3",
   "devDependencies": {
     "@types/node": "^20.11.17",
-    "typescript": "^5.7.3",
+    "typescript": "^5.8.3",
     "typescript-json-schema": "^0.65.1"
   },
   "dependencies": {
-    "@babel/core": "^7.26.0",
+    "@babel/core": "^7.26.10",
     "@hybridless/serverless-ecs-plugin": "^0.0.53",
     "@hybridless/serverless-plugin-log-retention": "^2.0.0",
     "babel-loader": "^8.x.x",
@@ -27,11 +27,11 @@
     "json-schema-ref-parser": "^9.0.9",
     "json-stringify-safe": "^5.0.1",
     "loadash": "^1.0.0",
-    "serverless-webpack": "^5.15.0",
+    "serverless-webpack": "^5.15.1",
     "stack-trace": "0.0.10",
-    "tar-fs": "^3.0.5",
+    "tar-fs": "^3.0.8",
     "uuid": "^9.0.0",
-    "webpack": "^5.97.1",
+    "webpack": "^5.99.6",
     "webpack-node-externals": "^3.0.0"
   }
 }

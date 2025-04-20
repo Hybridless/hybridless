@@ -1,0 +1,10 @@
+FROM ghcr.io/hybridless/node:20-alpine
+
+# Copy files
+COPY /usr/src/app/ /usr/src/app/
+
+# Set the working directory
+WORKDIR /usr/src/app
+
+# Run the specified command within the container.
+ENTRYPOINT node -e "(async () => { try {await ((await import('./$ENTRYPOINT.mjs'))['$ENTRYPOINT_FUNC']());} catch (e) { console.error(e); } })()"

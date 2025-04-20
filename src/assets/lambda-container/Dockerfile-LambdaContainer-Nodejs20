@@ -1,0 +1,7 @@
+FROM public.ecr.aws/lambda/nodejs:20
+
+# Copy function code
+COPY /usr/src/app/ ${LAMBDA_TASK_ROOT}
+
+# 
+ENTRYPOINT ["/lambda-entrypoint.sh", "$ENTRYPOINT.$ENTRYPOINT_FUNC"] 
