@@ -75,7 +75,11 @@ export default class Globals {
       environment == OFunctionHttpdTaskRuntime.nodejs16
     ) {
       return 'task-httpd/Index-Httpd-NodejsX'
-    } else if (environment == OFunctionHttpdTaskRuntime.nodejs18) {
+    } else if (
+      environment == OFunctionHttpdTaskRuntime.nodejs18 ||
+      environment == OFunctionHttpdTaskRuntime.nodejs20 ||
+      environment == OFunctionHttpdTaskRuntime.nodejs22
+    ) {
       return 'task-httpd/Index-Httpd-NodejsESM'
     }
     throw new Error(
@@ -173,7 +177,11 @@ export default class Globals {
       environment == OFunctionLaunchableTaskRuntime.nodejs16
     ) {
       return 'task-launchable/Index-Launchable-NodejsX'
-    } else if (environment == OFunctionLaunchableTaskRuntime.nodejs18) {
+    } else if (
+      environment == OFunctionLaunchableTaskRuntime.nodejs18 ||
+      environment == OFunctionLaunchableTaskRuntime.nodejs20 ||
+      environment == OFunctionLaunchableTaskRuntime.nodejs22
+    ) {
       return 'task-launchable/Index-Launchable-NodejsESM'
     }
     throw new Error(
