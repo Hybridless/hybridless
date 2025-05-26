@@ -396,6 +396,7 @@ export interface OFunctionLambdaSQSEvent extends OFunctionEvent {
   queueBatchSize?: number
   maximumBatchingWindow?: number
   reportFailureResponse?: boolean
+  queueMaxConcurrency?: number
 }
 export interface OFunctionLambdaSNSEvent extends OFunctionEvent {
   protocol: OFunctionLambdaProtocol.sns

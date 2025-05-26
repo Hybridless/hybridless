@@ -158,6 +158,7 @@ export class FunctionLambdaContainerEvent extends FunctionContainerBaseEvent {
             ...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
             ...((this.event as OFunctionLambdaSQSEvent).maximumBatchingWindow ? { maximumBatchingWindow: (this.event as OFunctionLambdaSQSEvent).maximumBatchingWindow } : {}),
             ...((this.event as OFunctionLambdaSQSEvent).reportFailureResponse ? { functionResponseType: 'ReportBatchItemFailures' } : {}),
+            ...((this.event as OFunctionLambdaSQSEvent).queueMaxConcurrency ? { maximumConcurrency: (this.event as OFunctionLambdaSQSEvent).queueMaxConcurrency } : {}),
             	//ddbstreams
 						...((<OFunctionLambdaContainerEvent>this.event).protocol == OFunctionLambdaProtocol.dynamostreams ? { 
 							type: 'dynamodb',
