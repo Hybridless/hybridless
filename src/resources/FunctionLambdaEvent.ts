@@ -97,6 +97,7 @@ export class FunctionLambdaEvent extends FunctionBaseEvent<OFunctionLambdaEvent>
 						...((this.event as OFunctionLambdaSQSEvent).queueBatchSize ? { batchSize: (this.event as OFunctionLambdaSQSEvent).queueBatchSize } : {}),
 						...((this.event as OFunctionLambdaSQSEvent).maximumBatchingWindow ? { maximumBatchingWindow: (this.event as OFunctionLambdaSQSEvent).maximumBatchingWindow } : {}),
 						...((this.event as OFunctionLambdaSQSEvent).reportFailureResponse ? { functionResponseType: 'ReportBatchItemFailures' } : {}),
+						...((this.event as OFunctionLambdaSQSEvent).queueMaxConcurrency ? { maximumConcurrency: (this.event as OFunctionLambdaSQSEvent).queueMaxConcurrency } : {}),
 						//ddbstreams
 						...(this.event.protocol == OFunctionLambdaProtocol.dynamostreams ? { 
 							type: 'dynamodb',
