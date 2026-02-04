@@ -54,6 +54,8 @@ export default class Globals {
       return 'task-httpd/Dockerfile-Httpd-Nodejs20'
     } else if (environment == OFunctionHttpdTaskRuntime.nodejs22) {
       return 'task-httpd/Dockerfile-Httpd-Nodejs22'
+    } else if (environment == OFunctionHttpdTaskRuntime.nodejs24) {
+      return 'task-httpd/Dockerfile-Httpd-Nodejs24'
     } else if (environment == OFunctionHttpdTaskRuntime.php5) {
       return 'task-httpd/Dockerfile-Httpd-PHP5'
     } else if (environment == OFunctionHttpdTaskRuntime.php7) {
@@ -78,7 +80,8 @@ export default class Globals {
     } else if (
       environment == OFunctionHttpdTaskRuntime.nodejs18 ||
       environment == OFunctionHttpdTaskRuntime.nodejs20 ||
-      environment == OFunctionHttpdTaskRuntime.nodejs22
+      environment == OFunctionHttpdTaskRuntime.nodejs22 ||
+      environment == OFunctionHttpdTaskRuntime.nodejs24
     ) {
       return 'task-httpd/Index-Httpd-NodejsESM'
     }
@@ -108,6 +111,8 @@ export default class Globals {
       return 'task-process/Dockerfile-Process-Nodejs20'
     } else if (environment == OFunctionProcessTaskRuntime.nodejs22) {
       return 'task-process/Dockerfile-Process-Nodejs22'
+    } else if (environment == OFunctionProcessTaskRuntime.nodejs24) {
+      return 'task-process/Dockerfile-Process-Nodejs24'
     } else if (environment == OFunctionProcessTaskRuntime.container) {
       throw new Error(`Container environments requires dockerFile to be set!`)
     }
@@ -134,6 +139,8 @@ export default class Globals {
       return 'task-scheduled/Dockerfile-Scheduler-Nodejs20'
     } else if (environment == OFunctionScheduledTaskRuntime.nodejs22) {
       return 'task-scheduled/Dockerfile-Scheduler-Nodejs22'
+    } else if (environment == OFunctionScheduledTaskRuntime.nodejs24) {
+      return 'task-scheduled/Dockerfile-Scheduler-Nodejs24'
     } else if (environment == OFunctionScheduledTaskRuntime.container) {
       throw new Error(`Container environments requires dockerFile to be set!`)
     }
@@ -160,6 +167,8 @@ export default class Globals {
       return 'task-launchable/Dockerfile-Launchable-Nodejs20'
     } else if (environment == OFunctionLaunchableTaskRuntime.nodejs22) {
       return 'task-launchable/Dockerfile-Launchable-Nodejs22'
+    } else if (environment == OFunctionLaunchableTaskRuntime.nodejs24) {
+      return 'task-launchable/Dockerfile-Launchable-Nodejs24'
     } else if (environment == OFunctionLaunchableTaskRuntime.container) {
       throw new Error(`Container environments requires dockerFile to be set!`)
     }
@@ -180,7 +189,8 @@ export default class Globals {
     } else if (
       environment == OFunctionLaunchableTaskRuntime.nodejs18 ||
       environment == OFunctionLaunchableTaskRuntime.nodejs20 ||
-      environment == OFunctionLaunchableTaskRuntime.nodejs22
+      environment == OFunctionLaunchableTaskRuntime.nodejs22 ||
+      environment == OFunctionLaunchableTaskRuntime.nodejs24
     ) {
       return 'task-launchable/Index-Launchable-NodejsESM'
     }
@@ -209,6 +219,8 @@ export default class Globals {
       return 'lambda-container/Dockerfile-LambdaContainer-Nodejs20'
     } else if (environment == OFunctionLambdaContainerRuntime.nodejs22) {
       return 'lambda-container/Dockerfile-LambdaContainer-Nodejs22'
+    } else if (environment == OFunctionLambdaContainerRuntime.nodejs24) {
+      return 'lambda-container/Dockerfile-LambdaContainer-Nodejs24'
     } else if (environment == OFunctionLambdaContainerRuntime.java11) {
       return 'lambda-container/Dockerfile-LambdaContainer-Java11'
     } else if (environment == OFunctionLambdaContainerRuntime.java8) {
@@ -237,6 +249,8 @@ export default class Globals {
       return 'job-batch/Dockerfile-Job-Nodejs20'
     } else if (environment == OFunctionBatchJobRuntime.nodejs22) {
       return 'job-batch/Dockerfile-Job-Nodejs22'
+    } else if (environment == OFunctionBatchJobRuntime.nodejs24) {
+      return 'job-batch/Dockerfile-Job-Nodejs24'
     } else if (environment == OFunctionBatchJobRuntime.java11) {
       return 'job-batch/Dockerfile-Job-Java11'
     } else if (environment == OFunctionBatchJobRuntime.java8) {
@@ -259,7 +273,8 @@ export default class Globals {
     } else if (
       environment == OFunctionBatchJobRuntime.nodejs18 ||
       environment == OFunctionBatchJobRuntime.nodejs20 ||
-      environment == OFunctionBatchJobRuntime.nodejs22
+      environment == OFunctionBatchJobRuntime.nodejs22 ||
+      environment == OFunctionBatchJobRuntime.nodejs24
     ) {
       return 'job-batch/Index-Job-NodejsESM'
     }

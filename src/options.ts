@@ -83,6 +83,7 @@ export enum OFunctionHttpdTaskRuntime {
   nodejs18 = 'nodejs18',
   nodejs20 = 'nodejs20',
   nodejs22 = 'nodejs22',
+  nodejs24 = 'nodejs24',
   php5 = 'php5',
   php7 = 'php7',
   go = 'go',
@@ -96,6 +97,7 @@ export enum OFunctionProcessTaskRuntime {
   nodejs18 = 'nodejs18',
   nodejs20 = 'nodejs20',
   nodejs22 = 'nodejs22',
+  nodejs24 = 'nodejs24',
   container = 'container',
 }
 export enum OFunctionScheduledTaskRuntime {
@@ -106,6 +108,7 @@ export enum OFunctionScheduledTaskRuntime {
   nodejs18 = 'nodejs18',
   nodejs20 = 'nodejs20',
   nodejs22 = 'nodejs22',
+  nodejs24 = 'nodejs24',
   container = 'container',
 }
 export enum OFunctionLaunchableTaskRuntime {
@@ -116,6 +119,7 @@ export enum OFunctionLaunchableTaskRuntime {
   nodejs18 = 'nodejs18',
   nodejs20 = 'nodejs20',
   nodejs22 = 'nodejs22',
+  nodejs24 = 'nodejs24',
   container = 'container',
 }
 export enum OFunctionLambdaContainerRuntime {
@@ -126,6 +130,7 @@ export enum OFunctionLambdaContainerRuntime {
   nodejs18 = 'nodejs18',
   nodejs20 = 'nodejs20',
   nodejs22 = 'nodejs22',
+  nodejs24 = 'nodejs24',
   container = 'container',
   java11 = 'java11',
   java8al12 = 'java8.al12',
@@ -139,6 +144,7 @@ export enum OFunctionBatchJobRuntime {
   nodejs18 = 'nodejs18',
   nodejs20 = 'nodejs20',
   nodejs22 = 'nodejs22',
+  nodejs24 = 'nodejs24',
   container = 'container',
   java11 = 'java11',
   java8al12 = 'java8.al12',
